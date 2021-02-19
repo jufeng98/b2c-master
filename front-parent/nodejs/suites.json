@@ -1,0 +1,136 @@
+{
+  "isSuccess": true,
+  "responseCode": 0,
+  "responseMsg": "请求成功",
+  "data": [
+    {
+      "pageSize": null,
+      "pageIndex": null,
+      "sort": null,
+      "orderBy": null,
+      "id": 4998043808318065664,
+      "suiteCode": "TC1903008",
+      "suiteName": "测试03132",
+      "marketPrice": 13017,
+      "opCode": "80546269",
+      "opName": "梁煜东",
+      "opTime": 1578041020000,
+      "createCode": "0",
+      "createName": "sysadmin",
+      "createTime": 1552439126000,
+      "mainPicture": "https://tmallapi.bluemoon.com.cn/img//group1//M00/03/0B/wKjwDl2MMvuASBeAAABkHCkcXOc920.jpg",
+      "specificsPictures": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/C8/wKjwDlyIVK6APRFeAABEbnsg5-Y358.jpg,https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D5/wKjwDlzb3EyARB-1AAFCY5LiDDY106.jpg",
+      "specificsPicturesArray": [
+        "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/C8/wKjwDlyIVK6APRFeAABEbnsg5-Y358.jpg",
+        "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D5/wKjwDlzb3EyARB-1AAFCY5LiDDY106.jpg"
+      ],
+      "detailPictures": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/C8/wKjwDlyIVK6APRFeAABEbnsg5-Y358.jpg",
+      "detailPicturesArray": [
+        "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/C8/wKjwDlyIVK6APRFeAABEbnsg5-Y358.jpg"
+      ],
+      "showDetail": 1,
+      "status": 1
+    },
+    {
+      "pageSize": null,
+      "pageIndex": null,
+      "sort": null,
+      "orderBy": null,
+      "id": 5568846919627599872,
+      "suiteCode": "TC1904001",
+      "suiteName": "CTX套餐三",
+      "marketPrice": 18000,
+      "opCode": "80546269",
+      "opName": "梁煜东",
+      "opTime": 1569726418000,
+      "createCode": "80111878",
+      "createName": "陈旭东",
+      "createTime": 1554258195000,
+      "mainPicture": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/A7/wKjwDlvo6i2AVeI7AADu39JBH94791.jpg",
+      "specificsPictures": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D5/wKjwDlzb3EyARB-1AAFCY5LiDDY106.jpg",
+      "specificsPicturesArray": [
+        "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D5/wKjwDlzb3EyARB-1AAFCY5LiDDY106.jpg"
+      ],
+      "detailPictures": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D5/wKjwDlzb3EyARB-1AAFCY5LiDDY106.jpg",
+      "detailPicturesArray": [
+        "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D5/wKjwDlzb3EyARB-1AAFCY5LiDDY106.jpg"
+      ],
+      "showDetail": 1,
+      "status": 1
+    },
+    {
+      "pageSize": null,
+      "pageIndex": null,
+      "sort": null,
+      "orderBy": null,
+      "id": 3979152865279859712,
+      "suiteCode": "TC1903009",
+      "suiteName": "0315测试",
+      "marketPrice": 31501,
+      "opCode": "80546269",
+      "opName": "梁煜东",
+      "opTime": 1569726355000,
+      "createCode": "0",
+      "createName": "sysadmin",
+      "createTime": 1552616647000,
+      "mainPicture": "https://tmallapi.bluemoon.com.cn/img//group1/M00/02/D7/wKjwDVyLDMeAGraDAABa1zX-3Kg881.jpg",
+      "specificsPictures": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D7/wKjwDVyLDMeAGraDAABa1zX-3Kg881.jpg",
+      "specificsPicturesArray": [
+        "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D7/wKjwDVyLDMeAGraDAABa1zX-3Kg881.jpg"
+      ],
+      "detailPictures": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D7/wKjwDVyLDMeAGraDAABa1zX-3Kg881.jpg",
+      "detailPicturesArray": [
+        "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/D7/wKjwDVyLDMeAGraDAABa1zX-3Kg881.jpg"
+      ],
+      "showDetail": 1,
+      "status": 1
+    },
+    {
+      "pageSize": null,
+      "pageIndex": null,
+      "sort": null,
+      "orderBy": null,
+      "id": 2263761889407706112,
+      "suiteCode": "TC1904003",
+      "suiteName": "CTX套餐五",
+      "marketPrice": 45000,
+      "opCode": "80111878",
+      "opName": "陈旭东",
+      "opTime": 1554355013000,
+      "createCode": "80111878",
+      "createName": "陈旭东",
+      "createTime": 1554354996000,
+      "mainPicture": "https://tmallapi.bluemoon.com.cn/img//group1//M00/02/A8/wKjwDlvpNPOAY8WHAACgV0pY91Q944.jpg",
+      "specificsPictures": "",
+      "specificsPicturesArray": null,
+      "detailPictures": "",
+      "detailPicturesArray": null,
+      "showDetail": 0,
+      "status": 1
+    },
+    {
+      "pageSize": null,
+      "pageIndex": null,
+      "sort": null,
+      "orderBy": null,
+      "id": 7486119261320693760,
+      "suiteCode": "TC1904002",
+      "suiteName": "CTX套餐四",
+      "marketPrice": 13900,
+      "opCode": "80111878",
+      "opName": "陈旭东",
+      "opTime": 1554344888000,
+      "createCode": "80111878",
+      "createName": "陈旭东",
+      "createTime": 1554344888000,
+      "mainPicture": "https://tmallapi.bluemoon.com.cn/img//group1/M00/02/CC/wKjwDlyla7iAbIulAACNhJ10Ucs452.jpg",
+      "specificsPictures": "",
+      "specificsPicturesArray": null,
+      "detailPictures": "",
+      "detailPicturesArray": null,
+      "showDetail": 0,
+      "status": 1
+    }
+  ],
+  "total": 58
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link id="css_skin" rel="stylesheet" type="text/css" href="../nui/skins/skin1/css/style.css"/>
+    <link id="css_icon" rel="stylesheet" type="text/css" href="../nui/icons/icon.css"/>
+    <script type="text/javascript" src="../nui/nui.js"></script>
+    <script type="text/javascript" src="../nui/swfupload.js"></script>
+    <script type="text/javascript" src="../nui/bluemoon.js"></script>
+    <script type="text/javascript" src="../nui/enterprise.js"></script>
+</head>
+<body>
+<div class="search-condition">
+    <fieldset style="text-align:left;">
+        <legend id="condition" style="color:#3366CC" size="2">查询条件</legend>
+        <div id="form1">
+            <table style="width:100%;height:100%;padding:0px;line-height:25px;border-collapse: collapse;border:none;">
+                <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                    <th align="right" width="5%">套餐编号：</th>
+                    <td style="text-align:left;width:5%;">
+                        <input id="suiteCode" name="criteria.suiteCode" class="nui-textbox" width="100%"/>
+                    </td>
+
+                    <th align="right" width="5%">套餐名称：</th>
+                    <td style="text-align: left; width: 5%;">
+                        <input id="suiteName" name="criteria.suiteName" class="nui-textbox" width="100%"/>
+                    </td>
+                    <td align="center" width="5%">
+                        <a class="nui-button" onclick="search()" iconCls="icon-search">查询</a>
+                        <a class="nui-button" onclick="reset()" iconCls="icon-reset">重置</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+</div>
+
+<div style="width:100%;">
+    <div class="mini-toolbar" style="border-bottom:0;padding:0px;">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:100%;">
+                    <a class="mini-button" iconCls="icon-add" onclick="addEnterprise()">新增</a>
+                    <span class="separator"></span>
+                    <a class="mini-button" iconCls="icon-search" onclick="showEnterprise()">查看</a>
+                    <span class="separator"></span>
+                    <a class="mini-button" iconCls="icon-edit" onclick="editEnterprise()">编辑</a>
+                    <span class="separator"></span>
+                    <a class="mini-button" iconCls="icon-edit" onclick="closeEnterprise()">删除</a>
+                    <span class="separator"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="nui-fit" style="height: 60%">
+    <div id="datagrid1" class="nui-datagrid" style="width:100%;height:100%;"
+    url="http://localhost:8520/getSuites" dataField="data"
+    allowResize="true" pageSize="50" multiSelect="true" showPager="true" onselectionchanged="selectChange"
+    allowCellValid="true">
+    <div property="columns">
+        <div type="checkcolumn"></div>
+        <div type="indexcolumn" align="center" headerAlign="center">序号</div>
+        <div visible="false" field="id" align="center" headerAlign="center"></div>
+        <div field="suiteCode" align="center" headerAlign="center">套餐编号</div>
+        <div field="suiteName" align="center" headerAlign="center">套餐名称</div>
+        <div field="marketPrice" align="center" headerAlign="center">市场价</div>
+        <div field="opName" align="center" headerAlign="center">操作人</div>
+        <div field="opCode" align="center" headerAlign="center">操作人编号</div>
+        <div field="opTime" align="center" headerAlign="center" dateFormat="yyyy-MM-dd HH:mm:ss" visable="false">
+            最后操作时间
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    function selectChange(e){
+        debugger
+    }
+</script>
+</body>
+</html>

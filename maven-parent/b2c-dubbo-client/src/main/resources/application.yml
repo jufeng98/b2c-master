@@ -1,0 +1,12 @@
+server:
+  port: 9994
+spring:
+  application:
+    name: b2c-dubbo-client
+dubbo:
+  application:
+    name: b2c-dubbo-client
+  registry:
+    address: zookeeper://192.168.240.3:2181?timeout=30000
+  scan:
+    basePackages: org.javamaster.b2c

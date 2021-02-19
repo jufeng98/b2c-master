@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>masterGradle</display-name>
+
+	<servlet>
+		<servlet-name>javaToDoServlet</servlet-name>
+		<servlet-class>org.javamaster.b2c.cloud.test.gradle.java.JavaToDoServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>javaToDoServlet</servlet-name>
+		<url-pattern>/java</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>kotlinToDoServlet</servlet-name>
+		<servlet-class>org.javamaster.b2c.cloud.test.gradle.kotlin.KotlinToDoServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>kotlinToDoServlet</servlet-name>
+		<url-pattern>/kotlin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>groovyToDoServlet</servlet-name>
+		<servlet-class>org.javamaster.b2c.cloud.test.gradle.groovy.GroovyToDoServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>groovyToDoServlet</servlet-name>
+		<url-pattern>/groovy</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>30000</session-timeout>
+	</session-config>
+
+     
+	<welcome-file-list>
+    	<welcome-file>login.jsp</welcome-file>
+  	</welcome-file-list>
+
+</web-app>

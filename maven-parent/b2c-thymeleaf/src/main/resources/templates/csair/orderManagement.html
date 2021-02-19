@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="WT.si_n" content="登录"/>
+    <meta name="WT.si_p" content="会员登录"/>
+    <title th:text="#{login.title}">中国南方航空官网</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/UI.css}" href="../../public/css/UI.css"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/my.css}" href="../../public/css/my.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/ordermanager.css}" href="../../public/css/ordermanager.css"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/login.css}" href="../../public/css/login.css"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/datepicker.css?v=1.21.00}"
+          href="../../public/css/datepicker.css?v=1.21.00"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/exFill.css?v=1.21.00}"
+          href="../../public/css/exFill.css?v=1.21.00"/>
+    <link rel="stylesheet" type="text/css" href="https://www.javamaster.com/headfoot/cn/styles/common.css"/>
+    <link rel="stylesheet" type="text/css" href="https://www.javamaster.com/headfoot/cn/styles/response.css"/>
+</head>
+<body>
+<div id="lightningjs-usabilla_live" style="display: none;">
+    <div>
+        <iframe frameborder="0" id="lightningjs-frame-usabilla_live"></iframe>
+    </div>
+</div>
+<div class="header">
+    <div class="W respond posR">
+        <div class="logo fl">
+            <a href="https://www.javamaster.com/cn/index.shtml" class="czlogo fl">
+                <img src="https://www.javamaster.com/headfoot/cn/images/logo.png" alt="南航官网"/>
+            </a>
+            <a href="http://www.skyteam.com"
+               class="skyteam fl"
+               target="_blank">
+                <img src="https://www.javamaster.com/headfoot/cn/images/logo_st.png" alt="天合联盟"/>
+            </a>
+        </div>
+        <div class="menu_box">
+            <div class="quick-entry">
+                <ul>
+                    <li class="login-info login-accessibility">
+                        <a href="https://iaw.javamaster.com" target="_blank"
+                           otype="button" otitle="首页-右上-无障碍网站">
+                            南航无障碍网站
+                        </a>
+                    </li>
+                    <li class="login-info login-info-feedback">
+                        客户服务热线：95539
+                        <a href="//feedback.javamaster.com/guestbook/index.html" target="_blank"
+                           class="grey feedback_i"><i></i>
+                            用户反馈
+                        </a>
+                        <a href="http://service.javamaster.com/JtalkManager/echatManager.do?codeKey=1&amp;companyPk=8a8080825c882db4015c884cb0190003&amp;channel=A8EB7158E31DED41"
+                           target="_blank" class="grey online_i"><i></i>
+                            在线客服
+                        </a>
+                    </li>
+                    <li class="login-info" id="logined" th:if="${session.userName != null}">
+                        <span class="login-margin fl">欢迎您,</span>
+                        <a id="userinfo"
+                           class="login-margin grey fl"
+                           rel="nofollow"
+                           th:href=" @{ ${javamasterHost} + '/order/orderManagementPage?_=1526213015748' }"
+                           href="https://b2c.javamaster.com/order/orderManagementPage?_=1526213015748"
+                           style="cursor: pointer;"
+                           th:text="${session.userName}">
+                            梁煜东
+                        </a>
+                        <a href="javascript:void(0)" id="exitsystem" class="login-margin grey fl" otype="button"
+                           rel="nofollow">
+                            退出
+                        </a>
+                    </li>
+                    <li class="login-info" id="login" th:if="${session.userName == null}">
+                        <a href="javascript:void(0);" class="login-margin red" otype="button"
+                           otitle="首页-右上-登录" id="loginzsl"
+                           rel="nofollow">登录
+                        </a>
+                    </li>
+                    <li th:if="${session.userName == null}">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/toQuickEnroll.action" class="login-margin grey"
+                           otype="button" id="signup_box" otitle="首页-右上-注册" rel="nofollow" style="display: none;">
+                            注册
+                        </a>
+                    </li>
+                    <li class="login-info" id="my_order">
+                        <a class="login-margin grey"
+                           href="https://b2c.javamaster.com/B2C40/modules/ordernew/orderManagementFrame.html?_=1526213015748"
+                           id="new_order" rel="nofollow" otype="button"
+                           otitle="首页-右上-订单管理">
+                            订单管理
+                        </a>
+                    </li>
+                    <li class="lang" id="headlang" otype="button" otitle="首页-右上-语言选择">
+                        <a class="country grey"
+                           href="javascript:void(0);"
+                           id="checklang">
+                            <span th:text="${#locale.language}=='zh'?'English':'简体中文'">English</span>
+                        </a>
+                    </li>
+                    <div id="ctry-lang-box" class="tab-content" style="display:none;">
+                        <form class="form">
+                            <div class="side-box country-box">
+                                <h3>Change Country/Region</h3>
+                                <a class="close-lang-box"
+                                   href="javascript:void(0);">
+                                    取消
+                                </a>
+
+                                <div class="list-box">
+                                    <div class="ctry-list">
+                                        <ul style="display: block;">
+                                            <li th:each="city: ${cityMap}"
+                                                th:class="${city.key}=='CN'?'used':''">
+                                                <a th:href="${city.key}" href="#CA" th:text="${city.value}">
+                                                    Canada
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="side-box lang-box">
+                                <h3>Change Language</h3>
+
+                                <div class="list-box">
+                                    <ul>
+                                        <li th:class="${#locale.language}=='zh'?'used':''">
+                                            <a href="#CN/gb" lang="en">English</a>
+                                        </li>
+                                        <li th:class="${#locale.language}=='en'?'used':''">
+                                            <a href="#CN/cn" lang="zh">简体中文</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="whole-search-box clearfix" id="search_ui">
+                        <form id="homesearch" action="https://www.javamaster.com/cn/czadscale/2015/20151008/20151008.html"
+                              target="_blank">
+                            <input class="whole-search-txt" placeholder="如何网上提前选座"
+                                   id="whole-search-txt" type="text" name="q" value="如何网上提前选座"/>
+                            <input class="whole-search-sub" type="submit" value="" otype="button" otitle="首页-右上-搜索"/>
+                        </form>
+                    </div>
+                </ul>
+            </div>
+            <div class="nav" id="navlist">
+                <ul class="clearfix">
+                    <li class="nav_li" tabindex="0">
+                        <a href="https://www.javamaster.com/cn/index.shtml" tabindex="-1">首 页</a>
+                    </li>
+                    <li class="hasChl nav_li" tabindex="0">
+                        <a href="https://b2c.javamaster.com/B2C40/newTrips/static/main/page/search/index.html" tabindex="-1"
+                           id="BK" otype="button" otitle="首页-导航-预订行程">
+                            预订行程
+                        </a>
+                    </li>
+                    <div class="navchildmenu W" id="_BK" style="display: none;">
+                        <div class="menuContent">
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-机票预订"
+                                       href="https://b2c.javamaster.com/B2C40/newTrips/static/main/page/search/index.html"
+                                       class="nav_title">
+                                        机票预订
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-团队预订"
+                                       href="https://b2c.javamaster.com/B2C40/modules/bookingGroup/manage/ticket_booking.html?lang=cn"
+                                       class="nav_title">
+                                        团队预订
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-旅游预订"
+                                       href="https://www.javamaster.com/cn/bookings/value_add_service/hotel/"
+                                       class="nav_title">
+                                        旅游预订
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-企业商旅"
+                                       href="https://www.javamaster.com/cn/bookings/enterprise/corporate_travel/index.shtml"
+                                       class="nav_title">
+                                        企业商旅
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="end">
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-PNR导入"
+                                       href="https://b2c.javamaster.com/B2C40/modules/bookingnew/manage/PNR.jsp?lang=cn"
+                                       class="nav_title">
+                                        PNR导入
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-机票预约"
+                                       href="http://subscribe.javamaster.com/ticket-reservation/index.html?_=1526213015779"
+                                       class="nav_title">
+                                        机票预约
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-残疾军人购票"
+                                       href="https://b2c.javamaster.com/B2C40/modules/bookingnew/manage/ticket_booking.jsp?lang=cn&amp;preUrl=ECP007 "
+                                       class="nav_title">
+                                        残疾军人购票
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-预订行程-伤残人民警察购票"
+                                       href="https://b2c.javamaster.com/B2C40/modules/bookingnew/manage/ticket_booking.jsp?lang=cn&amp;preUrl=ECP008"
+                                       class="nav_title">
+                                        伤残人民警察购票
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <li class="hasChl nav_li" tabindex="0">
+                        <a href="https://www.javamaster.com/cn/online/index.shtml"
+                           tabindex="-1" id="OL" otype="button"
+                           otitle="首页-导航-服务大厅">
+                            服务大厅
+                        </a>
+                    </li>
+                    <div class="navchildmenu W" id="_OL" style="display: none;">
+                        <div class="menuContent">
+                            <div class="sev_title" style="overflow:hidden;color:#007caf;">
+                                <ul style="width:57.2%;">
+                                    <li class="head" style="font-size:16px;">服务办理</li>
+                                </ul>
+                                <ul style="width:19%;">
+                                    <li class="head" style="font-size:16px;">自助查询</li>
+                                </ul>
+                                <ul style="width:22%;border-right:0;">
+                                    <li class="head" style="font-size:16px;">特殊旅客服务</li>
+                                </ul>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--提前选座"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/seatnew/login.html"
+                                       class="nav_title">
+                                        提前选座
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--办理乘机手续"
+                                       href="https://www.javamaster.com/cn/online/cki/" class="nav_title">
+                                        办理乘机手续
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--退改票"
+                                       href="https://b2c.javamaster.com/B2C40/modules/ordernew/orderList.jsp"
+                                       class="nav_title">
+                                        退改票
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--里程兑换"
+                                       href="https://b2c.javamaster.com/B2C40/modules/bookingnew/mileage/search.html"
+                                       class="nav_title">
+                                        里程兑换
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--价格保障申诉"
+                                       href="https://b2c.javamaster.com/B2C40/modules/msp/addMSP.html" class="nav_title">
+                                        价格保障申诉
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--行程单邮寄"
+                                       href="http://tuan.javamasterholiday.com/module/ticketdeliver/passager_infoN.jsp "
+                                       class="nav_title">
+                                        行程单邮寄
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--电子发票"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/emdInvoice/login.html"
+                                       class="nav_title">
+                                        电子发票
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--延误退改"
+                                       href="//emp.javamaster.com/EMP/empLogin?param=c3lzQ29kZT1CMkM= " class="nav_title">
+                                        延误退改
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--延误证明"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/flightdelay/login.html"
+                                       class="nav_title">
+                                        延误证明
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul style="margin-top: 0px; padding-top: 15px;">
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--餐食预订"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/mealnew/login.html"
+                                       class="nav_title">
+                                        餐食预订
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--中转住宿"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/newtransithotel/login.html"
+                                       class="nav_title">
+                                        中转住宿
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--额外行李购买"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/baggagenew/login.html"
+                                       class="nav_title">
+                                        额外行李购买
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--机上上网申请"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/cabinwifi/login.html"
+                                       class="nav_title">
+                                        机上上网申请
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--保险理赔"
+                                       href="https://b2c.javamaster.com/B2C40/modules/services/insurance/apply.html"
+                                       class="nav_title">
+                                        保险理赔
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul style="margin-top: 0px; padding-top: 15px;">
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--航班动态"
+                                       href="https://www.javamaster.com/cn/online/flight_dynamic/" class="nav_title">
+                                        航班动态
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--客票验证"
+                                       href="https://b2c.javamaster.com/B2C40/modules/bookingnew/manage/checkOrder.jsp?lang=cn"
+                                       class="nav_title">
+                                        客票验证
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--遗失行李查询"
+                                       href="https://www.javamaster.com/cn/online/outbaggage/" class="nav_title">
+                                        遗失行李查询
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--遗失物品查询"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/lostitems/login.html"
+                                       class="nav_title">
+                                        遗失物品查询
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="end" style="margin-top: 0px; padding-top: 15px;">
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--婴儿摇篮"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/babycradle/login.html"
+                                       class="nav_title">
+                                        婴儿摇篮
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--老人协助服务"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/specialservice/oldmanservice/login.html"
+                                       class="nav_title">
+                                        老人协助服务
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--行动障碍旅客"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/specialservice/mobilityassistance/login.html?lang=zh"
+                                       class="nav_title">
+                                        行动障碍旅客
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-服务大厅--小动物托运"
+                                       href="https://extra.javamaster.com/B2C40/modules/services/specialservice/animalservice/login.html"
+                                       class="nav_title">
+                                        小动物托运
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <li class="hasChl nav_li tabindex">
+                        <a href="//holiday.javamaster.com/" id="HD" otype="button" tabindex="-1"
+                           otitle="首页-导航-南航假期">
+                            南航假期
+                        </a>
+                    </li>
+                    <div class="navchildmenu W" id="_HD" style="display: none;">
+                        <div class="menuContent">
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-南航假期-旅游度假" href="//trip.javamaster.com"
+                                       class="nav_title" target="_blank">旅游度假</a></li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-南航假期-酒店" href="//hotel.javamaster.com/"
+                                       class="nav_title" target="_blank">
+                                        酒店
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-南航假期-用车" href="//car.javamaster.com/"
+                                       class="nav_title" target="_blank">
+                                        用车
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-南航假期-签证" href="//visa.javamaster.com/"
+                                       class="nav_title" target="_blank">
+                                        签证
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="end">
+                                <li class="head">
+                                    <a otype="button" otitle="首页-南航假期-旅游社区"
+                                       href="//holiday.javamaster.com/?m=travel&amp;c=community"
+                                       class="nav_title" target="_blank">
+                                        旅游社区
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-南航假期-免税品"
+                                       href="//trip.javamaster.com/module/newgroupon/productList.html#100232||||0|1"
+                                       class="nav_title" target="_blank">
+                                        免税品
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <li class="nav_li" tabindex="0">
+                        <a href="https://skypearl.javamaster.com/cn/index.html" id="VIP"
+                           tabindex="-1" otype="button" otitle="首页-导航-明珠会员">
+                            明珠会员
+                        </a>
+                    </li>
+                    <div class="navchildmenu W" id="_VIP" style="display: none;">
+                        <div class="menuContent">
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-明珠会员-账户管理"
+                                       href="https://skypearl.javamaster.com/skypearl/cn/memberArea.action?&amp;NOSSL#myInfo1"
+                                       class="nav_title showBindDialog">
+                                        账户管理
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-明珠会员-里程累积"
+                                       href="https://skypearl.javamaster.com/cn/earning/fly_cz.html"
+                                       class="nav_title">
+                                        里程累积
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-明珠会员-里程兑换"
+                                       href="https://skypearl.javamaster.com/cn/redemption/ticket_cz.html"
+                                       class="nav_title">
+                                        里程兑换
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-明珠会员-会员权益"
+                                       href="https://skypearl.javamaster.com/cn/about/member.html"
+                                       class="nav_title">
+                                        会员权益
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="end">
+                                <li class="head">
+                                    <a otype="button" otitle="首页-明珠会员-促销信息"
+                                       href="https://skypearl.javamaster.com/cn/newsletter/hotspots.html"
+                                       class="nav_title">
+                                        促销信息
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-明珠会员-明珠商城" href="//czshop.javamaster.com/"
+                                       class="nav_title">
+                                        明珠商城
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-明珠会员-明珠礼遇"
+                                       href="https://www.javamaster.com/cn/czadscale/2015/20150310_0/20160803.html?WT.inner_id=ndjjh150130IM112"
+                                       class="nav_title">
+                                        明珠礼遇
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <li class="hasChl nav_li" tabindex="0">
+                        <a href="https://www.javamaster.com/cn/favourable/" id="FA"
+                           otype="button" tabindex="-1" otitle="首页-导航-优惠信息">
+                            优惠信息
+                        </a>
+                    </li>
+                    <div class="navchildmenu W" id="_FA" style="display: none;">
+                        <div class="menuContent">
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-优惠信息-优惠机票"
+                                       href="https://www.javamaster.com/cn/favourable/discount_tickets_domestic/"
+                                       class="nav_title">
+                                        优惠机票
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-优惠信息-机票促销"
+                                       href="https://www.javamaster.com/cn/favourable/mileage_promotion/"
+                                       class="nav_title">
+                                        机票促销
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-优惠信息-精彩活动"
+                                       href="https://www.javamaster.com/cn/favourable/joint_promotion/"
+                                       class="nav_title">
+                                        精彩活动
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-优惠信息-目的地优惠"
+                                       href="https://www.javamaster.com/cn/favourable/mudidiyouhui/"
+                                       class="nav_title">
+                                        目的地优惠
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="end">
+                                <li class="head">
+                                    <a otype="button" otitle="首页-优惠信息-本周推荐"
+                                       href="//lucky.javamaster.com/bluegate/t_sczu/?WT.inner_id=gw-bztj-meiyuejingxuan"
+                                       class="nav_title">
+                                        本周推荐
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <li class="hasChl nav_li" tabindex="0">
+                        <a href="https://www.javamaster.com/cn/tourguide/index.shtml"
+                           tabindex="-1" id="TG" otype="button" otitle="首页-导航-出行帮助">
+                            出行帮助
+                        </a>
+                    </li>
+                    <div class="navchildmenu W" id="_TG" style="display: none;">
+                        <div class="menuContent">
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-出行帮助-机票预订"
+                                       href="https://www.javamaster.com/cn/tourguide/booking/payment/domestic_pay/index.shtml"
+                                       class="nav_title">
+                                        机票预订
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机票预订-预订须知"
+                                       href="https://www.javamaster.com/cn/tourguide/booking/orders/order/lvkexuzhi/guonei/index.shtml"
+                                       class="nav_title">
+                                        预订须知
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机票预订-支付须知"
+                                       href="https://www.javamaster.com/cn/tourguide/booking/payment/domestic_pay/index.shtml"
+                                       class="nav_title">
+                                        支付须知
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机票预订-各地服务点"
+                                       href="https://www.javamaster.com/cn/tourguide/booking/static/gnxsjg/index.shtml"
+                                       class="nav_title">
+                                        各地服务点
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机票预订-南航授权代理商"
+                                       href="https://www.javamaster.com/cn/tourguide/booking/shouquandailishang/index.shtml"
+                                       class="nav_title">
+                                        南航授权代理商
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-出行帮助-办理值机"
+                                       href="https://www.javamaster.com/cn/tourguide/Check-in_Procedures/"
+                                       class="nav_title">
+                                        办理值机
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-办理值机-网上值机"
+                                       href="https://www.javamaster.com/cn/tourguide/Check-in_Procedures/online/Check-in_Procedures/index.shtml"
+                                       class="nav_title">
+                                        网上值机
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-办理值机-自助值机"
+                                       href="https://www.javamaster.com/cn/tourguide/Check-in_Procedures/diy/"
+                                       class="nav_title">
+                                        自助值机
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-办理值机-移动值机"
+                                       href="https://www.javamaster.com/cn/tourguide/Check-in_Procedures/app/"
+                                       class="nav_title">
+                                        移动值机
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-办理值机-微信值机"
+                                       href="https://www.javamaster.com/cn/tourguide/Check-in_Procedures/weixin/opening_cities/index.shtml"
+                                       class="nav_title">
+                                        微信值机
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-办理值机-短信值机"
+                                       href="https://www.javamaster.com/cn/tourguide/Check-in_Procedures/sms/"
+                                       class="nav_title">
+                                        短信值机
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-出行帮助-行李服务"
+                                       href="https://www.javamaster.com/cn/tourguide/luggage_service/"
+                                       class="nav_title">
+                                        行李服务
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-行李服务-托运行李"
+                                       href="https://www.javamaster.com/cn/tourguide/luggage_service/carryon_luggage/"
+                                       class="nav_title">
+                                        托运行李
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-行李服务-随身携带行李"
+                                       href="https://www.javamaster.com/cn/tourguide/luggage_service/accompanied_luggage/"
+                                       class="nav_title">
+                                        随身携带行李
+                                    </a>
+                                </li>
+                                <li><a otype="button" otitle="首页-出行帮助-行李服务-行李运输限制"
+                                       href="https://www.javamaster.com/cn/tourguide/luggage_service/unchecked_luggage/"
+                                       class="nav_title">
+                                    行李运输限制
+                                </a>
+                                </li>
+                                <li><a otype="button" otitle="首页-出行帮助-行李服务-特殊行李"
+                                       href="https://www.javamaster.com/cn/tourguide/luggage_service/checked_luggage/"
+                                       class="nav_title">
+                                    特殊行李
+                                </a>
+                                </li>
+                                <li><a otype="button" otitle="首页-出行帮助-行李服务-行李丢失/延误/损坏"
+                                       href="https://www.javamaster.com/cn/tourguide/luggage_service/luggage_lost_delay_damage/"
+                                       class="nav_title">
+                                    行李丢失/延误/损坏
+                                </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="head">
+                                    <a otype="button" otitle="首页-出行帮助-机上服务"
+                                       href="https://www.javamaster.com/cn/tourguide/flight_service/B787mxfj/index/index.shtml"
+                                       class="nav_title">
+                                        机上服务
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机上服务-机舱布局"
+                                       href="https://www.javamaster.com/cn/tourguide/flight_service/cabin_layout/kongke/index.shtml"
+                                       class="nav_title">
+                                        机舱布局
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机上服务-机上娱乐"
+                                       href="https://www.javamaster.com/cn/tourguide/flight_service/entertainment/film_tv/index.shtml"
+                                       class="nav_title">
+                                        机上娱乐
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机上服务-机上餐食"
+                                       href="https://www.javamaster.com/cn/tourguide/flight_service/tour/toudengcang/index.shtml"
+                                       class="nav_title">
+                                        机上餐食
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-机上服务-B787梦想飞机"
+                                       href="https://www.javamaster.com/cn/tourguide/flight_service/B787mxfj/index/index.shtml"
+                                       class="nav_title">
+                                        B787梦想飞机
+                                    </a>
+                                </li>
+                                <li><a otype="button" otitle="首页-出行帮助-机上服务-A380全新体验"
+                                       href="https://www.javamaster.com/cn/tourguide/flight_service/A380quanxintiyan/index/index.shtml"
+                                       class="nav_title">
+                                    A380全新体验
+                                </a>
+                                </li>
+                            </ul>
+                            <ul class="end">
+                                <li class="head"><a otype="button" otitle="首页-出行帮助-常见问题"
+                                                    href="https://www.javamaster.com/cn/tourguide/faq/flight/inquiry.shtml"
+                                                    class="nav_title">
+                                    常见问题
+                                </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-常见问题-办理乘机手续"
+                                       href="https://www.javamaster.com/cn/tourguide/faq/check-in/guidline.shtml"
+                                       class="nav_title">
+                                        办理乘机手续
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-常见问题-航班信息"
+                                       href="https://www.javamaster.com/cn/tourguide/faq/flight/inquiry.shtml"
+                                       class="nav_title">
+                                        航班信息
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-常见问题-明珠俱乐部"
+                                       href="https://www.javamaster.com/cn/tourguide/faq/club/sky-pearl-club.shtml"
+                                       class="nav_title">
+                                        明珠俱乐部
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-常见问题-网上预定服务"
+                                       href="https://www.javamaster.com/cn/tourguide/faq/reserve/e-ticket.shtml"
+                                       class="nav_title">
+                                        网上预定服务
+                                    </a>
+                                </li>
+                                <li>
+                                    <a otype="button" otitle="首页-出行帮助-常见问题-机场服务"
+                                       href="https://www.javamaster.com/cn/tourguide/faq/airport/lounge.shtml"
+                                       class="nav_title">
+                                        机场服务
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="more">
+                                <a href="https://www.javamaster.com/cn/tourguide/booking/payment/domestic_pay/index.shtml"
+                                   otype="button" otitle="首页-出行帮助-更多">
+                                    更多&gt;&gt;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="menu_icon_zone">
+            <a href="#" class="menu_icon">
+                <span class="menu_icon_m"></span>
+            </a>
+        </div>
+    </div>
+</div>
+<div id="loading" class="hide">
+    <iframe class="shadow-bg-loading"></iframe>
+    <div class="xbmutling" id="flight-loading" style="margin:-160px 0 0 -240px;">
+        <div class="logindop"></div>
+        <div class="haerbmnmb"></div>
+        <div class="blintkyongh"></div>
+        <div class="fjlotnfliagh">
+            <img width="170" height="30" th:src="@{/images/csloading.gif}" src="../../public/images/csloading.gif"/>
+        </div>
+        <div class="loadingtxt"><h2>正在加载中，请稍等...</h2>
+
+            <div>
+                <iframe id="loadding_frame" src="//www.javamaster.com/cn/b2cAD/filterBottom.html"
+                        style="Z-INDEX: 2; VISIBILITY: inherit; WIDTH: 100%; HEIGHT: 58px" frameborder="0"
+                        scrolling="no">
+                </iframe>
+            </div>
+        </div>
+        <div class="loadsfbootm"></div>
+    </div>
+</div>
+<div style="display:none;" id="hidden_flightDelay_url"></div>
+<div class="second-main">
+    <div class="my-javamaster">我的南航</div>
+    <div class="second-left mc-nav">
+        <ul class="left-nav">
+            <li class=""><a href="javascript:;">订单管理</a>
+                <ul>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/orderList.jsp">
+                            机票订单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/orderListGroup.jsp">
+                            团队订单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://holiday.javamaster.com/?m=user&amp;a=order_list_hotel">
+                            酒店订单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://holiday.javamaster.com/?m=user&amp;a=order_list_car">
+                            租车订单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://holiday.javamaster.com/?m=user&amp;c=index&amp;a=tg_order">
+                            度假订单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://holiday.javamaster.com/?m=user&amp;c=index&amp;a=order_list_visa">
+                            签证订单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/applayList.jsp">
+                            申诉单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://extra.javamaster.com/B2C40/modules/services/seatnew/seatRecord.html">
+                            提前选座订单
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://extra.javamaster.com/B2C40/modules/services/baggagenew/baggageNewRecord.html">
+                            额外行李订单
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="javascript:;">我的钱包</a>
+                <ul>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/accountnew/searchBalance.html">
+                            余额
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/accountnew/whitebars.html">
+                            南航白条
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/accountnew/coupon.html">
+                            优惠券
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/accountnew/cards.html">
+                            银行卡
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    里程管理
+                </a>
+                <ul>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=integralquery2">
+                            汇总查询
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=cumulativeInfo2">
+                            详细记录查询
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/bookingnew/mileage/search.html">
+                            里程兑换
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=mileageRecruit2">
+                            里程补登
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="//czshop.javamaster.com/">
+                            明珠商城
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/memberArea.action?&amp;NOSSL&amp;rem=true&amp;ms=skypearlweb.actions.login.pwd.and.info.error.address#mileagedefer">
+                            里程延期记录
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/memberArea.action?&amp;NOSSL&amp;rem=true&amp;ms=skypearlweb.actions.login.pwd.and.info.error.address#upgrademsg">
+                            升级信息
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="javascript:;">会员服务</a>
+                <ul>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=commRecord3">
+                            服务记录
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=service3">
+                            服务定制
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=toPrintCard3">
+                            会员卡打印
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/cn/tools/cn.pdf">
+                            会员手册
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=promotion3">
+                            促销注册
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/toAccumulateStandard.action">
+                            城市间里程查询
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/toExchangeStandard.action">
+                            里程兑换计算器
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="javascript:;">个人中心</a>
+                <ul>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=baseinfo5">
+                            基本信息
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=connectinfo5">
+                            联系信息
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=validator5">
+                            受让人管理
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://skypearl.javamaster.com/skypearl/cn/tomemberArea.action?urlredirect=security5">
+                            修改密码
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/commPsg.jsp">
+                            常用旅客管理
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://b2c.javamaster.com/B2C40/modules/ordernew/commContactor.jsp">
+                            常用联系人
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="qrcode">
+            <div class="qr-phoneImg"/>
+            <div class="qr-title">掌上南航</div>
+            <div class="qr-content">
+                <div class="qr-tagBar">
+                    <div class="qr-tag current">微信公众号</div>
+                    <div class="qr-tag">手机端下载</div>
+                </div>
+                <div class="qr-codeBox current wxcode"></div>
+                <div class="qr-codeBox phonecode"></div>
+            </div>
+        </div>
+    </div>
+    <div class="second-right">
+        <div class="current-align">
+            <span>您当前的位置：</span>
+            <a href="//www.javamaster.com/zh/">首页</a>&gt;
+            <a href="/B2C40/modules/ordernew/orderManagementFrame.html">
+                我的南航
+            </a>
+        </div>
+        <div id="list_data">
+            <div class="psg_top">
+                <img th:src="@{/images/head_img.png}" src="../../public/images/head_img.png"/>
+                尊敬的梁煜东旅客，您好！
+            </div>
+            <div class="psc_op">
+                <ul>
+                    <li id="commPsg">&gt;&nbsp;
+                        <a href="/B2C40/modules/ordernew/commPsg.jsp" se_prerender_url="loading">
+                            管理我的常用旅客姓名
+                        </a>
+                    </li>
+                    <li id="balance">&gt;&nbsp;<a href="/B2C40/modules/ordernew/accountnew/searchBalance.html">
+                        钱包余额 ：
+                        <span class="red" id="balanceNum">0.00</span>
+                        <span style="color:#0093d0">元</span>
+                        <span class="txt-blue">可用</span>
+                    </a>
+                        <a href="/B2C40/modules/ordernew/accountnew/searchBalance.html?type=voucher">
+                            代金券
+                        </a>：
+                        <span class="red" id="voucherNum">--</span>
+                        <span style="color:#0093d0">张</span>
+                    </li>
+                    <li id="whitebars">&gt;&nbsp;
+                        <span class="link-span" id="toRegCZ">开通南航白条</span>
+                    </li>
+                    <li id="coupon">&gt;&nbsp;
+                        <a href="/B2C40/modules/ordernew/accountnew/coupon.html">
+                            优惠券
+                        </a> ：
+                        <span class="red" id="yhqNum">0</span>
+                        <span style="color:#0093d0">张</span>
+                    </li>
+                    <li id="cards">
+                        &gt;&nbsp;
+                        <a href="/B2C40/modules/ordernew/accountnew/cards.html">
+                            银行卡
+                        </a>
+                        ：
+                        <span class="red" id="cardsNum">
+                        1
+                    </span>
+                        <span style="color:#0093d0">
+                            张</span
+                                ></li>
+                    <li>&gt;&nbsp;
+                        <span style="color:#008dd4;padding:0 5px">
+                            合作账户绑定：
+                        </span>
+                        <span id="qq_bind" style="">
+                            <a otitle="新版登录-QQ登录-帐户名" style="cursor: pointer">
+                                <img th:src="@{/images/QQ_logo_login.png}" src="../../public/images/QQ_logo_login.png"/>
+                            </a>&nbsp;&nbsp;&nbsp;</span>
+                        <span id="wechat_bind" style="display:none">
+                            <a otitle="新版登录-WX登录-帐户名" style="cursor: pointer">
+                                <img th:src="@{/images/wx_logo_login.png}" src="../../public/images/wx_logo_login.png"/>
+                            </a>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;
+                        <table id="alreadyBind" style="">
+                            <tbody>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;
+                                    <span style="color:#008dd4;padding:0 5px">
+                                        已绑定：
+                                    </span>
+                                </td>
+                                <td class="binding_user" id="accountInfo">
+                                    <input name="accountGroup" type="checkbox"
+                                           value="o_jrJt1NtA7hLlelpm-41dvwhUOs,CSPWX,微信"/>
+                                    <img th:src="@{/images/wx_logo_login.png}"
+                                         src="../../public/images/wx_logo_login.png"/>
+                                    &nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td class="binding_user">
+                                    <span class="form-login">
+                                    <input value="解绑"
+                                           class="form-login-btn form-btn-small"
+                                           type="button"
+                                           id="unbind_account"/>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+            <div class="psg_top">
+                <div class="alarm_div">
+                    <ul>
+                        <li style="padding:0">机票订单提醒：</li>
+                        <li>
+                            <a href="javascript:;">
+                                待支付订单(
+                                <span id="wait_pay_order">0</span>
+                                )
+                            </a>
+                        </li>
+                        <li><a href="javascript:;">
+                            变更中订单(
+                            <span id="changging_order">0</span>)
+                        </a>
+                        </li>
+                        <li><a href="javascript:;">
+                            退票中订单(
+                            <span id="refunding_order">0</span>)
+                        </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img th:src="@{/images/upcabin.png}" src="../../public/images/upcabin.png"/>
+                                超值升舱(
+                                <span id="upcabin_order">0</span>
+                                )
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://emp.javamaster.com/EMP/empLogin?param=c3lzQ29kZT1CMkM=&#10;"
+                               style="font-weight:bolder">
+                                航班延误/取消
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="psg_content">
+                <div class="content_head">
+                    最近机票订单
+                    <a href="/B2C40/modules/ordernew/orderList.jsp"
+                       style="text-decoration:underline">
+                        查看所有机票订单
+                    </a>
+                </div>
+                <div class="table_cantainer">
+                    <div class="table_content">
+                        <div id="record_list">
+                            <div class="table_td blue_td">
+                                <ul>
+                                    <li>订单编号</li>
+                                    <li class="short ">行程</li>
+                                    <li class="short ">乘机人</li>
+                                    <li>出发时间</li>
+                                    <li class="short ">订单金额</li>
+                                    <li class="short ">订单状态</li>
+                                    <li class="short ">操作</li>
+                                </ul>
+                            </div>
+                            <div th:each="order,orderStat:${orders}"
+                                 class="table_cell"
+                                 th:attr="style=${order.seginfo.size() > 1?'height: 160px;':'height: 80px;' }"
+                                 th:switch="${order.status}"
+                                 style="height: 160px;">
+                                <ul th:attr="
+                                    orderno=${order.orderno},
+                                    orderstatus=${order.status},
+                                    isinter=${order.domesticindicate},
+                                    campaignid=${order.campaignscriptid},
+                                    ordertype=${order.ordertype},
+                                    bookuser=${order.bookuser},
+                                    style=${order.seginfo.size() > 1?'height: 160px;':'height: 80px;'}
+                                    ">
+                                    <li>
+                                        <a href="javascript:void(0);"
+                                           style="color: #008dd4;padding:0px"
+                                           class="view-order"
+                                           th:text="${order.orderno}">
+                                            C1804200001586
+                                        </a>
+                                    </li>
+                                    <li class="short special">
+                                        <span th:each="seg,segStat:${order.seginfo}"
+                                              th:text="${seg.depport}+'-'+${seg.arrport}">
+                                            广州白云机场-北京首都机场
+                                        </span>
+                                    </li>
+                                    <li class="short special">
+                                        <span th:each="psg,psgStat:${order.psginfo}"
+                                              th:title="${psg.psgname}"
+                                              title="梁煜东"
+                                              th:text="${psg.psgname}
+                                                 + (${order.psginfo.size()>1} and ${psgStat.count != order.psginfo.size()}?' /':'') ">
+                                            梁煜东
+                                        </span>
+                                    </li>
+                                    <li th:text="${order.createdate}">2018-04-23 10:00</li>
+                                    <li class="short" th:text="${order.totalpaymoney}">5780</li>
+                                    <li th:case="E" class="short" th:text="#{order.ticket.out}">已出票</li>
+                                    <li th:case="D" class="short" th:text="#{order.ticket.cancel}">已取消</li>
+                                    <li th:case="*" class="short" th:text="${order.status}">未知状态</li>
+                                    <li th:if="${order.status} != D">
+                                        <a href="javascript:void(0);"
+                                           class="change-order"
+                                           data-direction="t"
+                                           data-type="change">变更</a>|
+                                        <a href="javascript:void(0);"
+                                           style="color: #008dd4"
+                                           class="seat-order">提前选座</a>
+                                        <a href="javascript:void(0);"
+                                           class="refund-order"
+                                           data-direction="t"
+                                           data-type="refund">退票</a>|
+                                        <a href="javascript:void(0);"
+                                           style="color: #008dd4"
+                                           class="check-in">在线值机</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="page_div">
+                            <a href="#" class="pre-page">上一页</a>
+
+                            <p>第<a href="#" id="page_1" class="current">1</a>
+                                页
+                            </p>
+                            <a href="#" class="next-page">下一页</a>
+
+                            <p>共<span id="total_page">1</span>
+                                页
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .fl-rule-head, .fl-rule-title {
+        font-weight: 700
+    }
+
+    .fl-rule-beauty {
+        padding: 5px .5em;
+        font-size: 13px;
+        color: #333;
+        line-height: 1.5em
+    }
+
+    .fl-rule-head {
+        margin-bottom: .5em
+    }
+
+    .fl-rule-beauty ul {
+        overflow: hidden
+    }
+
+    .fl-rule-beauty li {
+        display: list-item;
+        list-style: disc;
+        margin-left: 2em
+    }
+
+    .fl-rule-beauty strong {
+        font-weight: 700;
+        margin: 0 5px
+    }
+
+    .fl-rule-item {
+        margin-bottom: 1em
+    }
+
+    .fl-expander-trigger {
+        cursor: pointer
+    }
+
+    .fl-expander-trigger:hover {
+        background-color: #eee
+    }
+
+    .fl-expander-trigger .close, .fl-expander-trigger .open {
+        margin-left: 5px;
+        color: #2D7D96;
+        font-style: normal
+    }
+
+    .fl-expander-trigger .open {
+        display: inline
+    }
+
+    .fl-expander-trigger .close {
+        display: none
+    }
+
+    .fl-expander-trigger i {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        width: 9px;
+        height: 10px;
+        margin-right: .5em;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAUCAMAAAEfANfxAAAAA3NCSVQICAjb4U/gAAAAolBMVEUiaYc/bIEofKpBdZ06doBSeIVNg5suirkccJVAfZI/jJ44c59Rl7Apfps6g6ZbfpRWf50ydJQ3mMNBhpUrd49bjZg9c5dFgZ1Beo5DjbA6gZ0odZMufKJYh5k6hKtEfqM6jK1ifoowfJwwhaRMb4tIepNKgKI5cYo7fZU/j6gka4lEe5lPeIpQhp5CjJQteI0tfZZZhaI9i7IzgJ4yha3///+0ITbCAAAANnRSTlP//////////////////////////////////////////////////////////////////////wChj04xAAAACXBIWXMAAA50AAAOdAFrJLPWAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M0BrLToAAAAJBJREFUCJk9jokOggAMQ+utoCCiqKgQD8AzKvr+/9ccaNyWZt3aZQJ1QxlehKU/mhtB/1p4ivfCIzD6IEIb2z/VYUJmgqSWVbALUQbmd2ZoAPl3kYInmn0Uw1AkQe0oXk5ty+wCZYoaxk5TWInj3WYtF135RltRXjfJwbxuyXJs6tvZTkPs22zd4138ftlW8AHFdR2G+rbxGAAAAABJRU5ErkJggg==) no-repeat;
+        *background-image: url(/B2C40/static/inter/images/toggleIcon.png)
+    }
+
+    .fl-expander-trigger .open i {
+        background-position: 0 -10px
+    }
+
+    .fl-expanded .fl-expander-trigger .open {
+        display: none
+    }
+
+    .fl-expanded .fl-expander-trigger .close {
+        display: inline
+    }
+
+    .fl-expander-detail {
+        display: none
+    }
+
+    .fl-expanded .fl-expander-detail {
+        display: block
+    }
+</style>
+<div id="cm-active-tip" class="cm-tip-box" style="display:none;">
+    <div class="content"></div>
+    <i></i>
+</div>
+
+<div th:replace="footer :: javamasterFooter">footer</div>
+
+<div class="right-nav">
+    <ul>
+        <li>
+            <a href="https://b2c.javamaster.com/B2C40/newTrips/static/main/page/search/index.html" class="right-plan"
+               title="机票预订">
+            </a>
+        </li>
+        <li><a href="https://www.javamaster.com/cn/online/cki/ " class="right-check-in" title="网上值机">
+        </a>
+        </li>
+        <li><a href="https://b2c.javamaster.com/B2C40/modules/bookingnew/manage/checkOrder.jsp" class="right-visa"
+               title="客票验证">
+        </a>
+        </li>
+        <li><a href="https://b2c.javamaster.com/B2C40/modules/ordernew/orderList.jsp?time=1526213015853" class="right-refund"
+               title="退改票">
+        </a>
+        </li>
+        <li>
+            <a href="https://www.javamaster.com/cn/online/outbaggage/" class="right-baggage" title="行李查询">
+            </a>
+        </li>
+        <li>
+            <a href="#top" class="right-top" title="返回顶部">
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="usabilla_live_button_container" tabindex="0"
+     style="height:182px;z-index:999;right:0px;top:50%;margin-top:-91px;position:fixed;width:64px"
+     aria-label="Usabilla Feedback Button">
+    <iframe src="" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" data-tags="right"
+            title="Usabilla Feedback Button"
+            style="width: 64px; height: 182px; margin: 0px; padding: 0px; border: 0px; overflow: hidden; z-index: 9998; position: absolute; left: 0px; top: 0px; box-shadow: 0px 0px 0px; background-color: transparent;">
+    </iframe>
+</div>
+<div class="tooltip-box tooltip-r" id="tooltip-box" role="tooltip" aria-hidden="true">
+    <div class="tooltip-arrows">
+        <span class="arrow-left"></span>
+        <span class="arrow-right"></span>
+    </div>
+    <div class="tooltip-content"></div>
+</div>
+</body>
+</html>

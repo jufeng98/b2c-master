@@ -1,0 +1,12 @@
+package com.javamaster.b2c.cloud.test.dubbo.provider.dubbo.impl;
+
+import com.javamaster.b2c.cloud.test.common.util.SpringUtils;
+import com.javamaster.b2c.cloud.test.dubbo.provider.api.service.UserDubboService;
+
+public class DynamicTestClass {
+
+    public Object execute() {
+        UserDubboService userDubboService = SpringUtils.getBean(UserDubboService.class);
+        return userDubboService.queryAll();
+    }
+}

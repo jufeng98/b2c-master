@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: b2c-cloud-test-mybatis
+server:
+  port: 9700
+logging:
+  level:
+    root: INFO
+    org.javamaster.b2c.mybatis.mapper: DEBUG

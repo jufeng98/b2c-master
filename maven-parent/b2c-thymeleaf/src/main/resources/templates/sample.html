@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8"/>
+    <title>thymeleaf sample</title>
+</head>
+<body>
+<p th:text="#{home.welcome}">Welcome to our grocery store!</p>
+
+<h1>变量表达式</h1>
+<label>${session.actor.lastName}</label>
+
+<p th:text="${session.actor.lastName}"></p>
+
+<h1>字符串拼接</h1>
+<span th:text=" |Welcome to our application,${session.actor.lastName}!| "></span>
+<br/>
+<span th:text=" 'Welcome to our application,' + ${user.name} + '!' "></span>
+
+<h1>选择(星号)表达式</h1>
+<label>*{lastName}</label>
+
+<div th:object="${session.actor}">
+    <span th:text="*{lastName}"></span>
+</div>
+<h1>回到info界面</h1>
+<a th:href="@{/info}">info</a>
+
+<div th:object="${session.actor}">
+    <span th:text="*{lastName}"></span>
+</div>
+<h1>回到info界面</h1>
+<a th:href="@{/info}">info</a>
+
+<h1>循环显示</h1>
+<table>
+    <tr th:each="actor,iterStat:${actors}">
+        <td th:text="${iterStat.count}+' '+${actor.actorId}"></td>
+        <td th:text="${actor.firstName}"></td>
+        <td th:text="${actor.lastName}"></td>
+        <td th:text="${actor.lastUpdate}"></td>
+        <td th:text="${#dates.setFormat(actor.lastUpdate, 'dd/MMM/yyyy')}"></td>
+    </tr>
+</table>
+<h1>国际化</h1>
+
+<p th:text="#{sample.name(${session.actor.lastName})}"></p>
+
+<h1>unescape html</h1>
+
+<p th:utext="#{home.important}">unescape html</p>
+
+<h1>三元表达式</h1>
+
+<p th:text=" ${session.actor.vip}?'贵宾':'一般' ">三元表达式</p>
+
+<h1>URL组装</h1>
+<!-- Will produce 'http://localhost:8080/gtvg/order/details?orderId=3' (plus rewriting) -->
+<a href="details.html" th:href="@{http://localhost:8080/gtvg/order/details(orderId=${session.actor.actorId})}">view</a>
+<!-- Will produce '/gtvg/order/details?orderId=3' (plus rewriting) -->
+<a href="details.html" th:href="@{/order/details(orderId=${session.actor.actorId})}">view</a>
+<!-- Will produce '/gtvg/order/3/details' (plus rewriting) -->
+<a href="details.html" th:href="@{/order/{orderId}/details(orderId=${session.actor.actorId})}">view</a>
+
+<h1>实用对象</h1>
+	<pre>
+	    See javadoc API for class org. thymeleaf. expression.*
+		#ctx : the context object.
+		#vars: the context variables.
+		#locale : the context locale.
+		#request : (only in Web Contexts) the HttpServletRequest object.
+		#response : (only in Web Contexts) the HttpServletResponse object.
+		#session : (only in Web Contexts) the HttpSession object.
+		#servletContext : (only in Web Contexts) the ServletContext object
+		#execInfo : information about the template being processed.
+		#messages : methods for obtaining externalized messages inside variables expressions, in the same way as they
+		would be obtained using #{… } syntax.
+		#uris : methods for escaping parts of URLs/URIs
+		#conversions : methods for executing the configured conversion service (if any).
+		#dates : methods for java. util. Date objects: formatting, component extraction, etc.
+		#calendars : analogous to #dates , but for java. util. Calendar objects.
+		#numbers : methods for formatting numeric objects.
+		#strings : methods for String objects: contains, startsWith, prepending/appending, etc.
+		#objects : methods for objects in general.
+		#bools : methods for boolean evaluation.
+		#arrays : methods for arrays.
+		#lists : methods for lists.
+		#sets : methods for sets.
+		#maps : methods for maps.
+		#aggregates : methods for creating aggregates on arrays or collections.
+		#ids : methods for dealing with id attributes that might be repeated (for example, as a result of an iteration).
+	</pre>
+<p th:text="${#locale.country}">中国</p>
+
+<h1>字面量</h1>
+
+<p>
+    Now you are looking at a <span th:text=" ' working web application' ">template file</span>.
+</p>
+
+<p>
+    The year is <span th:text="2013">1492</span>.
+</p>
+
+<p>
+    In two years, it will be <span th:text=" 2013 + 2">1494</span>.
+</p>
+
+<div th:text="true == false ? 2 : 3"></div>
+<div th:text="${session.user} == null? 2 : 3"></div>
+<div th:text="3 > 4 ? 3 : 4"></div>
+<p th:class=" 3 % 2 == 0 ? 'even' : 'odd' ">even or odd</p>
+
+<h1>Elvis表达式</h1>
+
+<p>
+    Age: <span th:text=" ${session.age} ?: '(no age specified)' ">27</span>.
+    Age: <span th:text=" ${session.age} ?: _ ">(no age specified)</span>.
+</p>
+
+<form action="subscribe.html" th:action="@{/subscribe}">
+    <fieldset>
+        <input type="text" name="email"/>
+        <input type="submit" value="Subscribe!"/>
+    </fieldset>
+</form>
+<h1>表单元素设置属性(thymeleaf动态设置)</h1>
+
+<form action="subscribe.html" th:attr="action=@{/subscribe}">
+    <fieldset>
+        <input type="text" name="email"/>
+        <input type="submit" value="Subscribe!" th:attr="value=#{subscribe.submit}"/>
+        <input type="submit" value="Subscribe!" th:value="#{subscribe.submit}"/>
+
+		<input type="checkbox" name="option1" checked="checked" />
+		<label>条件计算为false,不会设置checked</label>
+		<input type="checkbox" name="active" th:checked="${session.user} !=null " />
+    </fieldset>
+</form>
+<h1>同时设置多个属性</h1>
+<img src="/images/welcome.png"
+     data-th-attr="title=#{home.welcome},alt=#{home.welcome}"/>
+<div th:insert="footer :: copy"></div>
+<div th:include="footer :: copy"></div>
+<div th:replace="footer :: copy"></div>
+</body>
+</html>

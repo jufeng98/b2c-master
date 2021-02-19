@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: b2c-https
+server:
+  port: 9443
+  # keytool -genkey -alias tomcat  -storetype PKCS12 -keyalg RSA -keysize 2048  -keystore keystore.p12 -validity 3650
+  # 执行成功以后会在目录下生成一个PKCS12格式的命名为keystore.p12的证书文件
+  # 注意配置maven resources插件不要过滤此文件
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: tomcat
+    protocol: TLS
+http:
+  port: 9700

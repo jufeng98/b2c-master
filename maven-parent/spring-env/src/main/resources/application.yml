@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: spring-env
+  profiles:
+    active: ${active.profile.name}
+server:
+  port: 8300
+foo:
+  list:
+    - name: yudong
+      age: 26
+    - name: liang
+      age: 25
+env.common: 公共配置
+---
+spring:
+  profiles: dev
+env.environment: 开发
+---
+spring:
+  profiles: test
+env.environment: 测试
+---
+spring:
+  profiles: prod
+env.environment: 生产

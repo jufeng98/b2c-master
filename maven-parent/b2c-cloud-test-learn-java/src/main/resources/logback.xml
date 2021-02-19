@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="infoAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>D:\\home\\logs\\sql.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                D:\\home\\logs\\sql.%d{yyyy-MM-dd-HH}.log.zip
+            </FileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="sqlAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>D:\\home\\logs\\sql-original.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                D:\\home\\logs\\sql-original.%d{yyyy-MM-dd-HH}.log.zip
+            </FileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%msg;%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="sqlAppender1"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>D:\\home\\logs\\sql-new.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                D:\\home\\logs\\sql-new.%d{yyyy-MM-dd-HH}.log.zip
+            </FileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%msg;%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
+
+    <logger name="com.alibaba.dubbo" level="error">
+        <appender-ref ref="infoAppender"/>
+    </logger>
+
+    <logger name="org.javamaster.b2c" level="info">
+        <appender-ref ref="infoAppender"/>
+    </logger>
+
+    <logger name="com.javamaster.b2c" level="info">
+        <appender-ref ref="infoAppender"/>
+    </logger>
+
+    <logger name="sql.original" level="info">
+        <appender-ref ref="sqlAppender"/>
+    </logger>
+    <logger name="sql.new" level="info">
+        <appender-ref ref="sqlAppender1"/>
+    </logger>
+
+</configuration>

@@ -1,0 +1,41 @@
+# 查看elasticsearch基本信息
+GET http://localhost:9200
+
+###
+# 查看当前节点的所有Index
+GET http://localhost:9200/_cat/indices?v
+
+###
+PUT http://localhost:9200/weather
+
+###
+DELETE http://localhost:9200/weather
+
+###
+POST http://localhost:8080/blog/add
+Content-Type: application/json
+Accept:  application/json
+
+{
+  "title": "Elasticsearch实战篇：Spring Boot整合ElasticSearch",
+  "time": "2019-05-06"
+}
+
+###
+GET http://localhost:8080/blog/search/title?keyword=Spring
+Accept:  application/json
+
+###
+GET http://localhost:8080/blog/search/title/custom?keyword=Spring
+Accept:  application/json
+
+###
+GET http://localhost:8080/blog/get
+Accept:  application/json
+
+###
+GET http://localhost:8080/blog/get/4oq8AnIBHJOr5pXUfjt_
+Accept:  application/json
+
+###
+

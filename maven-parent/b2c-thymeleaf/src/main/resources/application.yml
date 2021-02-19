@@ -1,0 +1,14 @@
+server:
+  port: 8008
+spring:
+  application:
+    name: b2c-thymeleaf
+  thymeleaf:
+    cache: false
+    mode: HTML5
+    encoding: UTF-8
+info:
+  service-name: ${spring.application.name}
+  ip: ${spring.cloud.client.ipAddress}
+  profile: ${active.profile.name}
+  system: ${os.name}

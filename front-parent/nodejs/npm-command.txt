@@ -1,0 +1,14 @@
+npm view jsdom
+
+npm install jsdom
+npm uninstall jsdom
+
+npm install -g jsdom
+npm uninstall -g jsdom
+
+npm update jsdom
+npm update -g jsdom
+
+npm root -g
+npm config prefix "d:\node_modules"
+

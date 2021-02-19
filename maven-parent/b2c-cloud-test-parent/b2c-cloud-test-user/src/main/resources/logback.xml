@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <jmxConfigurator/>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+    </appender>
+    <appender name="info_file"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>logs/${project.artifactId}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>logs/${project.artifactId}.%d{yyyy-MM-dd-HH}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>128MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+    </appender>
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="info_file"/>
+    </root>
+    <logger name="com.javamaster.b2c" level="INFO" additivity="false">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="info_file"/>
+    </logger>
+</configuration>

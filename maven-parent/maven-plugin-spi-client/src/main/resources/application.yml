@@ -1,0 +1,4 @@
+server:
+  port: 8822
+info:
+  packageTime: ${plugin-package-time}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.angularjs.org/1.2.5/angular.min.js"></script>
+</head>
+<body ng-app="myapp">
+<div ng-controller="HelloController">
+    <h2>Hello {{helloTo.title}} !</h2>
+    <span>{{myData.textf()}}</span><br/>
+    <span ng-bind-html-unsafe="myData.textG()"></span>
+    <span ng-show="myData.showIt">show true</span>
+    <span ng-hide="myData.showIt">hide false</span>
+
+    <div ng-if="myData.showIt">ng-if Show it</div>
+    <div ng-switch on="myData.switch">
+        <div ng-switch-when="1">Shown when switch is 1</div>
+        <div ng-switch-when="2">Shown when switch is 2</div>
+        <div ng-switch-default>Shown when switch is anything else than 1 and 2</div>
+    </div>
+    <table>
+        <thead>
+        <th>
+        <td>订单编号</td>
+        <td>行程</td>
+        <td>乘机人</td>
+        <td>创建时间</td>
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="oJsonPlaneOrder in myData.oJsonPlaneOrders | filter: itemFilter">
+            <td>{{oJsonPlaneOrder.orderno}}</td>
+            <td>{{oJsonPlaneOrder.journal}}</td>
+            <td>{{oJsonPlaneOrder.psg}}</td>
+            <td>{{oJsonPlaneOrder.createdate | date: 'dd-MM-yyyy'}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script>
+    angular.module("myapp", [])
+            .controller("HelloController", function ($scope) {
+                $scope.helloTo = {};
+                $scope.helloTo.title = "World, AngularJS";
+
+                $scope.myData = {};
+                $scope.myData.textf = function () {
+                    return "A text from a function<p></p>";
+                };
+                $scope.myData.textG = function () {
+                    return "A text from a function<p></p>";
+                };
+                $scope.myData.showIt = true;
+                $scope.myData.switch = 3;
+                var sPlaneOrders = '[{"orderno":"C1803200002753","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:31","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002753"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002753"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002752","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:31","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002752"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002752"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002755","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:31","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002755"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002755"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002754","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:31","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002754"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002754"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002756","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:31","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002756"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002756"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002750","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:30","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002750"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002750"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002749","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:30","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002749"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002749"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002751","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:30","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002751"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002751"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002744","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:29","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002744"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002744"}],"readonly":"false","bookuser":"113712340010"},{"orderno":"C1803200002746","bookagent":"B2COU","bookagentname":"B2C散客网上售票","domesticindicate":"1","ordertype":"100","status":"D","totalpaymoney":"1060","equivfarecurrency":"CNY","createdate":"2018-03-20 00:30:29","campaignscriptid":"6","seginfo":[{"carrier":"CZ","depcode":"CAN","arrcode":"PEK","depport":"广州白云机场","arrport":"北京首都机场","flightno":"3101","deptime":"2018-08-01 10:54","arrtime":"2018-08-01","orderno":"C1803200002746"}],"psginfo":[{"psgname":"测试","type":"0","orderno":"C1803200002746"}],"readonly":"false","bookuser":"113712340010"}]';
+                var oJsonPlaneOrders = JSON.parse(sPlaneOrders, function (key, value) {
+                    if (key == "createdate") {
+                        return new Date(value);
+                    } else {
+                        return value;
+                    }
+                });
+                $scope.myData.oJsonPlaneOrders = oJsonPlaneOrders;
+                $scope.itemFilter = function (oPlaneOrder) {
+                    var oSegs = oPlaneOrder.seginfo;
+                    var journal = "";
+                    for (var innerIndex in oSegs) {
+                        journal += oSegs[innerIndex]["depport"] + "-" + oSegs[innerIndex]["arrport"] + " ";
+                    }
+                    oPlaneOrder.journal = journal;
+
+                    var oPsgs = oPlaneOrder.psginfo;
+                    var psg = "";
+                    for (var innerIndex in oPsgs) {
+                        psg += oPsgs[innerIndex]["psgname"] + " ";
+                    }
+                    oPlaneOrder.psg = psg;
+
+                    return true;
+                };
+            });
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+server:
+  port: 8258
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+spring:
+  application:
+    name: b2c-upload
+  servlet:
+    multipart:
+      max-file-size: 200MB

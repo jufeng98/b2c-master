@@ -1,0 +1,15 @@
+org.javamaster.annotation.processor.client
+---
+mall_person_info
+  java.lang.String name
+  java.lang.Integer age
+---
+mall_address_info
+  java.lang.String province
+  java.lang.String city
+  java.lang.String county
+---
+mall_actor_info
+  java.lang.String first_name
+  java.lang.String last_name
+  java.util.Date   last_update

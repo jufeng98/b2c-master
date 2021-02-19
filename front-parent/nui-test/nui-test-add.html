@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link id="css_skin" rel="stylesheet" type="text/css" href="../nui/skins/skin1/css/style.css"/>
+    <link id="css_icon" rel="stylesheet" type="text/css" href="../nui/icons/icon.css"/>
+    <script type="text/javascript" src="../nui/nui.js"></script>
+    <script type="text/javascript" src="../nui/swfupload.js"></script>
+    <script type="text/javascript" src="../nui/bluemoon.js"></script>
+    <script type="text/javascript" src="../nui/enterprise.js"></script>
+</head>
+<body style="overflow:hidden;width:100%;">
+<div id="left" style="width:60%;float: left;height: 100%">
+    <form id="form1">
+        <table>
+            <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                <th
+                        style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid; width: 10%;"
+                        align="right">操作人：
+                </th>
+                <td align="left"
+                    style="border-top: 1px #cccccc solid; width: 14%;"><input
+                        class="nui-textbox" name="enterprise.createName"
+                        id="enterprise.createName" enabled="false" value="${sessionScope.user.realName}"
+                        width="85%"/></td>
+                <th
+                        style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid; width: 10%;"
+                        align="right">操作人编号：
+                </th>
+                <td align="left"
+                    style="border-top: 1px #cccccc solid; width: 14%;">
+                    <input
+                            class="nui-textbox" name="enterprise.createCode"
+                            id="enterprise.createCode" enabled="false"
+                            value="${sessionScope.user.account}" width="85%"/>
+                </td>
+                <th
+                        style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid; width: 10%;"
+                        align="right">操作时间：
+                </th>
+                <td align="left" style="border-top: 1px #cccccc solid; width: 14%;">
+                    <input
+                            class="nui-textbox" name="enterprise.createTime"
+                            id="enterprise.createTime" enabled="false"
+                            value="2018-10-10 10:10:10" pattern="yyyy-MM-dd HH:mm:ss" />
+                </td>
+            </tr>
+        </table>
+        <fieldset style="text-align: center; padding-bottom: 5px;height: 50%">
+            <legend style="color:#3366CC" size="2">商品信息</legend>
+            <table
+                    style="width: 100%; height: 100%; padding: 0px !important; height: 15px; border-collapse: collapse; border: none; padding-left: 5px;"
+                    border="0">
+
+                <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                    <th
+                            style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid;"
+                            align="right">套餐编号<span style="color: red">&nbsp;*</span>：
+                    </th>
+                    <td align="left" style="border-top: 1px #cccccc solid;"><input
+                            class="nui-textbox" name="enterprise.packageId"
+                            id="enterprise.packageId"/>
+                    </td>
+                    <th
+                            style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid;"
+                            align="right">套餐名称<span style="color: red">&nbsp;*</span>：
+                    </th>
+                    <td align="left" style="border-top: 1px #cccccc solid;" colspan="3">
+                        <input class="nui-textbox"
+                               width="94%"
+                               name="enterprise.packageName"
+                               id="enterprise.packageName"
+                               emptyText="不超过10个汉字"/>
+                    </td>
+                </tr>
+                <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                    <th
+                            style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid;"
+                            align="right">市场价<span style="color: red">&nbsp;*</span>：
+                    </th>
+                    <td align="left" style="border-top: 1px #cccccc solid;" colspan="3">
+                        <input class="nui-textbox"
+                               name="enterprise.marketPrice" id="enterprise.marketPrice"
+                               emptyText="两位小数点,正数"/>
+                    </td>
+                </tr>
+                <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                    <th style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid;" align="right">
+                        套餐主图<span style="color: red">&nbsp;*</span>：
+                    </th>
+                    <td align="left" style="border-top: 1px #cccccc solid;" colspan="3">
+                        <input accept="image/*" type="file" class="picFile" id="wash_clothes"/>
+                        &nbsp;&nbsp;建议图片尺寸：200*200px，不大于100k
+                    </td>
+                </tr>
+                <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                    <th style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid;" align="right">
+                        套餐细节图：
+                    </th>
+                    <td align="left" colspan="7">
+                        <input accept="image/*" type="file" class="picFile" id="specifics"/>&nbsp;&nbsp;
+                        <a class="nui-button" iconCls="icon-upload" style="height:19px;"
+                           onclick="uploadFile('clothes')">添加</a>
+                        <span size="1">&nbsp;&nbsp;建议图片宽为750px，高不超过750px，单张不大于200k，最多6张</span>
+                    </td>
+                </tr>
+                <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                    <th style="padding: 5px 0px 5px 5px; border-top: 1px #cccccc solid;" align="right">
+                        套餐详情图：
+                    </th>
+                    <td align="left" colspan="7">
+                        <input accept="image/*" type="file" class="picFile" id="detail"/>&nbsp;&nbsp;
+                        <a class="nui-button" iconCls="icon-upload" style="height:19px;"
+                           onclick="uploadFile('clothes')">添加</a>
+                        <span size="1">&nbsp;&nbsp;建议图片宽为750px，高不超过750px，单张不大于200k，最多6张</span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset style="height: 80%">
+            <legend>产品信息</legend>
+            <a class="mini-button" iconCls="icon-add" onclick="addEnterprise()">添加产品</a>
+            <a class="mini-button" iconCls="icon-cancel" onclick="addEnterprise()">删除</a>
+            <div class="nui-panel">
+                <div id="datagrid1" class="nui-datagrid" style="width:100%;height:100%;"
+                     dataField="products"
+                     allowResize="true" pageSize="50" multiSelect="true" allowCellValid="true">
+                    <div property="columns">
+                        <div visible="false" field="id" align="center" headerAlign="center"></div>
+                        <div field="productName" align="center" headerAlign="center">产品名称</div>
+                        <div field="productSku" align="center" headerAlign="center">产品SKU</div>
+                        <div field="marketPrice" align="center" headerAlign="center">市场价</div>
+                        <div field="num" align="center" headerAlign="center">数量</div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="nui-toolbar" style="padding: 0px;" borderStyle="border:0;">
+        <table width="100%">
+            <tr>
+                <td style="text-align: center;"><a class="nui-button"
+                                                   iconCls="icon-ok" id="save_bt" name="save_bt" onclick="save()">确认</a>
+                    <span style="display: inline-block; width: 25px;"></span> <a
+                            class="nui-button" iconCls="icon-cancel" onclick="onCancel">取消</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="right" style="float: right;width: 40%;height: 100%">
+    <div class="search-condition">
+        <fieldset style="text-align:left;">
+            <legend style="color:#3366CC" size="2">查询条件</legend>
+            <div id="form2">
+                <table style="width:100%;height:100%;padding:0px!important;line-height:25px;border-collapse: collapse;border:none;padding-left:5px;">
+                    <tr style="background: none repeat scroll 0 0 #F8F8F8;">
+                        <th align="right" width="5%">产品SKU：</th>
+                        <td style="text-align:left;width:5%;">
+                            <input id="productCode" name="criteria.packageCode" class="nui-textbox" width="100%"/>
+                        </td>
+
+                        <th align="right" width="5%">产品名称：</th>
+                        <td style="text-align: left; width: 5%;">
+                            <input id="productName" name="criteria.packageName" class="nui-textbox" width="100%"/>
+                        </td>
+                        <td align="center" width="2%">
+                            <a class="nui-button" onclick="search2()" iconCls="icon-search">查询</a>
+                        </td>
+                        <td align="center" width="2%">
+                            <a class="nui-button" onclick="reset()" iconCls="icon-reset">重置</a>
+                        </td>
+                        <td align="center" width="2%">
+                            <a class="nui-button" onclick="selectProducts()">选择</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="nui-fit" style="height: 60%">
+        <div id="datagrid2" class="nui-datagrid" style="width:100%;height:100%;"
+        url="http://localhost:9101/test/debug/data/productRes" dataField="products"
+        allowResize="true" pageSize="50" multiSelect="true" showPager="true" onselectionchanged=""
+        allowCellValid="true" autoLoad="true">
+        <div property="columns">
+            <div type="checkcolumn"></div>
+            <div visible="false" field="id" align="center" headerAlign="center"></div>
+            <div field="productSku" align="center" headerAlign="center">产品SKU</div>
+            <div field="productName" align="center" headerAlign="center">产品名称</div>
+            <div field="marketPrice" align="center" headerAlign="center">市场价格</div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</body>
+</html>

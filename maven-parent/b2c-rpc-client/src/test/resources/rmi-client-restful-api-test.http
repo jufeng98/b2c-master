@@ -1,0 +1,8 @@
+GET http://localhost:8999/rmi/getBook
+Accept: application/json
+
+###
+GET http://localhost:8800/jersey/jsr/welcome
+Accept: */*
+
+###

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javamaster.b2c.mybatis.mapper.mysql.StudentMapper">
+    <!--    指定 parameterType 是可选的；MyBatis 可以使用反射机制来决定 parameterType ,但是，从配置可读性的角度来看，最好
+            指定parameterType 属性。-->
+    <select id="findStudents" resultType="student">
+        select *
+        from Students
+    </select>
+
+    <select id="findStudentById" parameterType="int" resultType="student">
+        SELECT STUD_ID AS studId, NAME, EMAIL, DOB, PHONE, GENDER
+        FROM STUDENTS
+        WHERE STUD_ID = #{Id}
+    </select>
+
+    <insert id="insertStudent" parameterType="student">
+        INSERT INTO STUDENTS (NAME, EMAIL, DOB, PHONE, GENDER)
+        VALUES (#{name}, #{email}, #{dob}, #{phone}, #{gender})
+    </insert>
+
+    <!-- 使用useGeneratedKeys来得到数据库自增的主键值 -->
+    <insert id="insertStudentGetGenerateId" parameterType="student" useGeneratedKeys="true" keyProperty="studId">
+        INSERT INTO STUDENTS (NAME, EMAIL, DOB, PHONE, GENDER)
+        VALUES (#{name}, #{email}, #{dob}, #{phone}, #{gender})
+    </insert>
+
+    <insert id="insertStudentWithSequenceBefore" parameterType="student">
+        <selectKey keyProperty="studId" resultType="int" order="BEFORE">
+            SELECT next_val_func('student_seq')
+        </selectKey>
+        INSERT INTO STUDENTS(STUD_ID,NAME,EMAIL,DOB, PHONE,GENDER)
+        VALUES(#{studId},#{name},#{email},#{dob},#{phone},#{gender})
+    </insert>
+
+    <insert id="insertStudentWithSequenceAfter" parameterType="student">
+        INSERT INTO STUDENTS(NAME,EMAIL,DOB, PHONE,GENDER)
+        VALUES(#{name},#{email},#{dob},#{phone},#{gender})
+        <selectKey keyProperty="studId" resultType="int" order="AFTER">
+            SELECT cur_val_func('student_seq')
+        </selectKey>
+    </insert>
+
+    <update id="updateStudent" parameterType="Student">
+        update students
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="dob != null">dob=#{dob},</if>
+        </set>
+        where stud_id=#{studId}
+    </update>
+    <update id="updateStudent1" parameterType="Student">
+        update students
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name=#{name},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="dob != null">dob=#{dob},</if>
+        </trim>
+        where stud_id=#{studId}
+    </update>
+
+    <resultMap type="Student" id="studentWithAddressResult">
+        <id property="studId" column="stud_id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="address.addressId" column="address_id"/>
+        <result property="address.street" column="street"/>
+        <result property="address.city" column="city"/>
+        <result property="address.state" column="state"/>
+        <result property="address.zip" column="zip"/>
+        <result property="address.country" column="country"/>
+    </resultMap>
+    <select id="selectStudentWithAddress" parameterType="int" resultMap="studentWithAddressResult">
+        SELECT STUD_ID,
+               NAME,
+               EMAIL,
+               A.ADDRESS_ID,
+               STREET,
+               CITY,
+               STATE,
+               ZIP,
+               COUNTRY
+        FROM STUDENTS S
+                 LEFT OUTER JOIN ADDRESSES A ON S.ADDRESS_ID = A.ADDRESS_ID
+        WHERE STUD_ID = #{studId}
+    </select>
+
+    <resultMap type="Address" id="addressResult1">
+        <id property="addressId" column="address_id"/>
+        <result property="street" column="street"/>
+        <result property="city" column="city"/>
+        <result property="state" column="state"/>
+        <result property="zip" column="zip"/>
+        <result property="country" column="country"/>
+    </resultMap>
+    <resultMap type="Student" id="studentWithAddressResult1">
+        <id property="studId" column="stud_id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <association property="address" resultMap="addressResult1"/>
+    </resultMap>
+    <select id="selectStudentWithAddress1" parameterType="int" resultMap="studentWithAddressResult1">
+        SELECT STUD_ID,
+               NAME,
+               EMAIL,
+               A.ADDRESS_ID,
+               STREET,
+               CITY,
+               STATE,
+               ZIP,
+               COUNTRY
+        FROM STUDENTS S
+                 LEFT OUTER JOIN ADDRESSES A ON S.ADDRESS_ID = A.ADDRESS_ID
+        WHERE STUD_ID = #{studId}
+    </select>
+
+    <resultMap type="Address" id="addressResult2">
+        <id property="addressId" column="address_id"/>
+        <result property="street" column="street"/>
+        <result property="city" column="city"/>
+        <result property="state" column="state"/>
+        <result property="zip" column="zip"/>
+        <result property="country" column="country"/>
+    </resultMap>
+    <select id="selectAddressById" parameterType="int" resultMap="addressResult2">
+        SELECT *
+        FROM ADDRESSES
+        WHERE ADDRESS_ID = #{address_id}
+    </select>
+
+    <resultMap type="Student" id="studentWithAddressResult2">
+        <id property="studId" column="stud_id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <association property="address" column="address_id" select="selectAddressById"/>
+    </resultMap>
+    <select id="selectStudentWithAddress2" parameterType="int" resultMap="studentWithAddressResult2">
+        SELECT *
+        FROM STUDENTS
+        WHERE STUD_ID = #{studId}
+    </select>
+
+    <resultMap type="Course" id="courseResult">
+        <id column="course_id" property="courseId"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+    </resultMap>
+    <resultMap type="Tutor" id="tutorResult">
+        <id column="tutor_id" property="tutorId"/>
+        <result column="tutor_name" property="name"/>
+        <result column="email" property="email"/>
+        <association property="address" resultMap="addressResult1"/>
+        <collection property="courses" resultMap="courseResult"/>
+    </resultMap>
+    <select id="findTutorById" parameterType="int" resultMap="tutorResult">
+        SELECT T.TUTOR_ID,
+               T.NAME AS TUTOR_NAME,
+               EMAIL,
+               C.COURSE_ID,
+               C.NAME,
+               A.ADDRESS_ID,
+               DESCRIPTION,
+               START_DATE,
+               END_DATE
+        FROM TUTORS T
+                 LEFT OUTER JOIN ADDRESSES A ON T.ADDRESS_ID = A.ADDRESS_ID
+                 LEFT OUTER JOIN COURSES C ON T.TUTOR_ID = C.TUTOR_ID
+        WHERE T.TUTOR_ID = #{tutorId}
+    </select>
+    <!--
+        MyBatis 是使用 ONGL（Object  Graph  Navigation Language）表达式来构建动态 SQL 语句。
+     -->
+    <select id="searchCourses" parameterType="Course" resultMap="courseResult">
+        SELECT * FROM COURSES
+        WHERE TUTOR_ID= #{tutorId}
+        <if test="name != null">
+            AND NAME LIKE concat('%',#{name},'%')
+        </if>
+        <if test="startDate != null">
+            AND START_DATE >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND #{endDate} >= END_DATE
+        </if>
+    </select>
+
+    <select id="searchCoursesByType" parameterType="map" resultMap="courseResult">
+        SELECT * FROM COURSES
+        <choose>
+            <when test="searchBy == 'Tutor'">
+                WHERE TUTOR_ID = #{tutorId}
+            </when>
+            <when test="searchBy == 'Name'">
+                WHERE name like concat('%',#{name},'%')
+            </when>
+            <otherwise>
+                WHERE TUTOR start_date >= now()
+            </otherwise>
+        </choose>
+    </select>
+
+    <resultMap id="inStock" type="INTEGER"/>
+    <select id="filmInStock" statementType="CALLABLE" resultMap="inStock">
+        {CALL film_in_stock(
+                #{filmId, mode=IN,jdbcType=INTEGER},
+                #{storeId, mode=IN, jdbcType=INTEGER},
+                #{filmCount, mode=OUT, jdbcType=INTEGER}
+        )}
+    </select>
+
+</mapper>

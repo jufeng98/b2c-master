@@ -1,0 +1,8 @@
+server:
+  port: 8964
+spring:
+  application:
+    name: b2c-swagger2
+user:
+  enabled: true
+  desc: super administration

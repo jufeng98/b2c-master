@@ -1,0 +1,883 @@
+@charset "utf-8";
+
+/*******
+reset
+*******/
+a,
+a:visited{
+	color: #3b7e86;
+	text-decoration: none;
+}
+a:hover{
+	color: #0093d0;
+	text-decoration: none;
+}
+body{
+	text-align: left;
+}
+label input {
+    height: 13px;
+    line-height: 13px;
+    vertical-align:middle;
+}
+select{
+	vertical-align: middle;
+}
+/******
+unit
+******/
+.comm-block {
+    border: 1px solid #DDDDDD;
+    margin-bottom: 10px;
+}
+.comm-block-2 {
+    margin-bottom: 10px;
+}
+	.comm-block-2 .block-head {
+	    background-color: #E2F1F8;
+	    color: #333333;
+	    margin: 0;
+	    padding: 10px 15px;
+	}
+	.comm-block-2 .block-content {
+	    border: 2px solid #7CBAEC;
+	    padding: 10px;
+	}
+/* tab */
+.tab-content-box {
+    display: none;
+}
+.tab-content-on {
+    display: block;
+}
+/* ico */
+.ico,
+.btn{
+    background: url(../images/myJavamaster.png) no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+.ico-magic{
+	background-position: 0 0;
+}
+.ico-clipboard{
+	background-position: 0 -30px;
+}
+.ico-card{
+	background-position: 0 -60px;
+}
+.ico-walk{
+	background-position: 0 -90px;
+}
+.ico-user{
+	background-position: 0 -120px;
+}
+.ico-profile{
+	background-position: 0 -150px;
+}
+.ico-seat {
+    background-position: 0 -246px;
+    height: 13px;
+    vertical-align: top;
+    width: 16px;
+}
+.ico-arr-down{
+	background-position: 0 -262px;
+    width: 11px;
+    height: 6px;
+    vertical-align: top;
+}
+.ico-lt,
+.ico-gt {
+    background-position: 0 -184px;
+    height: 28px;
+    width: 22px;
+}
+.ico-gt{
+	background-position: 0 -213px;
+}
+.ico-x {
+    background-position: 0 -285px;
+    height: 16px;
+    width: 18px;
+}
+.ico-tri-l,
+.ico-tri-r{
+    background-position: -12px -303px;
+    height: 10px;
+    width: 5px;
+}
+.ico-tri-r{
+	background-position: -19px -303px;
+}
+.ico-onepay{
+	background: url(../images/onepayico.jpg) no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+.onepaybox{border:1px solid #CCC;width:729px;padding:10px;font-size:12px;position:relative;}
+.onepaybox .loadlist{border:none;width:50px;background:url("../images/loading1.gif") 10px center no-repeat;}
+.onepaybox .ubloading{display:none;width:729px;position:absolute;top:46px;filter:alpha(opacity=80);-moz-opacity:0.8;opacity:0.8;background:url("../images/loading1.gif") #FFF center center no-repeat;}
+.onepaytitle{padding-left:10px;line-height:36px;height:36px;font-weight:bold;background:#E2F1F8;}
+.onepaytitle span{float:left;}
+.onepaytitle a{float:right;margin-right:10px;font-size:48px;}
+.onepaytitle a:hover{color:#FF3300;}
+.onepaybank{width:100%;padding:20px 0px 20px 0px;overflow:hidden;}
+.onepaybank li{float:left;position:relative;margin:0px 0px 10px 20px;padding:5px 0px 0px 5px;width:170px;height:45px;border:1px solid #ddd;}
+.onepaybank li div.bankname{position:absolute;top:0px;height:45px;line-height:45px;}
+.onepaybank li img{margin-top:5px;}
+.onepaybank li .delbank{position:absolute;top:0px;right:0px;padding:10px;text-align:center;line-height:18px;}
+.onepaybank li .delbank a{color:#0193CF;}
+.onepaybank .addsub{text-align:center;color:#0193CF;font-size:14px;border:1px dotted #0193CF;background:url("../images/onepayadd.jpg") 20px center no-repeat}
+.onepaybank .addsub a{float:left;width:175px;height:50px;line-height:45px;color:#0193CF}
+.onepaylist{overflow:hidden;padding:15px 0px 20px 50px;}
+.onepaylist #error{color:red;height:25px;line-height:20px;padding-left:85px;}
+.onepaylist dl{overflow:hidden;margin: 0px auto;padding:15px 0px 0px 0px;}
+.onepaylist dl dt{height:40px;}
+.onepaylist dl dt p{float:left;margin:0px;padding:0px 5px 0px 0px;width:80px;line-height:21px;text-align:right;}
+.onepaylist dl dt label{float:left;}
+.onepaylist dl dt span{line-height:24px;}
+.onepaylist,.onePaybox input,.onePaybox select{font-size:14px;color:#666;}
+.onepaylist input.txt{color:#999;padding-left:5px;height:20px;line-height:20px;border:1px solid #CCCCCC;}
+.onepaylist input.inw{width:200px;}
+.onepaylist input.inw2{width:105px;}
+.onepaylist input.ibg{background:#EFEFEF;}
+.onepaylist select{width:100px;margin-right:5px;font-size:14px;}
+.onepaylist input.onePayMsend{float:left;border:none;margin:0px 5px 0px 5px;padding:0px 15px 0px 15px;height:24px;line-height:24px;font-size:12px;color:#FFF;background:#0193CF;}
+.onepaylist label.onePayMsno a{color:#999;line-height:22px;font-size:12px;}
+.onepaylist .onepaysub{padding:0px 0px 0px 45px;}
+.onepaylist .onepaysub #addNewPsg{width:80px;text-align:center;}
+.onepaylist .opepayok{padding:0px 0px 0px 100px;height:50px;line-height:50px;font-size:16px;font-weight:bold;color:#0193CF;background:url("../images/onepayok.jpg") 60px 8px no-repeat;}
+
+.disabled .ico-tri-l{
+	background-position: 0 -303px;
+}
+.disabled .ico-tri-r{
+	background-position: -7px -303px;
+}
+/* btn */
+.btn{
+	overflow: hidden;
+	border: 1px solid #ddd;
+	background-repeat: repeat-x;
+	border-radius: 3px;
+	cursor: pointer;
+	width: auto;
+}
+button.btn,
+button.btn:hover,
+input.btn,
+input.btn:hover{
+	line-height: normal;
+}
+.btn-t1,
+.btn-t1:link,
+.btn-t1:visited,
+.btn-t1:hover {
+	border-color: #428284;
+    background-position: 0 -391px;
+    color: #FFFFFF;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 10px;
+    background: url("/B2C40/common/images/main/Javamaster_com_bg.gif") no-repeat scroll right -463px rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: block;
+    padding-right: 10px;
+    text-align: center;
+    margin: 0 20px 10px 20px;
+}
+.btn-t2,
+.btn-t2:link,
+.btn-t2:visited,
+.btn-t2:hover {
+	border-color: #3b8fab;
+    background-position: 0 -417px;
+    color: #FFFFFF;
+    height: 23px;
+    line-height: 23px;
+    padding: 0 10px;
+}
+/* form */
+.form{
+	overflow: hidden;
+}
+	.control-group {
+	    margin-bottom: 20px;
+	}
+	.control-label,
+	.controls {
+	    height: 24px;
+	    line-height: 24px;
+	}
+	.controls input,
+	.controls select {
+	    vertical-align: top;
+	}
+	.form-actions {
+	    padding: 10px 100px;
+	}
+	.form-honrizontal .control-group{
+		float: left;
+		width: 100%;
+	}
+	.form-honrizontal .control-label {
+	    float: left;
+	    text-align: right;
+	    width: 100px;
+	}
+/* slider */
+.slider-box {
+	    position: relative;
+	    padding: 0 73px;
+	}
+.slider-box .buttons {
+    margin-top: -10px;
+    position: absolute;
+    top: 50%;
+}
+.slider-box .prev {
+    left: 20px;
+}
+.slider-box .next {
+    right:20px;
+}
+.slider-box .viewport {
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+}
+.slider-box .overview {
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    word-break: keep-all;
+}
+.slider-box .overview li {
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	margin-right: 30px;
+	height: 100%;
+}
+.slider-box .overview a,
+.slider-box .overview img{
+	display: block;
+	height: 100%
+}
+/* pop box */
+.pop-box {
+    position: absolute;
+    z-index: 100;
+}
+	.pop-inner {
+	    overflow: hidden;
+	    position: relative;
+	}
+		.pop-arr-ico{
+			width: 10px;
+			height: 15px;
+			display: block;
+		}
+		.arr-at-right .pop-arr-ico {
+			float:left;
+			margin-top: 10px;
+		    background-position: -20px -244px;
+		    position: relative;
+		    z-index: 101;
+		}
+		.pop-close-ico{
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			z-index: 101;
+			cursor: pointer;
+		}
+		.pop-content{
+			background-color: #FFFFFF;
+		    border: 1px solid #DDDDDD;
+		}
+		.arr-at-right .pop-content{
+			float: left;
+			margin-left: -1px;
+			position: relative;
+			z-index: 100;
+		}
+/******
+classes
+******/
+.notice {
+    background-color: #E2F1F8;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    color: #333333;
+    padding: 5px 10px;
+}
+.num{
+	color:#FF6347;
+	margin:0 3px;
+}
+.hide {
+    display: none;
+}
+.cut-text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: keep-all;
+    width: 100%;
+}
+.a-right {
+    text-align: right;
+}
+.shadow-bg{
+	background: url(../images/myJavamaster.png) repeat-x scroll 0 -448px transparent;
+    height: 32px;
+    line-height: 32px;
+}
+/*******
+top position guide
+*******/
+#mbx-home h2 {
+    color: #333;
+    font-size: 22px;
+    font-weight: normal;
+    margin: 0;
+    padding: 10px 0;
+}
+
+/******
+main content
+******/
+#body-bg-mask{
+	position: absolute;
+	z-index: 0;
+	background-color: white;
+	width: 100%;
+	left: 0;
+	top: 96px;
+	height: 60px;
+}
+#commonbox{
+	position: relative;
+	z-index: 1;
+}
+#commonbox #mbx{
+	border: 0 none;
+}
+.main-container{
+	position: relative;
+	z-index: 1;
+	padding-bottom: 10px;
+}
+.left-block{
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 200px;
+	background-color: #FFF;
+}
+.main-block{
+	margin-left: 210px;
+	background-color: #FFF;
+}
+
+/* left */
+.nav-list-box {
+    border: 1px solid #DDD;
+    margin-top: -1px;
+}
+.nav-head {
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0 25px 0 40px;
+    white-space:nowrap;
+    word-break:keep-all;
+    overflow:hidden;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    position: relative;
+    background: url(../images/myJavamaster.png) repeat-x scroll 0 -314px transparent;
+}
+	.nav-ico {
+	    height: 30px;
+	    width: 30px;
+	    position: absolute;
+	    top: 50%;
+	    left:5px;
+	    margin-top: -15px;
+	}
+	.right-part {
+	    color: #43868E;
+	    display: block;
+	    position: absolute;
+	    top: 50%;
+	    right: 5px;
+	    font-size: 14px;
+	    font-weight: normal;
+	    height: 20px;
+	    line-height: 20px;
+	    margin: -10px 0 0;
+	}
+	.right-part .ico {
+	    background-position: 0 -262px;
+	    height: 6px;
+	    width: 11px;
+	    margin: 7px 7px 0;
+	}
+	.nav-expanded .right-part .ico{
+		background-position: -12px -262px;
+	}
+.nav-list-box ul {
+    border-top: 1px solid #DDDDDD;
+    display: none;
+}
+.nav-expanded ul{
+	display: block;
+    overflow: hidden;
+    padding: 0 10px;
+}
+	.nav-list-box div{
+		color: #008dd4;
+		font-size:12px;
+	}
+	.nav-list-box li {
+	    border-top: 1px solid #EEEEEE;
+	    margin: -1px 0 1px;
+	    padding: 8px 0 8px 30px;
+	    list-style: disc inside none;
+	    color: #008dd4;
+	}
+	.nav-list-box li a {
+		color: #008dd4;
+		font-size:14px;
+	
+/* 	    color: #666666; */
+/* 	    font-size: 12px; */
+/* 	    padding: 0; */
+	}
+	.nav-list-box li a:hover {
+	    color: #0093D0;
+	}
+	.nav-list-box .current{
+		font-weight: bold;
+		color: #008DD4;
+	}
+.top-line{
+	border-top: 2px solid #677f81;
+}
+/* main */
+#welcome-msg {
+	line-height: 24px;
+    padding: 10px;
+}
+	#welcome-msg h3 {
+	    color: #333333;
+	    font-size: 16px;
+	    font-weight: normal;
+	    margin: 0;
+	}
+	#welcome-msg .msg-box{
+		font-size: 13px;
+		color: #666666;
+	}
+	.msg-box a {
+	    margin-right: 10px;
+	}
+#order-memo {
+    padding: 5px 10px;
+}
+#order-summary {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+	#order-summary a{
+	    color: #AAAAAA;
+	    cursor: default;
+	    margin-right: 1em;
+	}
+	#order-summary a strong{
+		margin: 0 3px;
+	}
+	#order-summary .active {
+		color: #7ca4a3;
+	    font-weight: bold;
+	    cursor: pointer;
+	}
+	#order-summary .active strong {
+	    color: #FF0000;
+	}
+	#order-summary .ico-seat {
+	    margin-right: 5px;
+	    margin-top: 3px;
+	}
+	.block-title {
+	    background-color: #E2F1F8;
+	    color: #111111;
+	    font-size: 13px;
+	    margin: 0;
+	    padding: 10px;
+	}
+	.order-list {
+	    border: 1px solid #DDDDDD;
+	    overflow: hidden;
+		text-align: center;
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+	}
+		.order-list td{
+			border-bottom: 1px dashed #ddd;
+			padding: 10px 0;
+		}
+		.o-status-0 {
+		    color: #BB2233;
+		    font-weight: bold;
+		}
+		.payThis span{
+			padding: 0 10px;
+		}
+		.o-action a {
+		    margin: 0 2px;
+		}
+		.psg-names {
+		    position: relative;
+		    z-index: 0;
+		}
+		.psg-expand{
+			white-space: normal;
+			word-break:break-all;
+		}
+			.psg-expand span{
+				display: inline;
+			}
+			.psg-names a {
+			    display: block;
+			    margin-top: -10px;
+			    position: absolute;
+			    right: 0;
+			    top: 50%;
+				height: 20px;
+				width: 10px;
+				cursor: pointer;
+				text-align: center;
+			}
+			.psg-names a .ico-arr-down{
+				margin-top: 7px;
+			}
+		.o-id {
+		    width: 110px;
+		}
+		.o-trip {
+		    width: 130px;
+		}
+		.o-psg{
+			width: 160px;
+		}
+		.o-depTime {
+		    width: 70px;
+		}
+		.o-cost{
+		    width: 60px;
+		}
+		.o-status {
+		    width: 60px;
+		}
+		.o-action {
+		    width: 100px;
+		}
+	#order-memo .a-right{
+		padding: 5px 0;
+	}
+#extra-info{}
+	#extra-info .tab-bar {
+	    background-color: #E2F0F9;
+	    border-bottom: 1px solid #AAAAAA;
+	    height: 40px;
+	    line-height: 40px;
+	    overflow: visible;
+	}
+		#extra-info .tab {
+		    border-color: transparent;
+		    border-style: solid;
+		    border-width: 2px 1px 0;
+		    float: left;
+		    height: 100%;
+		    margin: -1px -1px 0 0;
+		    padding: 0;
+		    text-align: center;
+		    width: 150px;
+		}
+		#extra-info .tab-on{
+			background-color: white;
+			border-color: #677f81 #aaa;
+			font-weight: bold;
+		}
+			#extra-info .tab a {
+			    display: block;
+			    height: 100%;
+			    width: 100%;
+			}
+			#extra-info .tab-on a{
+				cursor: default;
+				color: #333
+			}
+	#extra-info .tab-content {
+	    border: 1px solid #AAAAAA;
+	    border-top: 0 none;
+	    padding: 5px;
+	}
+		#extra-info .slider-box {
+		    margin: 20px 0;
+		}
+#extra-info .viewport,
+#extra-info .overview {
+    height: 120px;
+}
+#extra-info .viewport{
+	width:670px;
+}
+#comm-links .pop-content {
+    width: 700px;
+    padding: 10px;
+    text-align: left;
+}
+	#comm-links h3 {
+	    border-bottom: 1px solid #CCCCCC;
+	    color: #333333;
+	    font-size: 13px;
+	    margin: 0 0 10px;
+	    padding-bottom: 5px;
+	}
+		#comm-links .hint {
+		    color: red;
+		    font-weight: normal;
+		    margin: 0 2px;
+		}
+	#comm-links .notice{
+		margin-bottom: 10px;
+	}
+	.selection-form {
+	    overflow: hidden;
+	    color: #333333;
+	    margin-bottom: 10px;
+	}
+		.selection-form ul {
+		    float: left;
+		    width: 25%;
+		}
+		.selection-form li {
+		    margin: 0 0 10px;
+		}
+			.selection-form label{
+				padding: 3px 0
+			}
+			.selection-form h4{
+				margin: 0;
+			}
+		.selection-form .btm-action {
+		    border-top: 1px solid #DDDDDD;
+		    padding-top: 5px;
+		    clear: both;
+		}
+		#comm-links .submit {
+		    margin-right: 1em;
+		    vertical-align: middle;
+		    line-height: normal;
+		}
+
+
+#order-list {
+    padding: 10px;
+}
+	#order-list .filter-bar {
+	    background-color: #FFFFFF;
+	    border-width: 1px 1px 0;
+	    border-style: solid ;
+	    border-color: #ddd;
+	    font-size: 14px;
+	    padding: 10px;
+	    overflow: hidden;
+	}
+		.filter-bar .filter-unit {
+		    float: left;
+		    width: 50%;
+		    font-size: 14px;
+		    color: #666;
+		}
+		.filter-bar .selector {
+		    padding: 2px 0;
+		}
+	#order-list .order-list{
+		border-top:0 none;
+	}
+	.order-list th {
+	    background-color: #F5F5F5;
+	    padding: 8px 0;
+	    color: #666;
+	}
+	.page-list-block {
+	    float: right;
+	}
+		.jumper-list,
+		.direct-form{
+			float: left;
+			margin: 0 5px;
+		}
+		.jumper-list{
+			padding: 2px 0;
+		}
+		.direct-form input {
+		    padding: 2px 0;
+		    text-align: center;
+		    width: 30px;
+		}
+		.omit,
+		.jumper{
+			float: left;
+			margin: 0 2px;
+		}
+		.jumper {
+		    border: 1px solid;
+		    display: block;
+		    float: left;
+		    height: 20px;
+		    line-height: 20px;
+		    padding: 0 5px;
+		    text-align: center;
+		}
+		.jumper-list .disabled {
+		    color: #BBBBBB;
+		    cursor: not-allowed;
+		}
+			.jumper-list .prev .ico {
+			    margin: 4px 3px 0 0;
+			    vertical-align: top;
+			}
+			.jumper-list .next .ico {
+			    margin: 4px 0 0 3px;
+			    vertical-align: top;
+			}
+		.jumper-list .current{
+			background-color: #0088D0;
+		    border-color: #0088D0;
+		    color: #FFFFFF;
+		}
+
+#welcome-simple {
+    background-color: #BFD5EA;
+    border-color: #9EAFB9;
+    color: #333333;
+    font-size: 16px;
+    padding: 10px 15px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+	#welcome-simple .log-out {
+		float: right;
+	    font-size: 12px;
+	}
+
+#method-bar {
+    border: 1px solid #87CEEB;
+    padding: 10px 15px;
+    text-align: right;
+    line-height: 32px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+	#addNewPsg {
+	    float: left;
+	    font-size: 14px;
+	    height: 30px;
+	    line-height: 30px;
+	    padding: 0 15px;
+	}
+	#filter-psg{
+		display: block;
+		overflow: hidden;
+		margin-left: 150px;
+	}
+#psg-list{
+	border: 1px solid #87CEEB;
+}
+	#psg-list h4 {
+	    border-bottom: 1px solid #87CEEB;
+	    color: #666666;
+	    margin: 0;
+	    padding: 0 10px;
+	}
+	#psg-list .table{
+		border-collapse: collapse;
+		width: 100%;
+		text-align: center;
+		background-color: #FAFAFA;
+		table-layout: fixed;
+	}
+	#psg-list th{
+		font-weight: normal;
+    	padding: 1px 0 1px;
+    	background-color: white;
+	}
+		#psg-list th div{
+			height: 32px;
+    		line-height: 32px;
+    		color: #666666;
+			border-right: 1px solid #dadada;
+			background: url(../images/myJavamaster.png) repeat-x scroll 0 -448px transparent;
+		}
+		#psg-list .action div{
+			border-right: 0 none;
+		}
+	#psg-list td{
+		border-top: 1px solid #dadada;
+		padding: 15px 0;
+		color: #666;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow:ellipsis;
+	}
+	.p-num {
+	    width: 35px;
+	}
+	.p-num {
+	    width: 35px;
+	}
+	.p-birthday {
+	    width: 75px;
+	}
+	.p-action{
+		width: 70px;
+	}
+
+#psg-list .form {
+    padding: 30px;
+}
+	.p-type {
+	    margin-right: 10px;
+	    float: left;
+	}
+	#psg-list .text-input {
+	    width: 210px;
+	}
+	.p-id-type {
+	    width: 70px;
+	    margin-right: 5px;
+	    float: left;
+	}
+	#psg-list .p-id-num{
+		width: 135px;
+		float: left;
+	}
+#discount-list-block .block-content {
+    padding: 0 0 20px;
+}
+.user-cox-list td{
+	word-break:break-all;
+}

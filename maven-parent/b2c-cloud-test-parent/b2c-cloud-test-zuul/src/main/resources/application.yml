@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: b2c-cloud-test-zuul
+  profiles:
+    active: ${active.profile.name}
+  # 启用请求重试机制
+  cloud.loadbalancer.retry.enabled: true
+# 断路器的超时时间
+hystrix.command.default.execution.isolation.thread.timeoutInMiliseconds: 20000
+ribbon:
+  # ribbon的超时时间需小于hystrix的超时时间,不然不会触发重试机制
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+  # 所有操作都重试
+  OkToRetryOnAllOperations: true
+  # 当前实例的重试次数
+  MaxAutoRetries: 1
+  # 切换实例的重试次数
+  MaxAutoRetriesNextServer: 1
+server:
+  port: 9000
+  servlet:
+    context-path: /zuul
+eureka:
+  instance:
+    hostname: eureka.dev.javamaster.com
+    port: 8761
+    nonSecurePort: ${server.port:8600}
+    statusPageUrlPath: ${server.context-path}/info
+    #healthCheckUrlPath: ${server.context-path}/health    
+  client:
+    #服务缓存清单的更新时间,默认为30s
+    registryFetchIntervalSeconds: 10
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+zuul:
+  routes:
+    redis:
+      path: /redis/**
+      serviceId: b2c-cloud-test-redis
+      customSensitiveHeaders: true
+      sensitiveHeaders:
+    user:
+      path: /user/**
+      serviceId: b2c-cloud-test-user
+      customSensitiveHeaders: true
+      sensitiveHeaders:
+info:
+  service-name: ${spring.application.name}
+  packagetime: ${packagetime}
+      

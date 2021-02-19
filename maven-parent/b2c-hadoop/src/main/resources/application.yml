@@ -1,0 +1,5 @@
+server.port: 8899
+spring.application.name: b2c-hadoop
+hdfs:
+  path: hdfs://localhost:9000
+  username: yu

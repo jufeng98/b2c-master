@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bookstore id="10001">
+
+    <book average="20">
+        <title lang="en">learn xml</title>
+        <price>29.99</price>
+    </book>
+
+    <book average="30">
+        <title lang="cn">学习xml</title>
+        <price>39.95</price>
+    </book>
+
+</bookstore>

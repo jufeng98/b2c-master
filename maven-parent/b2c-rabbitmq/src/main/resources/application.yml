@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: b2c-rabbitmq
+server:
+  port: 9300

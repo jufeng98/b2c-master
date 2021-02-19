@@ -1,0 +1,4 @@
+安装redis服务
+D:\Redis-x64-3.0.501\redis-server.exe --service-install D:\Redis-x64-3.0.501\redis.windows.conf --loglevel verbose  
+卸载redis服务
+D:\Redis-x64-3.0.501\redis-server.exe --service-uninstall

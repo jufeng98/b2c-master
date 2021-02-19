@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link id="css_skin" rel="stylesheet" type="text/css" href="../nui/skins/skin1/css/style.css"/>
+    <link id="css_icon" rel="stylesheet" type="text/css" href="../nui/icons/icon.css"/>
+    <script type="text/javascript" src="../nui/nui.js"></script>
+    <script type="text/javascript" src="../nui/swfupload.js"></script>
+    <script type="text/javascript" src="../nui/nui-tutorial.js"></script>
+</head>
+<body>
+<div>
+    <div id="result">占位符:</div>
+    <form id="personForm">
+        <input value="hello" class="nui-textbox" id="idName" name="person.name">
+        <input type="button" onclick="get('idName')" value="nui.get">
+        <input type="button" onclick="getByUID('mini-1')" value="nui.getByUID">
+        <input type="button" onclick="getbyName('person.name')" value="nui.getbyName">
+        <input type="button" onclick="getsbyName('person.name')" value="nui.getsbyName">
+        <br/>
+        <input class="nui-textbox" id="idSex" name="person.sex">
+        <br/>
+        <input value="12.2" class="nui-textbox" id="idSum" name="person.sum">
+        <pre>
+            小数点和千分位：format="n"
+            货币格式：format="c"。
+            百分比格式：format="p"。
+            自定义格式：format="¥#,0.00"。
+        </pre>
+        <input type="button" onclick="formatCurrency('idSum')" value="nui.formatCurrency">
+        <br/>
+        <input type="button" onclick="encode()" value="nui.encode">
+        <input type="button" onclick="decode()" value="nui.decode">
+        <br/>
+        <input type="button" onclick="parseDate()" value="nui.parseDate">
+        <input type="button" onclick="formatDate()" value="nui.formatDate">
+        <br/>
+        <input value="control" class="nui-textbox" id="idControl" name="person.control">
+    </form>
+</div>
+</body>
+</html>

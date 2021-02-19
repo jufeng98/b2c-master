@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery select2</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
+</head>
+<body>
+<form>
+    <select id="state" name="states[]" style="width: 100%">
+        <option value="">-请选择-</option>
+        <option value="AL">Alabama</option>
+        <option value="WY">Wyoming</option>
+        <option value="CA">California</option>
+        <option value="NV">Nevada</option>
+        <option value="OR">Oregon</option>
+        <option value="WA">Washington</option>
+    </select>
+    <select id="state1" name="states1[]" multiple="multiple" style="width: 100%">
+        <option value="AL">Alabama</option>
+        <option value="WY">Wyoming</option>
+        <option value="CA">California</option>
+        <option value="NV">Nevada</option>
+        <option value="OR">Oregon</option>
+        <option value="WA">Washington</option>
+    </select>
+</form>
+</body>
+<script src="jquery-3.0.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $("#state").select2();
+    $("#state1").select2();
+</script>
+</html>

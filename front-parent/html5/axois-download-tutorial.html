@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/axios.min.js"></script>
+</head>
+<body>
+<div>
+    <button onclick="exportFileAxios('http://localhost:8258/upload/exportPost')">axios方式测试点击下载</button>
+    <br/>
+    <button onclick="exportFileAxiosGet('http://localhost:8258/upload/exportGet?list=1&list=5&list=49')">
+        axios GET方式测试点击下载(有问题)
+    </button>
+    <br/>
+    <a href="http://localhost:8258/upload/exportGet?list=1&list=5&list=49">超链接方式测试点击下载</a>
+    <a href="http://localhost:8258/upload/exportGet1?ids=1,2,45">超链接方式测试点击下载</a>
+    <br/>
+    <button onclick="exportFileDynamicAlink('http://localhost:8258/upload/exportGet?list=1&list=5&list=49')">
+        动态创建超链接方式测试点击下载
+    </button>
+    <br/>
+    <button onclick="exportFileDynamicForm('http://localhost:8258/upload/exportPost')">
+        动态创建表单方式测试点击下载(有问题)
+    </button>
+    <br/>
+    <button onclick="exportFileDynamicFormGet('http://localhost:8258/upload/exportGet')">
+        动态创建表单GET方式测试点击下载
+    </button>
+    <br/>
+    <a href="http://localhost:8258/file/Super-Mario-Forever-2016-02-11.exe">超链接方式测试点击下载</a>
+    <br/>
+</div>
+<script type="text/javascript">
+
+    function exportFileDynamicAlink(url) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.click();
+    }
+
+    function exportFileDynamicForm(url) {
+        var form = document.createElement("form");
+        form.enctype = "text/plain";
+        form.style = "display:none";
+        form.method = "post";
+        form.action = url;
+        for (var i = 0; i < 3; i++) {
+            var input = document.createElement("input");
+            input.name = "list";
+            input.value = "" + (i + 1);
+            form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+    }
+
+    function exportFileDynamicFormGet(url) {
+        var form = document.createElement("form");
+        form.style = "display:none";
+        form.method = "get";
+        form.action = url;
+        for (var i = 0; i < 3; i++) {
+            var input = document.createElement("input");
+            input.name = "list";
+            input.value = "" + (i + 1);
+            form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+    }
+
+    function exportFileAxiosGet(url) {
+        axios.get(url, {params: {list: 1}})
+            .then(function (resData) {
+                doAxiosResData(resData);
+            })
+            .catch(function (error) {
+                console.log('error', error);
+            });
+    }
+
+    function exportFileAxios(url) {
+        axios({
+            method: 'post',
+            url: url,
+            data: JSON.stringify([1, 20, 3, 42, 58]),
+            responseType: 'blob',
+            headers: {
+                "Accept": '*/*',
+                "Content-Type": "application/json",
+                "Pragma": "no-cache",
+                "Cache-Control": "no-cache"
+            }
+        }).then(resData => {
+            doAxiosResData(resData);
+        }).catch((error) => {
+            console.error(error);
+        }).finally(() => {
+        })
+    }
+
+    function doAxiosResData(resData) {
+        var content = resData.headers["content-disposition"];
+        var index = content.indexOf("filename=");
+        var fileName = content.substring(index + "filename=".length + 1, content.length - 1);
+        fileName = decodeURIComponent(fileName);
+        console.log(fileName);
+
+        let blob = new Blob([resData.data], {type: resData.data.type})
+        let downloadElement = document.createElement('a')
+        // 创建下载的链接
+        let href = window.URL.createObjectURL(blob);
+        downloadElement.href = href;
+        // 下载后文件名
+        downloadElement.download = fileName;
+        document.body.appendChild(downloadElement);
+        // 点击下载
+        downloadElement.click();
+        // 下载完成移除元素
+        document.body.removeChild(downloadElement);
+        // 释放blob对象
+        window.URL.revokeObjectURL(href);
+    }
+</script>
+
+</body>
+</html>

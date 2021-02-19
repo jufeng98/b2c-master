@@ -1,0 +1,23 @@
+server:
+  port: 8969
+spring:
+  application:
+    name: b2c-apollo
+# 默认情况下，日志文件的大小达到10MB时会切分一次
+logging:
+  path: /var/logs/
+  file: b2c-apollo-application.log
+  level:
+    root: info
+    org.javamaster.b2c: info
+server.tomcat.accesslog:
+  enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+info:
+  service-name: ${spring.application.name}
+  ip: ${spring.cloud.client.ip-address}
+  system: ${os.name}

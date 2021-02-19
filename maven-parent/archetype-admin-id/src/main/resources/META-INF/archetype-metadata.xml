@@ -1,0 +1,38 @@
+<archetype-descriptor
+        xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0 https://maven.apache.org/xsd/archetype-descriptor-1.1.0.xsd"
+        name="archetype-admin-id">
+    <fileSets>
+        <fileSet filtered="false" packaged="true" encoding="utf-8">
+            <directory>src/assembly</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="utf-8">
+            <directory>src/main/java</directory>
+            <includes>
+                <include>**/*.java</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="utf-8">
+            <directory>src/test/java</directory>
+            <includes>
+                <include>**/*.java</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="utf-8">
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>**/*.properties</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <requiredProperties>
+        <requiredProperty key="projectSimpleName"/>
+        <requiredProperty key="groupId">
+            <defaultValue>org.javamaster.b2c</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="version">
+            <defaultValue>1.0.0-SNAPSHOT</defaultValue>
+        </requiredProperty>
+    </requiredProperties>
+</archetype-descriptor>

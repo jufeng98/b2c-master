@@ -1,0 +1,8 @@
+GET http://localhost:8300/getStores
+
+###
+POST http://localhost:8300/getStoresPage?pageNum=1&pageSize=5
+
+###
+
+

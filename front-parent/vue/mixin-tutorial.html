@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-demo="http://www.w3.org/1999/xhtml" xmlns:v-pin="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>混入</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .a-foo {
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+<div id="app-1">
+    自定义指令
+    <input v-focus type="text"/>
+</div>
+<div id="app-2">
+    自定义指令:v-demo:foo.a.b="message"
+    <div v-demo:foo.a.b="message"></div>
+</div>
+<div id="app-3" style="height: 300px">
+    自定义指令动态参数v-pin:[direction]="200"
+    <h3>Scroll down inside this section ↓</h3>
+    <p v-pin:[direction]="200">I am pinned onto the page at 200px to the left.</p>
+</div>
+<div id="app-4">
+    <anchored-heading :level="1">标题1</anchored-heading>
+    <anchored-heading :level="2">标题2</anchored-heading>
+</div>
+<div id="app-5">
+    <anchored-heading :level="1">title one</anchored-heading>
+    <anchored-heading :level="2">title two</anchored-heading>
+</div>
+<script src="mixin-tutorial.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+server:
+  port: 8258
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+spring:
+  application:
+    name: b2c-test

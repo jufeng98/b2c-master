@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: b2c-batch
+  batch.initialize-schema: ALWAYS
+server:
+  port: 8195

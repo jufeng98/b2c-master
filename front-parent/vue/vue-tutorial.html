@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../css/core.css"/>
+    <!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+
+
+    <script src="../lib/vue.js"></script>
+    <!--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+
+    <!--<script type="module" src="./components/componentA.js"></script>-->
+    <style>
+        .redColor {
+            color: red;
+        }
+
+        .greenColor {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<h3>声明式渲染</h3>
+<div id="app">
+    {{ message }}
+</div>
+<h3>悬浮提示</h3>
+<div id="app-2">
+  <span v-bind:title="message">
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+  </span>
+</div>
+<h3>if条件</h3>
+<div id="app-3">
+    <p v-if="seen">现在你看到我了</p>
+    <p v-if="score>=90">good</p>
+    <p v-else-if="score>=60">normal</p>
+    <p v-else>bad</p>
+</div>
+<h3>for循环数组和对象</h3>
+<div id="app-4">
+    <ol>
+        <li v-for="(todo,index) in todos" :key="todo.text">
+            迭代的数组下标:{{index}}-{{ todo.text }}
+        </li>
+        <h4>遍历对象时，是按 Object.keys() 的结果遍历，
+            但是不能保证它的结果在不同的 JavaScript 引擎下是一致的</h4>
+        <li v-for="(value,key,index) in person">
+            迭代的对象下标:{{index}}-{{key}}-{{ value }}
+        </li>
+        <li v-for="(value,key,index) in person" v-if="index===1">
+            if过滤迭代的对象:{{index}}-{{key}}-{{ value }}
+        </li>
+    </ol>
+    <div>
+        <span v-for="n in 10">{{ n }} </span>
+    </div>
+</div>
+<h3>click事件及计算属性</h3>
+<div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">逆转消息</button>
+</div>
+<h3>model数据绑定</h3>
+<div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+</div>
+<h3>自定义组件1</h3>
+<div id="app-S">
+    <ol>
+        <need-item></need-item>
+    </ol>
+</div>
+<h3>自定义组件2</h3>
+<div id="app-K">
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+</div>
+<h3>自定义组件,可接受传参1和slot</h3>
+<div id="app-G">
+    <div v-on:enlarge-text="postFontSize += 0.2">
+        <ol :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post title="博文标题">hello</blog-post>
+            <blog-post v-for="post in posts" :key="post.id" :title="post.title"></blog-post>
+        </ol>
+    </div>
+</div>
+<h3>自定义组件,可接受传参1和带name属性的slot</h3>
+<div id="app-L">
+    <blog-post-multi title="博文标题">
+        <template slot="slot1">
+            <h1>Here might be a page title</h1>
+        </template>
+
+        <p>A paragraph for the main content.</p>
+        <p>And another one.</p>
+
+        <template slot="slot2"></template>
+    </blog-post-multi>
+</div>
+<h3>自定义组件,可接受传参2</h3>
+<div id="app-H">
+    <custom-input
+            v-bind:value="searchText"
+            v-on:input="searchText = $event"></custom-input>
+    <span>{{searchText}}</span>
+</div>
+<h3>自定义组件,可接受传参</h3>
+<div id="app-7">
+    <ol>
+        <todo-item-in
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id">
+        </todo-item-in>
+    </ol>
+</div>
+<h3>自定义组件,作用域插槽slot-scope</h3>
+<div id="app-7a">
+    <ol>
+        <todo-item-slot v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
+            <template slot-scope="slotProps">
+                <span v-if="slotProps.todo.isComplete">✓</span>
+                {{ slotProps.todo.text }}
+            </template>
+        </todo-item-slot>
+    </ol>
+</div>
+<h3>原始html</h3>
+<div id="app-8">
+    <ol>
+        <li>{{ rawHtml }}</li>
+        <li v-html="rawHtml"></li>
+    </ol>
+</div>
+<h3>v-bind绑定变量值到元素属性上及v-bind缩写</h3>
+<div id="app-9">
+    <ol>
+        <li v-bind:id="liId">hello</li>
+        <li v-bind:disabled="liDisabled">world</li>
+        <li :disabled="liDisabled">world</li>
+    </ol>
+</div>
+<h3>使用 JavaScript 表达式</h3>
+<div id="app-10">
+    <ol>
+        <li>{{Math.random()}}</li>
+        <li>{{Date.now()}}</li>
+        <li>{{new Date()}}</li>
+        <li>{{Math.floor(Math.random()*10%2)==0?'你好':'你坏'}}</li>
+    </ol>
+</div>
+<h3>v-on监听事件及v-on缩写及事件修饰符,修饰符可以串联</h3>
+<div id="app-11">
+    <ol>
+        <li v-on:click="showCurrentText('a',$event)">点我:{{Math.floor(Math.random()*10%2)==0?'你好':'你坏'}}</li>
+        <li @click.self="showCurrentText('b',$event)">点我:{{Math.floor(Math.random()*10%2)==0?'你好':'你坏'}}</li>
+    </ol>
+</div>
+<h3>watch监视属性变化</h3>
+<div id="app-12">
+    <form>
+        <input type="text" id="first" v-model="firstName"/><br/>
+        <input type="text" id="last" v-model="lastName"/><br/>
+        <ol>
+            <li>firstName:{{firstName}}</li>
+            <li>lastName:{{lastName}}</li>
+            <li ref="name">name:{{name}}</li>
+        </ol>
+    </form>
+</div>
+<h3>watch监听器</h3>
+<div id="app-13">
+    <p>
+        Ask a yes/no question: <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+</div>
+<h3>v-model在表单 input、textarea 及 select 元素上创建双向数据绑定。</h3>
+<p>v-model 会忽略所有表单元素的 value、checked、selected 特性的初始值
+    而总是将 Vue 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 data 选项中声明初始值。</p>
+<div id="app-13-a">
+    <input v-model.trim="message" placeholder="edit me">
+    <p>Message is: {{ message }}</p>
+
+    <span>Multiline message is:</span>
+    <p style="white-space: pre-line;">{{ multiMessage }}</p>
+    <br>
+    <textarea v-model="multiMessage" placeholder="add multiple lines"></textarea>
+    <br>
+
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <label for="checkbox">{{ checked }}</label>
+    <br>
+
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+    <br>
+    <span>Checked names: {{ checkedNames }}</span>
+    <br>
+
+    <input type="radio" id="one" value="One" v-model="picked">
+    <label for="one">One</label>
+    <br>
+    <input type="radio" id="two" value="Two" v-model="picked">
+    <label for="two">Two</label>
+    <br>
+    <span>Picked: {{ picked }}</span>
+    <br>
+
+    <select v-model="selected">
+        <option disabled value="">请选择</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+
+    <select v-model="selectedd">
+        <option v-for="option in options" v-bind:value="option.value">
+            {{ option.text }}
+        </option>
+    </select>
+    <span>Selected: {{ selectedd }}</span>
+    <br>
+
+    <input v-model.number="age" type="number">
+    <span>age: {{ age }}</span>
+
+</div>
+<h3>v-bind动态改变class</h3>
+<div id="app-14">
+    <p class="static" v-bind:class="{redColor:activeRed,greenColor:activeGreen}">
+        the size will be change dinamic
+    </p>
+    <p class="static" v-bind:class="classObj">
+        the size will be change dinamic
+    </p>
+    <p class="static" v-bind:class="classObject">
+        the size will be change dinamic
+    </p>
+    <p class="static" v-bind:class="activeRed?'haha':'hehe'">
+        the size will be change dinamic
+    </p>
+</div>
+<h3>复用元素</h3>
+<div id="app-15">
+    <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+    </template>
+    <br/>
+    <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username" key="username">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" key="email">
+    </template>
+    <br/>
+    <button v-on:click="change">change login type</button>
+</div>
+<h3>v-show简单地切换元素的 CSS 属性 display</h3>
+<div id="app-16">
+    <button v-on:click="change">show or hide hello world</button>
+    <p v-show="ok">
+        hello world
+    </p>
+</div>
+<h3>局部注册组件</h3>
+<div id="app-17">
+    <component-a title="描述啊啊"></component-a>
+</div>
+<h3>自定义组件的prop约束</h3>
+<div id="app-18">
+    <p>{{msg}}</p>
+    <my-component @changemsg="msg=$event" prop-C="bigger" prop-c="hello" prop-f="success" :prop-g="parentFunc"
+                  prop-h="额外子组件未定义参数"></my-component>
+</div>
+
+<h3>filter过滤器</h3>
+<div id="app-19">
+    <p>{{date}}</p>
+</div>
+
+<div id="app-20">
+</div>
+<div id="app-21">
+</div>
+
+<div id="app-22">
+    <template>
+        <h1 :[attr]="attrValue">{{msg}} attr设为null可以移除属性</h1>
+        <a @[attr1]="msg1='你点击了我,哈哈哈哈'" style="font-size: large">{{msg1}}</a>
+        <div v-if="showName">
+            姓名:<input type="text" v-model="name">
+        </div>
+    </template>
+</div>
+
+<div id="app-23">
+    <button @click="tabClick">component1</button>
+    <button @click="tabClick">component2</button>
+    <button @click="tabClick">component3</button>
+    <keep-alive include="component1,component2" exclude="component3">
+        <component :is="componentName"></component>
+    </keep-alive>
+</div>
+
+<div id="app-24">
+    <base-checkbox v-model="lovingVue"></base-checkbox>
+</div>
+
+<div id="app-25">
+    <sync-component v-bind:title="title" v-on:update:title="title = $event"></sync-component>
+    <sync-component :title1.sync="title1" ref="subRef"></sync-component>
+    <h1>{{title}}</h1>
+    <h1>{{title1}}</h1>
+    <button @click="touchSub">点击直接调用子组件方法:{{count}}</button>
+</div>
+
+<div id="app-26">
+    <sub-component1>
+        <sub-component2></sub-component2>
+    </sub-component1>
+</div>
+<script src="vue-tutorial.js"></script>
+</body>
+</html>

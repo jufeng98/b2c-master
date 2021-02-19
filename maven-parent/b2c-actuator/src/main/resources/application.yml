@@ -1,0 +1,15 @@
+server.port: 8961
+spring:
+  application:
+    name: b2c-actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+      cors:
+        allowed-headers: '*'
+        allowed-methods: GET,POST
+  endpoint:
+    health:
+      show-details: always

@@ -1,0 +1,6 @@
+    @PostMapping("/{{methodMapping}}")
+    public Result<{{methodBeanName}}ResVo> {{methodName}}(@Validated @RequestBody {{methodBeanName}}ReqVo reqVo) {
+        {{methodBeanName}}ResVo resVo = {{serviceVariableName}}Service.{{methodName}}(reqVo);
+        Result<{{methodBeanName}}ResVo> result = new Result<>(resVo);
+        return result;
+    }

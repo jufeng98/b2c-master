@@ -1,0 +1,9 @@
+server:
+  port: 8008
+spring:
+  application:
+    name: b2c-i18n
+info:
+  service-name: ${spring.application.name}
+  ip: ${spring.cloud.client.ipAddress}
+  system: ${os.name}

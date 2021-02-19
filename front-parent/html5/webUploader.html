@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>webUploader</title>
+    <script type="text/javascript" src="../lib/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="../lib/webuploader.js"></script>
+</head>
+<body>
+<div>
+    <input type="file" onchange="readFiles(event)">
+    <div>
+        <span>进度:</span><span id="progress"></span>
+    </div>
+</div>
+<script>
+    let self = window;
+    self.chunkSize = 5 * 1024 * 1024;
+    self.fileObject = {};
+    self.wulObj = {};
+
+    function readFiles(event) {
+        let selectedFiles = event.target.files;
+        self.webUploader.addFiles(selectedFiles);
+    }
+
+    WebUploader.Uploader.register(
+        {
+            "before-send-file": "beforeSendFile",
+            "before-send": "beforeSend",
+            "after-send-file": "afterSendFile"
+        },
+        {
+            beforeSendFile: function (file) {
+                $("#progress").html("文件MD5计算中...");
+                let deferred = WebUploader.Deferred();
+                self.webUploader.md5File(file)
+                    .progress(function (percentage) {
+                        $("#progress").html("文件MD5计算进度:" + percentage + "%");
+                    })
+                    .then(function (fileMd5) {
+                            $("#progress").html("检查文件中...");
+                            self.wulObj[file.id] = {};
+                            self.wulObj[file.id].fileMd5 = fileMd5;
+                            self.wulObj[file.id].fileSize = file.size;
+                            self.wulObj[file.id].chunkSize = self.chunkSize;
+                            self.wulObj[file.id].fileName = file.name;
+                            let reqJsonObj = Object.assign({}, self.wulObj[file.id]);
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "http://localhost:8258/upload/checkBigFile",
+                                data: reqJsonObj,
+                                dataType: "json",
+                                error: function (e) {
+                                    $("#progress").html("上传失败,请联系管理员" + e);
+                                    deferred.reject();
+                                }.bind(this),
+                                success: function (resJsonObj) {
+                                    if (resJsonObj.code === 0) {
+                                        $("#progress").html("文件检查完成,状态:已完成上传");
+                                        self.fileObject[file.id].url = resJsonObj.url;
+                                        deferred.reject();
+                                    } else {
+                                        $("#progress").html("文件检查完成,状态:缺失分片");
+                                        self.fileObject[file.id].missingChunks = resJsonObj.missingChunks;
+                                        deferred.resolve();
+                                    }
+                                }.bind(this)
+                            });
+                            return deferred.promise();
+                        }.bind(this)
+                    );
+                return deferred.promise();
+            }.bind(this),
+            beforeSend: function (block) {
+                let deferred = WebUploader.Deferred();
+                if (self.fileObject[block.file.id].missingChunks.indexOf(block.chunk) === -1) {
+                    return deferred.reject();
+                }
+                self.webUploader.md5File(block.blob).then(
+                    function (chunkMd5) {
+                        self.wulObj[block.file.id][block.chunk] = {};
+                        self.wulObj[block.file.id][block.chunk].formData = {
+                            chunk: block.chunk,
+                            fileMd5: self.wulObj[block.file.id].fileMd5,
+                            chunkMd5: chunkMd5,
+                        };
+                        deferred.resolve();
+                    }.bind(this)
+                );
+                return deferred.promise();
+            }.bind(this),
+            afterSendFile: function (file) {
+                $("#progress").html("所有分片上传完成,通知服务器合并文件分片...");
+                jQuery.ajax({
+                    type: "POST",
+                    url: "http://localhost:8258/upload/mergeBigFile",
+                    data: {
+                        fileMd5: self.wulObj[file.id].fileMd5,
+                        fileName: file.name,
+                        chunkSize: this.chunkSize,
+                        size: self.wulObj[file.id].fileSize,
+                    },
+                    success: function (resJsonObj) {
+                        if (resJsonObj.code === 0) {
+                            $("#progress").html("服务器合并文件分片完成");
+                            if (self.fileObject[file.id]) {
+                                self.fileObject[file.id].status = "success";
+                                self.fileObject[file.id].percentage = 100;
+                                self.fileObject[file.id].url = resJsonObj.url;
+                            }
+                        } else {
+                            $("#progress").html("文件分片合并失败:" + resJsonObj.msg);
+                            if (this.fileObject[file.id]) {
+                                this.fileObject[file.id].status = "exception";
+                            }
+                        }
+                        self.wulObj[file.id] = {};
+                    }.bind(this)
+                });
+            }.bind(this)
+        }
+    );
+    self.webUploader = WebUploader.create({
+        // swf文件路径
+        swf: "../js/Uploader.swf",
+        // 文件接收服务端。
+        server: "http://localhost:8258/upload/uploadBigFile",
+        // 自动上传
+        auto: true,
+        // 禁止浏览器打开文件
+        disableGlobalDnd: true,
+        // 分片上传
+        chunked: true,
+        // 分片大小
+        chunkSize: self.chunkSize,
+        // 分片上传失败重试次数
+        chunkRetry: 1,
+        // 图片不做压缩
+        compress: false,
+        // 提前准备好下一个文件
+        prepareNextFile: true,
+        // 限制单个文件大小
+        fileSingleSizeLimit: 200 * 1024 * 1024,
+        fileNumLimit: 5,
+        //线程数
+        threads: 5,
+        // 限制格式
+        accept: {
+            title: 'file',
+            extensions: '*',
+            mimeTypes: '*/*'
+        }
+    });
+    self.webUploader.on(
+        "fileQueued",
+        function (file) {
+            self.fileObject[file.id] = {};
+            self.fileObject[file.id].name = file.name;
+            self.fileObject[file.id].status = "ready";
+            self.fileObject[file.id].blobUrl = URL.createObjectURL(file.source.source);
+        }
+    );
+    self.webUploader.on(
+        "uploadBeforeSend",
+        function (block, headers) {
+            Object.assign(headers, self.wulObj[block.file.id][block.chunk].formData);
+        }
+    );
+    self.webUploader.on(
+        "uploadProgress",
+        function (file, percentage) {
+            self.fileObject[file.id].showPercentage = true;
+            self.fileObject[file.id].percentage = Math.ceil(percentage * 100);
+            self.fileObject[file.id].status = "uploading";
+            $("#progress").html("文件上传进度:" + self.fileObject[file.id].percentage + "%");
+        }
+    );
+    self.webUploader.on(
+        "uploadComplete",
+        function (file) {
+            self.fileObject[file.id].showPercentage = false;
+            self.fileObject[file.id].status = "complete";
+            $("#progress").html("上传完成");
+        }
+    );
+    self.webUploader.on(
+        "error",
+        function (type) {
+            $("#progress").html("错误:" + type);
+        }
+    );
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+server:
+  port: 8008
+spring:
+  application:
+    name: b2c-mail
+  mail:
+    host: 127.0.0.1
+    username: root@javamaster.com
+    password: root
+    properties:
+      mail:
+        debug: true
+        smtp:
+          starttls:
+            required: false
+info:
+  service-name: ${spring.application.name}
+  ip: ${spring.cloud.client.ipAddress}
+  profile: ${active.profile.name}
+  system: ${os.name}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javamaster.b2c.cloud.test.learn.java.mapper.TestMapper">
+
+    <resultMap id="baseResultMap" type="com.javamaster.b2c.cloud.test.learn.java.model.Menus">
+        <result column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="text" property="text"/>
+    </resultMap>
+    <select id="selectAll" resultMap="baseResultMap">
+        select * from SYS_MENU order by ID
+    </select>
+
+</mapper>

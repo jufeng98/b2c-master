@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <jmxConfigurator/>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+    </appender>
+    <appender name="ribbon"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.base}${separator}ribbon${separator}ribbon.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}${separator}ribbon${separator}ribbon.%d{yyyy-MM-dd-HH}.log.zip
+            </FileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+    </appender>
+    <root>
+        <level value="info"/>
+        <appender-ref ref="stdout"/>
+    </root>
+    <logger name="com.javamaster.b2c.cloud.test" level="info">
+        <appender-ref ref="ribbon"/>
+    </logger>
+</configuration>  

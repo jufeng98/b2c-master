@@ -1,0 +1,12 @@
+server:
+  port: 8812
+spring:
+  application.name: web-flux
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  file:
+    name: /home/appadm/log/eureka/${spring.application.name}.log

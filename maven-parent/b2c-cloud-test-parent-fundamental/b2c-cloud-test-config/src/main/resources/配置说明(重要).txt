@@ -1,0 +1,4 @@
+application-default 放置公共的配置,也就是不区分环境的配置,具有最高优先级
+application-dev 放置开发环境配置
+application-test 放置测试环境配置
+application-prod 放置生产环境配置

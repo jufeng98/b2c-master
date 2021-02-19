@@ -1,0 +1,4 @@
+安装,注意要先建好db文件夹和logs文件夹,否则安装会失败
+mongod --dbpath "D:\MongoDB\db"  --logpath "D:\MongoDB\logs\log.txt"  --install -serviceName "mongodb"
+卸载
+sc delete mongodb

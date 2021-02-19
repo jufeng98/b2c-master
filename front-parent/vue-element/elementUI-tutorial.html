@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>elementUI</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/index.css">
+    <script src="../lib/index.js"></script>
+    <script src="../lib/moment.js"></script>
+    <script src="../lib/bignumber.js"></script>
+</head>
+<body>
+<div id="app">
+    <el-table :data="tableData3" style="width: 100%" height="850">
+        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+        <el-table-column prop="gender" label="性别" :formatter="formatDict" width="60"></el-table-column>
+        <el-table-column prop="province" label="省份" width="120"></el-table-column>
+        <el-table-column prop="city" label="市区" width="120"></el-table-column>
+        <el-table-column prop="address" label="地址" width="300"></el-table-column>
+        <el-table-column prop="zip" label="邮编" width="120"></el-table-column>
+        <el-table-column prop="servicePrice" label="服务费" :formatter="formatMoney"
+                         width="100"></el-table-column>
+        <el-table-column prop="date" label="日期" :formatter="formatDateTime"></el-table-column>
+        <el-table-column prop="video" label="视频">
+            <template slot-scope="scope">
+                <video width="100px" height="100px" controls="">
+                    <source :src="scope.row.video" type="video/mp4">
+                </video>
+            </template>
+        </el-table-column>
+        <el-table-column prop="pic" label="图片">
+            <template slot-scope="scope">
+                <img :src="scope.row.pic" alt="图片" style="width:100px;height: 100px"/>
+            </template>
+        </el-table-column>
+    </el-table>
+</div>
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data() {
+            return {
+                GENDER: {
+                    M: '男',
+                    F: '女',
+                },
+                DATE_PATTERN: 'YYYY-MM-DD HH:mm:ss',
+                BIG_NUMBER_100: new BigNumber(100),
+                tableData3: [
+                    {
+                        name: '王小虎',
+                        gender: 'M',
+                        province: '上海',
+                        city: '普陀区',
+                        address: '上海市普陀区金沙江路 1518 弄',
+                        zip: 200333,
+                        date: new Date(),
+                        servicePrice: 12350,
+                        pic: "https://tmallapi.bluemoon.com.cn/img/group1/M00/04/BA/wKjwDl-Q5_eEXRdSAAAAACWlGe8924.jpg",
+                        video: "http://tmallapi.bluemoon.com.cn/img/group1/M00/04/BA/wKjwDl-P64iEPmMvAAAAALI1Izs586.mp4"
+                    }, {
+                        name: '王中虎',
+                        gender: 'F',
+                        province: '上海',
+                        city: '普陀区',
+                        address: '上海市普陀区金沙江路 1519 弄',
+                        zip: 200334,
+                        date: null,
+                        servicePrice: 15858,
+                        pic: "https://tmallapi.bluemoon.com.cn/img/group1/M00/04/BA/wKjwDl-Q5_eEXRdSAAAAACWlGe8924.jpg",
+                        video: "http://tmallapi.bluemoon.com.cn/img/group1/M00/04/BA/wKjwDl-P64iEPmMvAAAAALI1Izs586.mp4"
+                    }, {
+                        name: '王大虎',
+                        gender: null,
+                        province: '上海',
+                        city: '普陀区',
+                        address: '上海市普陀区金沙江路 1520 弄',
+                        zip: 200335,
+                        date: new Date(),
+                        servicePrice: 0,
+                        pic: "https://tmallapi.bluemoon.com.cn/img/group1/M00/04/BA/wKjwDl-Q5_eEXRdSAAAAACWlGe8924.jpg",
+                        video: "http://tmallapi.bluemoon.com.cn/img/group1/M00/04/BA/wKjwDl-P64iEPmMvAAAAALI1Izs586.mp4"
+                    },
+                ],
+            }
+        },
+        methods: {
+            formatDateTime(rowData, rowProperty, cellValue, rowIndex) {
+                if (!cellValue) {
+                    return
+                }
+                return moment(cellValue).format(this.DATE_PATTERN);
+            },
+            formatMoney(rowData, rowProperty, cellValue, rowIndex) {
+                return new BigNumber(cellValue).dividedBy(this.BIG_NUMBER_100).toFixed(2);
+            },
+            formatDict(rowData, rowProperty, cellValue, rowIndex) {
+                return this.GENDER[cellValue];
+            },
+        },
+    });
+</script>
+</body>
+</html>

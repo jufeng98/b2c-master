@@ -1,0 +1,58 @@
+server:
+  port: 8761
+eureka:
+  instance:
+    hostname: localhost
+    leaseExpirationDurationInSeconds: 10000
+  client:
+    #缓存清单的更新时间
+    registryFetchIntervalSeconds: 5
+    #是否将自己也作为客户端注册
+    registerWithEureka: false
+    #是否检索服务
+    fetchRegistry: false
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    #eureka默认每隔60s将当前清单中超过90s没有续约的服务剔除出去
+    #打开自我保护机制(心跳失败比例15min内低于85%)
+    enable-self-preservation: false
+    #启用主动失效，并且每次主动失效检测间隔为3s
+    evictionIntervalTimerInMs: 3000
+    #eureka server刷新readCacheMap的时间，注意，client读取的是readCacheMap，这个时间
+    #决定了多久会把readWriteCacheMap的缓存更新到readCacheMap上.默认30s
+    responseCacheUpdateInvervalMs: 3000
+    #eureka server缓存readWriteCacheMap失效时间，这个只有在这个时间过去后缓存才会失效，失效前
+    #不会更新，过期后从registry重新读取注册服务信息，registry是一个ConcurrentHashMap。
+    #由于启用了evict其实就用不太上改这个配置了,默认180s
+    responseCacheAutoExpirationInSeconds: 180
+spring:
+  application:
+    name: b2c-cloud-test-eureka
+management:
+  security:
+    enabled: false
+info:
+  queryAllServiceList:
+    method: GET
+    url: ${eureka.client.serviceUrl.defaultZone}apps
+  querySpecificServiceList:
+    method: GET
+    url: ${eureka.client.serviceUrl.defaultZone}apps/appID
+  querySpecificInstanceOfSomeService:
+    method: GET
+    url: ${eureka.client.serviceUrl.defaultZone}apps/appID/instanceID
+  querySpecificInstance:
+    method: GET
+    url: ${eureka.client.serviceUrl.defaultZone}instances/instanceID
+  deleteSpecificInstanceOfSomeService:
+    method: DELETE
+    url: ${eureka.client.serviceUrl.defaultZone}apps/appID/instanceID
+  changeSpecificInstanceStatusDown:
+    method: PUT
+    url: ${eureka.client.serviceUrl.defaultZone}apps/appID/instanceID/status?value=OUT_OF_SERVICE
+  changeSpecificInstanceStatusUp:
+    method: PUT
+    url: ${eureka.client.serviceUrl.defaultZone}apps/appID/instanceID/status?value=UP

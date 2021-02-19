@@ -1,0 +1,18 @@
+server:
+  servlet:
+    jsp:
+      init-parameters:
+        development: true
+  port: 8666
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/sakila?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+app:
+  adminPath: /a

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: b2c-mybatistk
+server:
+  port: 9701
+logging:
+  level:
+    #org.hibernate: DEBUG
+    org.javamaster.b2c.mybatistk.mapper: DEBUG

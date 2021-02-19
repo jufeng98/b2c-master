@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.javamaster.b2c.cloud.test.user.mapper.AuthoritiesMapper">
+    <resultMap id="BaseResultMap" type="com.javamaster.b2c.cloud.test.common.model.Authorities">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="authority" property="authority" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectGroupInfo" resultType="com.javamaster.b2c.cloud.test.common.model.GroupAuthoritiesInfo">
+        SELECT g.id, g.group_name groupName, ga.authority
+        FROM groups g,
+        group_members gm,
+        group_authorities ga
+        WHERE gm.username = #{username}
+        AND g.id = ga.group_id
+        AND g.id = gm.group_id
+    </select>
+</mapper>

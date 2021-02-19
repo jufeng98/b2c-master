@@ -1,0 +1,9 @@
+server.port: 8473
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+spring:
+  redis:
+    password: 123456

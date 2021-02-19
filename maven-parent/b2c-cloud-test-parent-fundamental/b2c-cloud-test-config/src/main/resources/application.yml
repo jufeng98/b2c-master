@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: b2c-cloud-test-config
+  profiles:
+    active: native
+#  cloud.config.server.git:
+#    uri: https://github.com/jufeng98/b2c-config-center.git
+#    searchPaths: /general
+#    username: jufeng98
+#    password: 13412699@Yu$
+server:
+  port: 9100
+eureka:
+  instance:
+    hostname: eureka.dev.javamaster.com
+    port: 8761
+    nonSecurePort: ${server.port:8600}
+    preferIpAddress: true
+    statusPageUrlPath: /info
+    #healthCheckUrlPath: ${server.context-path}/health    
+  client:
+    #服务缓存清单的更新时间,默认为30s
+    registryFetchIntervalSeconds: 10
+    registerWithEureka: true
+    fetchRegistry: true      
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+management:
+  security:
+    enabled: false
+endpoints: 
+  shutdown: 
+    enabled: true          
+info:
+  service-name: ${spring.application.name}
+  packagetime: ${packagetime}
+  my-plugin-pachagetime: ${plugin.pachagetime}

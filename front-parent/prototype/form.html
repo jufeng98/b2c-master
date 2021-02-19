@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        span.errors {
+            display: inline;
+            list-style: none;
+            background: #FFCECE;
+            padding: 3px;
+            margin: 3px 0 3px 10px;
+            font-size: 0.9em;
+
+        }
+
+        span.tooltip div {
+            display: none;
+        }
+
+        span.tooltip:hover div {
+            display: inline;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            border: 1px solid #000;
+            border-color: #ddd;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend align="left">login information</legend>
+        <ul>
+            <li><label>Username</label><input id="username" type="text" pattern="required"/></li>
+            <li><label>Password</label><input type="password" pattern="required"/></li>
+        </ul>
+    </fieldset>
+    <fieldset>
+        <legend align="left">Personal information</legend>
+        <ul>
+            <li><label>Name</label><span class="tooltip"><input type="text" pattern="required"/><div>代码提示代码提示</div></span>
+            </li>
+            <li><label>Email</label><input type="email" pattern="email"/></li>
+            <li><label>Date</label><input type="date" pattern="date"/></li>
+            <li><label>Website</label><input type="url" pattern="url"/></li>
+            <li><label>Telephone</label><input type="number" pattern="telephone"/></li>
+            <li><label>Mobilephone</label><input type="text" pattern="mobilephone"/></li>
+            <li><label>test</label><input type="text" formaction="heel.do"/></li>
+            <li><input type="submit"/></li>
+        </ul>
+    </fieldset>
+</form>
+<button id="showValue">click me</button>
+<script type="text/javascript" src="prototype-1.6.0.3.js"></script>
+<script type="text/javascript" src="prototype.js"></script>
+</body>
+</html>

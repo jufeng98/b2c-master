@@ -1,0 +1,5 @@
+GET http://www.javamaster.org:8008/user/sendVerifyCode?mobile=13800138000
+Accept: text/plain
+Cookie: language=zh;
+
+###

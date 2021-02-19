@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: b2c-jmx
+server:
+  port: 8999
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+      cors:
+        allowed-headers: '*'
+        allowed-methods: GET,POST
+  endpoint:
+    health:
+      show-details: always
+info:
+  service-name: ${spring.application.name}
+  packagetime: ${packagetime}
+  ip: ${spring.cloud.client.ip-address}
+  env: ${active.profile.name}
+  system: '@os.name@'

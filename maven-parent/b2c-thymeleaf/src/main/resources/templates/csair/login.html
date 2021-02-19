@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="WT.si_n" content="登录"/>
+    <meta name="WT.si_p" content="会员登录"/>
+    <title th:text="#{login.title}">中国南方航空官网</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/newlogin.css?v=1.4}"
+          href="../../public/css/newlogin.css?v=1.4"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css?v=1.3}" href="../../public/css/login.css?v=1.3"/>
+</head>
+<body>
+<div id="alert_msg_box" class="confirm-window-box hidden">
+    <iframe class="shadow-bg" title="background"></iframe>
+    <div class="confirm-window" tabindex="0">
+        <div class="right confirm-info">
+            <img src="../../public/images/alert.png" th:src="@{/images/alert.png}" class="left img"/>
+            <p>已经向您的手机，188****3963 发送了密码。</p>
+        </div>
+        <a class="close-window close-w" href="javascript:;" role="button">×</a>
+        <div class="a-center top10">
+            <button class="btn btn-primary" th:text="#{login.popbox.confirm}">确定</button>
+        </div>
+    </div>
+</div>
+<div class="lg-header">
+    <a class="logo" href="http://www.test.javamaster.com/cn/index.shtml">
+        <img th:src="@{/images/LOGO.png}" src="../../public/images/LOGO.png"/>
+    </a>
+</div>
+<div class="middle-content">
+    <div id="loginbgshow" style="position: absolute;">
+        <img th:src="@{/images/background.jpg}" src="../../public/images/background.jpg"/>
+    </div>
+    <div class="wrap">
+        <div id="ad-content">
+            <div id="travlstart" class="travlstart"></div>
+            <nav id="ad-slider" class="viewport">
+                <ul class="ad-container overview">
+                    <li>
+                        <a href="https://lucky.javamaster.com/bluegate/2h1m/?WT.inner_id=gw-520jx-dl-180507" target="_blank">
+                            <img th:src="@{/images/520.png}" src="../../public/images/520.png"
+                                 th:alt="#{login.love}" alt="520告白季 带上爱出发！"/>
+
+                            <div class="ad-info" style="bottom:-30px;">
+                                <div class="ad-bg"></div>
+                                <div class="ad-txt" th:text="#{login.love}">520告白季 带上爱出发！</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.javamaster.com/cn/czadscale/2018/20180503/index.html?WT.inner_id=gw-bybk-dl-180503"
+                           target="_blank">
+                            <img th:src="@{/images/hotsale.jpg}" src="../../public/images/hotsale.jpg"
+                                 th:alt="#{login.hotsale}" alt="五月新西兰本月爆款"/>
+
+                            <div class="ad-info" style="bottom:-30px;">
+                                <div class="ad-bg"></div>
+                                <div class="ad-txt" th:text="#{login.hotsale}">五月新西兰本月爆款</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://lucky.javamaster.com/bluegate/5ott/?WT.inner_id=gw-byy-dl" target="_blank">
+                            <img th:src="@{/images/graduatetour.jpg}" src="../../public/images/graduatetour.jpg"
+                                 th:alt="#{login.graduatetour}" alt="毕业游"/>
+
+                            <div class="ad-info" style="bottom: -30px;">
+                                <div class="ad-bg"></div>
+                                <div class="ad-txt" th:text="#{login.graduatetour}">毕业游</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://lucky.javamaster.com/bluegate/tgdn/?WT.inner_id=gw-zmly-dl" target="_blank">
+                            <img th:src="@{/images/weekendtour.jpg}" src="../../public/images/weekendtour.jpg"
+                                 th:alt="#{login.graduatetour}" alt="周末游-任性周末 说走就走"/>
+
+                            <div class="ad-info" style="bottom:-30px;">
+                                <div class="ad-bg"></div>
+                                <div class="ad-txt" th:text="#{login.graduatetour}">周末游-任性周末 说走就走</div>
+                            </div>
+                        </a></li>
+                    <li>
+                        <a href="https://lucky.javamaster.com/bluegate/xk72/?WT.inner_id=gw-ttcj-dl-170412"
+                           target="_blank">
+                            <img th:src="@{/images/everydayprice.jpg}" src="../../public/images/everydayprice.jpg"
+                                 th:alt="#{login.everydayprice}" alt="天天有奖"/>
+
+                            <div class="ad-info" style="bottom: -30px;">
+                                <div class="ad-bg"></div>
+                                <div class="ad-txt" th:text="#{login.everydayprice}">天天有奖</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div id="loginBox_page" class="login">
+            <div class="login-box all ">
+                <ul class="tab-title">
+                    <li class="left member-login current" data-boxname="memberBox" th:text="#{login.member}">会员登录</li>
+                    <li class="left psw-login" data-boxname="dynamicPswBox" th:text="#{login.dynamic}">动态密码登录</li>
+                </ul>
+                <div class="lg-tabcontent" id="memberBox">
+                    <form class="form-box" id="memberLogin" autocomplete="off">
+                        <div class="lg-unit">
+                            <input type="text" autocomplete="off" maxlength="30"
+                                   value="手机号/邮箱/会员号/证件号" th:value="#{login.holder.pmmi}"
+                                   class="ipt-valid greyfont" name="userId"
+                                   data-placeholder="手机号/邮箱/会员号/证件号"
+                                   th:attr="data-placeholder=#{login.holder.pmmi}"
+                                   id="userId" data-pattern=".{1,}"/>
+
+                            <div class="help-txt hide-box" th:text="#{login.err.notblank}">此处不能为空</div>
+                        </div>
+                        <div class="lg-unit">
+                            <input type="text" class="greyfont place-hoder"
+                                   autocomplete="off" th:attr="data-placeholder=#{login.pwd}"
+                                   data-placeholder="密码"
+                                   name="passWordPH" id="passWordPH" value="密码" th:value="#{login.pwd}"/>
+                            <input type="password"
+                                   class="hide ipt-valid"
+                                   maxlength="10"
+                                   autocomplete="off"
+                                   name="passWord"
+                                   value=""
+                                   id="passWord"
+                                   data-pattern=".{1,}"/>
+
+                            <div class="help-txt hide-box" th:text="#{login.err.notblank}">此处不能为空</div>
+                        </div>
+                        <div class="forget-psw">
+                            <a href="#" target="_blank" class="btn" id="mem_forgetPsw" th:text="#{login.forgetpwd}">忘记密码？</a>
+                        </div>
+                        <div class="lg-msg"></div>
+                        <button type="submit" class="btn long-btn" otype="button" id="mem_btn_login"
+                                th:text="#{login.login}">
+                            登 录
+                        </button>
+                    </form>
+                </div>
+                <div class="lg-tabcontent hide" id="dynamicPswBox">
+                    <form class="form-box" id="dynamicPswLogin" autocomplete="off">
+                        <div class="lg-unit">
+                            <input type="text" autocomplete="off" maxlength="30"
+                                   th:attr="data-placeholder=#{login.holder.pm}"
+                                   data-placeholder="国内11位手机号或邮箱"
+                                   data-pattern="(\d{11})|(.+@{1}.+)"
+                                   th:value="#{login.holder.pm}" value="国内11位手机号或邮箱"
+                                   class="ipt-valid ipt-disBtn greyfont" name="userId" id="eId"/>
+
+                            <div class="help-txt"
+                                 data-errmsg="请输入正确的手机号码或邮箱地址"
+                                 th:attr="data-errmsg=#{login.err.errPM}"></div>
+                        </div>
+                        <div class="lg-unit">
+                            <input type="text" class="short greyfont ipt-valid" autocomplete="off"
+                                   th:attr="data-placeholder=#{login.holder.dynamic}"
+                                   data-placeholder="请输入动态密码"
+                                   th:value="#{login.holder.dynamic}" value="请输入动态密码" name="vcode" id="vcode"/>
+
+                            <div class="btn short-btn disabled" id="dyn_btn_psw">
+                                <img src="../../public/images/loading.gif" th:src="@{/images/loading.gif}"
+                                     class="loading-img hide-box"/>
+                                <span th:text="#{login.get.dynamic}">获取动态密码</span>
+                                <span class="hidden">
+                                    <span style="color: #F00000;">10</span>
+                                    <span th:text="#{login.get.dynamicAgain}">秒后在获取</span>
+                                </span>
+                            </div>
+                            <div class="help-txt"></div>
+                        </div>
+                        <div class="lg-msg"></div>
+                        <button type="submit" class="btn long-btn" id="dyn_btn_login" th:text="#{login.login}">
+                            登 录
+                        </button>
+                    </form>
+                </div>
+                <div class="exAccount" id="exAccount">
+                    <div th:text="#{login.coop.account}">合作账户登录：</div>
+                    <div class="qqlogin">
+                        <a th:href="@{https://graph.qq.com/oauth2.0/show(which='login',display='pc',respose_type='code',client_id=101195994,scope='get_user_info',state=4,redirect_uri=${javamasterHost}+'/portal/user/login')}">
+                            QQ
+                        </a>
+                    </div>
+                    <div class="weixinlogin">
+                        <a th:href="@{https://open.weixin.qq.com/connect/qrconnect(response_type='code',appid='wxb84b459d0ef05bf6',scope='snsapi_login',state=5,redirect_uri=${javamasterHost}+'/portal/user/login')}">
+                            weixin
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer :: javamasterFooter">footer</div>
+<script th:src="@{/js/jquery.js}" src="../../public/js/jquery.js"></script>
+<script type="text/javascript" th:src="@{/js/javamasterUtils.js}" src="../../public/js/javamasterUtils.js"></script>
+<script type="text/javascript" th:src="@{/js/login.js}" src="../../public/js/login.js"></script>
+</body>
+</html>

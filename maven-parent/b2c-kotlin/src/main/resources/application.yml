@@ -1,0 +1,10 @@
+server:
+  port: 8808
+spring:
+  application:
+    name: b2c-kotlin
+info:
+  service-name: ${spring.application.name}
+  ip: ${spring.cloud.client.ip-address}
+  profile: ${active.profile.name}
+  system: ${os.name}

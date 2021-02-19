@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javamaster.b2c.cloud.test.learn.java.mybatis.mapper.BmMicrowebsiteMessageSendMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.javamaster.b2c.cloud.test.learn.java.mybatis.model.BmMicrowebsiteMessageSendEntity" id="BaseResultMap">
+        <result property="id" column="id"/>
+        <result property="empCode" column="emp_code"/>
+        <result property="messageTitle" column="message_title"/>
+        <result property="messageContent" column="message_content"/>
+        <result property="alreadyRead" column="already_read"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createCode" column="create_code"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="opCode" column="op_code"/>
+        <result property="opName" column="op_name"/>
+        <result property="opTime" column="op_time"/>
+    </resultMap>
+    
+    <sql id="selectColumns">
+  		select 
+  		id,   		
+  		emp_code,   		
+  		message_title,   		
+  		message_content,   		
+  		already_read,   		
+  		del_flag,   		
+  		create_code,   		
+  		create_name,   		
+  		create_time,   		
+  		op_code,   		
+  		op_name,   		
+  		op_time  		
+  		from bm_microwebsite_message_send a
+	</sql>
+
+    <select id="get" resultMap="BaseResultMap">
+        <include refid="selectColumns"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 查询有效数据列表，可分页查询 -->
+    <select id="findList" resultMap="BaseResultMap">
+       <include refid="selectColumns"/>
+        order by id desc
+    </select>
+    
+    <select id="findAllList" resultMap="BaseResultMap">
+    	<include refid="selectColumns"/>
+        order by id desc
+    </select>
+
+	 
+	<insert id="insert" parameterType="com.javamaster.b2c.cloud.test.learn.java.mybatis.model.BmMicrowebsiteMessageSendEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into bm_microwebsite_message_send
+		(
+			`emp_code`, 
+			`message_title`, 
+			`message_content`, 
+			`already_read`, 
+			`del_flag`, 
+			`create_code`, 
+			`create_name`, 
+			`create_time`, 
+			`op_code`, 
+			`op_name`, 
+			`op_time`
+		)
+		values
+		(
+			#{empCode}, 
+			#{messageTitle}, 
+			#{messageContent}, 
+			#{alreadyRead}, 
+			#{delFlag}, 
+			#{createCode}, 
+			#{createName}, 
+			#{createTime}, 
+			#{opCode}, 
+			#{opName}, 
+			#{opTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.javamaster.b2c.cloud.test.learn.java.mybatis.model.BmMicrowebsiteMessageSendEntity">
+		update bm_microwebsite_message_send 
+		<set>
+			<if test="empCode != null">`emp_code` = #{empCode}, </if>
+			<if test="messageTitle != null">`message_title` = #{messageTitle}, </if>
+			<if test="messageContent != null">`message_content` = #{messageContent}, </if>
+			<if test="alreadyRead != null">`already_read` = #{alreadyRead}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}, </if>
+			<if test="createCode != null">`create_code` = #{createCode}, </if>
+			<if test="createName != null">`create_name` = #{createName}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="opCode != null">`op_code` = #{opCode}, </if>
+			<if test="opName != null">`op_name` = #{opName}, </if>
+			<if test="opTime != null">`op_time` = #{opTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+
+</mapper>

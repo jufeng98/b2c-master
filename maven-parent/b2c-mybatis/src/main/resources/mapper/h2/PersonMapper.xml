@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javamaster.b2c.mybatis.mapper.h2.PersonMapper">
+    <resultMap id="userResultMap" type="org.javamaster.b2c.mybatis.model.Person">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+    </resultMap>
+
+    <select id="selectPerson" resultMap="userResultMap" statementType="PREPARED">
+        select *
+        from Person
+        where id = #{id,javaType=int,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAllPerson" resultType="org.javamaster.b2c.mybatis.model.Person">
+        select *
+        from Person
+    </select>
+
+    <sql id="insertFields">(id, name, age, sex)</sql>
+
+    <insert id="insertRandIdAuthor">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select
+            CAST(rand()*1000000 as INTEGER) a from dual
+        </selectKey>
+        insert into Person
+        <include refid="insertFields"/>
+        values
+        (#{id}, #{name}, #{age},${sex})
+    </insert>
+
+    <insert id="insertPerson">
+        insert into Person
+        <include refid="insertFields"/>
+        values
+        (#{id},#{name},#{age},#{sex})
+    </insert>
+
+    <update id="updatePerson">
+        update Person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name=#{name},</if>
+            <if test="age != null">age=#{age}</if>
+        </trim>
+        where id
+        = #{id}
+    </update>
+
+    <delete id="deletePerson">
+        delete
+        from Person
+        where id = #{id}
+    </delete>
+
+    <resultMap type="org.javamaster.b2c.mybatis.model.Customer"
+               id="complicatedMap">
+        <id property="custId" column="CUST_ID"/>
+        <result property="custName" column="CUST_NAME"/>
+        <result property="custState" column="CUST_STATE"/>
+        <collection property="orders"
+                    ofType="org.javamaster.b2c.mybatis.model.Order">
+            <id property="orderNum" column="ORDER_NUM"/>
+            <result property="orderDate" column="ORDER_DATE"/>
+            <collection property="orderItems"
+                        ofType="org.javamaster.b2c.mybatis.model.OrderItem">
+                <id property="orderItem" column="ORDER_ITEM"/>
+                <result property="itemPrice" column="ITEM_PRICE"/>
+                <association property="product"
+                             javaType="org.javamaster.b2c.mybatis.model.Product">
+                    <id property="prodId" column="PROD_ID"/>
+                    <result property="prodName" column="PROD_NAME"/>
+                    <association property="vendor"
+                                 javaType="org.javamaster.b2c.mybatis.model.Vendor">
+                        <id property="vendId" column="VEND_ID"/>
+                        <result property="vendName" column="VEND_NAME"/>
+                    </association>
+                </association>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="selectShopping" resultMap="complicatedMap">
+        SELECT c.CUST_ID,
+               c.CUST_NAME,
+               c.CUST_STATE,
+               o.ORDER_NUM,
+               o.ORDER_DATE,
+               oi.ORDER_ITEM,
+               oi.ITEM_PRICE,
+               p.PROD_ID,
+               p.PROD_NAME,
+               v.VEND_ID,
+               v.VEND_NAME
+        FROM customers c
+                 INNER JOIN orders o ON c.cust_id = o.cust_id
+                 INNER JOIN orderitems oi ON oi.ORDER_NUM = o.ORDER_NUM
+                 INNER JOIN products p ON p.PROD_ID = oi.PROD_ID
+                 INNER JOIN vendors v ON v.VEND_ID = p.VEND_ID
+        WHERE c.cust_id = #{custId}
+    </select>
+
+    <resultMap type="org.javamaster.b2c.mybatis.model.Product"
+               id="simpleMap">
+        <id property="prodId" column="PROD_ID"/>
+        <result property="prodName" column="PROD_NAME"/>
+        <association property="vendor" column="VEND_ID" select="selectVendor"/>
+    </resultMap>
+
+    <select id="selectProduct" resultMap="simpleMap">
+        SELECT p.PROD_ID, p.PROD_NAME, p.VEND_ID
+        FROM products p
+        WHERE p.prod_id = #{prodId}
+    </select>
+
+    <select id="selectVendor" resultType="org.javamaster.b2c.mybatis.model.Vendor">
+        SELECT v.VEND_ID vendId, v.VEND_NAME vendName
+        FROM vendors v
+        WHERE v.VEND_ID = #{vendId}
+    </select>
+
+    <select id="selectVendors" resultType="org.javamaster.b2c.mybatis.model.Vendor">
+        select vend_id vendId,vend_name vendName from vendors
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test=" vendCountry != null and vendCountry != '' ">
+                AND vend_country=#{vendCountry}
+            </if>
+            <if test=" vendorState != null and vendorState != '' ">
+                AND vend_state=#{vendorState}
+            </if>
+        </trim>
+    </select>
+    <select id="selectVendorsByIds" resultType="org.javamaster.b2c.mybatis.model.Vendor">
+        select vend_id vendId,vend_name vendName from vendors
+        where vend_id in
+        <!-- 使用 Map 对象（或者 Map.Entry 对象的集合）时，index 是键，item 是值 -->
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectVendorsLike" resultType="org.javamaster.b2c.mybatis.model.Vendor">
+        <!-- 从 OGNL 表达式中创建一个变量并将其绑定到上下文 -->
+        <bind name="pattern" value="'%' + name + '%'"/>
+        select vend_id vendId,vend_name vendName from vendors
+        where vend_name
+        like #{pattern}
+    </select>
+</mapper>

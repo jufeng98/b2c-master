@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件测试</title>
+</head>
+<body>
+<div>
+    <input type="file" onchange="readFiles(event)">
+</div>
+
+<div id="fileDropZone">
+    Drag file in here
+</div>
+
+<div>
+    <div>base64方式</div>
+    <img src="" id="img-show" style="width:100px;height: 100px"/>
+</div>
+<div>
+    <div>URL方式</div>
+    <img src="" id="img-show1" style="width:100px;height: 100px"/>
+</div>
+
+<time datetime="2012-05-01">May 1st 2012</time>
+<br/>
+<time>2012-05-01</time>
+<script type="text/javascript">
+    function readFiles(event) {
+        var selectedFiles = event.target.files;
+        for (var i = 0; i < selectedFiles.length; i++) {
+            var file = selectedFiles[i];
+            console.log(file);
+            loadAsText(file);
+            loadAsTextSlice(file);
+            loadAsUrl(file);
+            loadAsArrayBuffer(file);
+        }
+    }
+
+    function loadAsText(theFile) {
+        var reader = new FileReader();
+        reader.readAsText(theFile);
+        reader.onload = function (loadedEvent) {
+            // result contains loaded file.
+            console.log(loadedEvent.target.result);
+        };
+    }
+
+    function loadAsTextSlice(theFile) {
+        var start = 3;
+        var stop = 9;
+        var blob = theFile.slice(start, stop);
+
+        var reader = new FileReader();
+        reader.onload = function (loadedEvent) {
+            console.log(loadedEvent.target.result);
+        };
+        reader.readAsText(blob);
+    }
+
+    function loadAsUrl(theFile) {
+        var reader = new FileReader();
+        reader.onload = function (loadedEvent) {
+            console.log(loadedEvent.target.result);
+            document.getElementById("img-show").src = loadedEvent.target.result;
+        };
+        reader.readAsDataURL(theFile);
+        document.getElementById("img-show1").src = URL.createObjectURL(theFile);
+    }
+
+    function loadAsArrayBuffer(theFile) {
+        var reader = new FileReader();
+        reader.onload = function (loadedEvent) {
+            var arrayBuffer = loadedEvent.target.result;
+            var dataView = new DataView(arrayBuffer, 0, arrayBuffer.byteLength);
+            var byte = dataView.getUint8(0);   //gets first byte of ArrayBuffer
+            //... process rest of dataView ...
+        }
+
+        reader.readAsArrayBuffer(theFile);
+    }
+
+    function drop(event) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        var fileList = event.dataTransfer.files;
+        // access files via fileList
+    }
+
+    function dragOver(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy';
+    }
+
+    var dropZone = document.getElementById("fileDropZone");
+    dropZone.addEventListener("dragover", dragOver, false);
+    dropZone.addEventListener("drop", drop, false);
+</script>
+</body>
+</html>

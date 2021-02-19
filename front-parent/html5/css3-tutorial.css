@@ -1,0 +1,108 @@
+div[id*=div-1] {
+    background-color: red;
+}
+
+div[id^=div-1] {
+    text-align: center;
+}
+
+[id$=\-2\-1] {
+    background-color: green;
+}
+
+#div-3:first-line {
+    color: aqua;
+}
+
+.div-4:first-letter {
+    color: blue;
+}
+
+dt:before {
+    content: '仅供测试';
+    color: red;
+}
+
+dt:after {
+    content: url("../nui/icons/emp.png");
+}
+
+:root {
+    background-color: cornflowerblue;
+}
+
+body {
+    background-color: deepskyblue;
+}
+
+#div-5 *:not(h3) {
+    background-color: yellow;
+}
+
+#div-6 :empty {
+    background-color: yellow;
+}
+
+#div-7 :first-child {
+    background-color: chartreuse;
+}
+
+#div-7 :last-child {
+    background-color: chartreuse;
+}
+
+#div-7 :nth-child(2) {
+    background-color: red;
+}
+
+#div-7 :nth-last-child(2) {
+    background-color: red;
+}
+
+#div-7 :nth-child(odd) {
+    text-align: center;
+}
+
+#div-7 :nth-last-child(even) {
+    text-align: right;
+}
+
+#div-8 :nth-child(2n+1) {
+    text-align: center;
+}
+
+#div-8 h3:nth-of-type(odd) {
+    background-color: yellow;
+}
+
+#div-8 h3:nth-of-type(even) {
+    background-color: red;
+}
+
+#div-9 :only-child {
+    background-color: red;
+}
+
+input[id=input-1]:hover {
+    border: 2px solid red;
+}
+
+#btn-1:active {
+    background-color: yellow;
+}
+
+input:focus {
+    background-color: red;
+}
+
+#input-2:disabled {
+    background-color: #6a8ccb;
+}
+
+#input-3:enabled {
+    background-color: #0074D9;
+}
+
+td::selection {
+    color: red;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="/css/gtvg.css" th:href="@{/css/gtvg.css}"/>
+</head>
+<body>
+<h1>Product list</h1>
+<table>
+    <tr>
+        <th>NAME</th>
+        <th>PRICE</th>
+        <th>IN STOCK</th>
+    </tr>
+    <tr th:each="prod,iterStat : ${prods}" th:class="${iterStat.odd}? 'odd'">
+        <td th:text="${prod.name}">Onions</td>
+        <td th:text="${prod.price}">2.41</td>
+        <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+        <td>
+            <span th:text="${#lists.size(prod.comments)}">2</span> comment/s
+            <a href="comments.html"
+               th:href="@{/product/comments(prodId=${prod.id})}"
+               th:if="${not #lists.isEmpty(prod.comments)}">view</a>
+            <a href="comments.html"
+               th:href="@{/comments(prodId=${prod.id})}"
+               th:unless="${#lists.isEmpty(prod.comments)}">view</a>
+        </td>
+    </tr>
+</table>
+<pre>
+    iterStat说明
+    The current  iteration index, starting with 0. This is the  index  property.
+    The current  iteration index, starting with 1. This is the  count  property.
+    The total amount of elements in the iterated variable. This is the  size  property.
+    The  iter variable for each iteration. This is the  current  property.
+    Whether the current iteration is even or odd. These are the  even/odd  boolean properties.
+    Whether the current iteration is the first one. This is the  first  boolean property.
+    Whether the current iteration is the last one. This is the  last  boolean property.
+</pre>
+<h1>switch表达式</h1>
+
+<div th:switch="${user.role}">
+    <p th:case="'admin'">User is an administrator</p>
+
+    <p th:case="#{roles.manager}">User is a manager</p>
+
+    <p th:case="*">User is some other thing</p>
+</div>
+</div>
+<p>
+    <a href="/home.html" th:href="@{/}">Return to home</a>
+</p>
+</body>
+</html>

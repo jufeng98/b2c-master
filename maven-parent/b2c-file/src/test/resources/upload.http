@@ -1,0 +1,23 @@
+###
+POST http://localhost:8258/upload/uploadFile
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+Content-Type: text/plain
+
+liangyudong
+--WebAppBoundary
+Content-Disposition: form-data; name="data"; filename="data.json"
+Content-Type: application/json
+
+< ./data.json
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="电脑创意Ⅰ-102.jpg"
+Content-Type: multipart/form-data
+
+< ./电脑创意Ⅰ-102.jpg
+--WebAppBoundary--
+
+###
+

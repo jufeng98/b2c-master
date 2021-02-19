@@ -1,0 +1,2 @@
+NET START MySQL57
+pause

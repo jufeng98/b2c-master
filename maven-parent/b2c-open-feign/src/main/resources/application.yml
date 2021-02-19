@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: b2c-open-feign
+server:
+  port: 8300
+feign:
+  client:
+    config:
+      b2c-open-feign-server:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full

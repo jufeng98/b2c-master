@@ -1,0 +1,2 @@
+NET STOP Redis
+pause
