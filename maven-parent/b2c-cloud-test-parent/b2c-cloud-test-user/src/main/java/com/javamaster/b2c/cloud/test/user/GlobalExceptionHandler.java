@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
         if (DebugUtils.isDebugOpen()) {
             return new Result<>(false, "-1", e.getMessage(), ExceptionUtils.fetchThrowableInfo(e), null);
         }
-        return new Result(false, "-1", "网络繁忙,请稍后再试");
+        return new Result<>(false, "-1", "网络繁忙,请稍后再试");
     }
 
     private Pair<Integer, String> hanlderMessage(String message) {

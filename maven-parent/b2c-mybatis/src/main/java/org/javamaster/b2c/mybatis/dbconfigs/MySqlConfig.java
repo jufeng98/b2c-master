@@ -67,6 +67,7 @@ public class MySqlConfig {
      * mybatis配置的核心bean
      */
     @Bean
+    @SuppressWarnings("all")
     public SqlSessionFactory mysqlSqlSessionFactory(@Qualifier("mysqlDataSource") DataSource mysqlDataSource)
             throws Exception {
 

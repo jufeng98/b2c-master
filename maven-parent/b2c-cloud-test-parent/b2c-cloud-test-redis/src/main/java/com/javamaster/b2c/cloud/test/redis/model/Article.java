@@ -1,25 +1,19 @@
 package com.javamaster.b2c.cloud.test.redis.model;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
+import redis.clients.jedis.Jedis;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Article {
     public static final int ONE_WEEK_IN_SECONDS = 86400,
             VOTE_SCORE = 432,
             ARTICLES_PEP_PAGE = 25;
-
-    @BeforeClass
-    public static void init() {
-        NoSpringRedisTest.init();
-    }
+    private final Jedis jedis = new Jedis("localhost", 6379);
 
     public void articleVote(String voteUser, String articleId) {
-        long currentTimeStamp = new Date().getTime();
+        long currentTimeStamp = System.currentTimeMillis();
         if (currentTimeStamp - jedis.zscore("times:", articleId) > ONE_WEEK_IN_SECONDS) {
             return;
         }
@@ -36,7 +30,7 @@ public class Article {
         template.opsForSet().add(voted, user);
         template.expire(voted, ONE_WEEK_IN_SECONDS, TimeUnit.SECONDS);
         String article = "article:" + articleId;
-        long now = new Date().getTime();
+        long now = System.currentTimeMillis();
         Map<String, String> articleMap = new HashMap<String, String>();
         articleMap.put("title", title);
         articleMap.put("link", link);

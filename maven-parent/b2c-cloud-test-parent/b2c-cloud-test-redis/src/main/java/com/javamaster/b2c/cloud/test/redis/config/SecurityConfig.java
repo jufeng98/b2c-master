@@ -15,6 +15,7 @@ import org.springframework.session.security.SpringSessionBackedSessionRegistry;
  *
  * @author yudong
  */
+@SuppressWarnings("all")
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

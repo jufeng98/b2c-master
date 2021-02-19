@@ -1,6 +1,7 @@
 package com.javamaster.b2c.cloud.test.user.vo;
 
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * Created on 2018/12/10.<br/>

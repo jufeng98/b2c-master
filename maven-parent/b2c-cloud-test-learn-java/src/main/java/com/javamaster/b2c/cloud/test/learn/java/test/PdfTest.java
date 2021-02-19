@@ -13,6 +13,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.javamaster.b2c.cloud.test.learn.java.thinking.UnitTest;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -36,6 +37,7 @@ import java.util.List;
 public class PdfTest {
 
     @Test
+    @UnitTest
     public void test() throws Exception {
         URL url = new URL("file:/G:/yunpan/Effective Java.pdf");
         PDDocument document = PDDocument.load(url);

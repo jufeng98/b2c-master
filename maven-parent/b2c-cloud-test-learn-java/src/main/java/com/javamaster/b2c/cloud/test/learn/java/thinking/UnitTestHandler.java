@@ -1,5 +1,6 @@
 package com.javamaster.b2c.cloud.test.learn.java.thinking;
 
+import com.javamaster.b2c.cloud.test.learn.java.test.PdfTest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.AccessibleObject;
@@ -26,6 +27,6 @@ public class UnitTestHandler {
 
 class UnitTestHandlerTest {
     public static void main(String[] args) throws Exception {
-        UnitTestHandler.handleTestAnnotation(MyUnitTest.class);
+        UnitTestHandler.handleTestAnnotation(PdfTest.class);
     }
 }

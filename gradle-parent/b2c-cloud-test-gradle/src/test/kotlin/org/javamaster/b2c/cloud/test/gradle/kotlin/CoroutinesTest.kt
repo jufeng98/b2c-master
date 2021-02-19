@@ -15,7 +15,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 
 fun main(args: Array<String>) {
-    val item = _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item()
+    val item = Item()
     postItem(item)
     postItemAsync(item)
     postItemPromise(item)
@@ -31,18 +31,18 @@ fun main(args: Array<String>) {
 }
 
 // 阻塞式请求
-fun postItem(item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item) {
+fun postItem(item: Item) {
     val token = preparePost()
     val person = submitPost(token, item)
     processPost(person)
 }
 
-fun preparePost(): _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token {
+fun preparePost(): Token {
     // makes a request and consequently blocks the main thread
-    return _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token()
+    return Token()
 }
 
-fun submitPost(token: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token, item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item): Person {
+fun submitPost(token: Token, item: Item): Person {
     return Person(token.id + " " + item.itemName, 23)
 }
 
@@ -51,7 +51,7 @@ fun processPost(person: Person) {
 }
 
 // 异步式请求,回调函数层层嵌套,难以理解
-fun postItemAsync(item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item) {
+fun postItemAsync(item: Item) {
     preparePostAsync { token ->
         submitPostAsync(token, item) { person ->
             processPost(person)
@@ -59,18 +59,18 @@ fun postItemAsync(item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.
     }
 }
 
-fun preparePostAsync(callback: (_root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token) -> Unit) {
+fun preparePostAsync(callback: (Token) -> Unit) {
     // make request and return immediately
     // arrange callback to be invoked later
-    callback(_root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token())
+    callback(Token())
 }
 
-fun submitPostAsync(token: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token, item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item, callback: (person: Person) -> Unit) {
+fun submitPostAsync(token: Token, item: Item, callback: (person: Person) -> Unit) {
     callback(Person(token.id + " " + item.itemName, 25))
 }
 
 // promise方式
-fun postItemPromise(item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item) {
+fun postItemPromise(item: Item) {
     preparePostAsync()
             .thenCompose { token ->
                 submitPostAsync(token, item)
@@ -81,17 +81,17 @@ fun postItemPromise(item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradl
 
 }
 
-fun submitPostAsync(token: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token, item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item): Person {
+fun submitPostAsync(token: Token, item: Item): Person {
     return Person(token.id + " " + item.itemName, 27)
 }
 
-fun preparePostAsync(): _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Promise<_root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token, Person> {
+fun preparePostAsync(): Promise<Token, Person> {
     // makes request an returns a promise that is completed later
-    return _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Promise(_root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token())
+    return Promise(Token())
 }
 
 
-fun postItemCoroutine(item: _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Item) {
+fun postItemCoroutine(item: Item) {
     println("Start")
 
 // Start a coroutine
@@ -104,7 +104,7 @@ fun postItemCoroutine(item: _root_ide_package_.org.javamaster.b2c.cloud.test.gra
     println("Stop")
 }
 
-suspend fun preparePostCoroutine(): _root_ide_package_.org.javamaster.b2c.cloud.test.gradle.kotlin.model.Token {
+suspend fun preparePostCoroutine(): Token {
     // makes a request and suspends the coroutine
     return suspendCoroutine { }
 }

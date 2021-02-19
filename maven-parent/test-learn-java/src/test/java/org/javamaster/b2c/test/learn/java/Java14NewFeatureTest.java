@@ -2,6 +2,7 @@ package org.javamaster.b2c.test.learn.java;
 
 import org.junit.Test;
 
+import java.awt.*;
 import java.math.RoundingMode;
 
 /**
@@ -9,14 +10,6 @@ import java.math.RoundingMode;
  * @date 2019/10/28
  */
 public class Java14NewFeatureTest {
-
-    @Test
-    public void test() {
-        Object obj = "hello";
-        if (obj instanceof String str) {
-            System.out.println(str);
-        }
-    }
 
     @Test
     public void test1() {
