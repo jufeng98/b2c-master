@@ -10,8 +10,8 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 public class ParentConfiguration {
 
     @Bean
-    public SpelExpressionParser spelExpressionParser() {
-        log.info("init spelExpressionParser");
+    public SpelExpressionParser spelExpressionParserParent() {
+        log.info("init parent spelExpressionParser");
         return new SpelExpressionParser();
     }
 }

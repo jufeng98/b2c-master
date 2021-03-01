@@ -12,11 +12,11 @@ import org.springframework.test.context.TestExecutionListener;
 public class CustomTestExecutionListener implements TestExecutionListener {
     @Override
     public void beforeTestMethod(TestContext testContext) {
-        log.info("1.{}",testContext.getTestMethod().toString());
+        log.info("beforeTestMethod:{}", testContext.getTestMethod().toString());
     }
 
     @Override
     public void afterTestMethod(TestContext testContext) {
-        log.info("2.{}",testContext.getTestMethod().toString());
+        log.info("afterTestMethod:{}", testContext.getTestMethod().toString());
     }
 }

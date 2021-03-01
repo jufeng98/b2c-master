@@ -8,3 +8,5 @@ management:
 spring:
   application:
     name: b2c-test
+  profiles:
+    active: dev
