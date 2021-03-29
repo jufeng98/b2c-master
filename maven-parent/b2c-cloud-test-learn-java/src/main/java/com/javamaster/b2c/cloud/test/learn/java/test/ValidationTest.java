@@ -1,4 +1,4 @@
-package com.javamaster.b2c.cloud.test.learn.java.validation;
+package com.javamaster.b2c.cloud.test.learn.java.test;
 
 import com.javamaster.b2c.cloud.test.learn.java.enums.CarTypeEnum;
 import com.javamaster.b2c.cloud.test.learn.java.model.AppointmentOrderDetailReqDto;
@@ -6,6 +6,8 @@ import com.javamaster.b2c.cloud.test.learn.java.model.Car;
 import com.javamaster.b2c.cloud.test.learn.java.model.Driver;
 import com.javamaster.b2c.cloud.test.learn.java.model.Person;
 import com.javamaster.b2c.cloud.test.learn.java.model.RentalCar;
+import com.javamaster.b2c.cloud.test.learn.java.validation.OrederedChecks;
+import com.javamaster.b2c.cloud.test.learn.java.validation.ValidationUtils;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
@@ -18,7 +20,7 @@ import java.util.Set;
  * @author yu
  */
 public class ValidationTest {
-    private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
     public void test() {
@@ -69,6 +71,7 @@ public class ValidationTest {
         System.out.println(violations);
         // 测试自定义校验注解
         Person person = new Person("yudong");
+        System.out.println(person.toString());
         Set<ConstraintViolation<Person>> constraintViolations = validator.validate(person);
         ConstraintViolation<Person> constraintViolation = constraintViolations.iterator().next();
         System.out.println(constraintViolation.getMessage());

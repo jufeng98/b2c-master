@@ -37,6 +37,7 @@
   </div>
 </template>
 <script>
+import gzip from 'gzip-js';
 
 import contentHtml from "../../../static/h5-long.html"
 import contentJs from "../../../static/h5-long.umd"
@@ -71,6 +72,10 @@ export default {
     window.html = contentHtml;
     window.js = contentJs;
     window.css = contentCss;
+    let options = {
+      level: 9,
+    };
+    window.out = gzip.zip(contentHtml, options);
   },
 }
 </script>

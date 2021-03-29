@@ -92,8 +92,8 @@ watch org.javamaster.b2c.swagger2.service.impl.LoginServiceImpl login {params} -
 # 观察方法调用后返回值
 watch org.javamaster.b2c.swagger2.service.impl.LoginServiceImpl login {returnObj} -x 2 -s
 
-# 同时观察方法调用前后的入参和返回值
-watch org.javamaster.b2c.swagger2.service.impl.LoginServiceImpl login {params,returnObj} -x 2 -b -s
+# 同时观察方法调用前后的入参,返回值和异常信息
+watch org.javamaster.b2c.swagger2.service.impl.LoginServiceImpl login {params,returnObj,throwExp} -x 2 -b -f
 
 # 观察方法调用前对象的属性值
 watch org.javamaster.b2c.swagger2.controller.LoginController login {target} -x 3 -b

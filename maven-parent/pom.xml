@@ -68,6 +68,7 @@
         <module>maven-plugin-spi-client</module>
         <module>spring-aop</module>
         <module>spring-env</module>
+        <module>spring-mybatisplus</module>
         <module>summer-parent</module>
         <module>test-learn-java</module>
     </modules>
