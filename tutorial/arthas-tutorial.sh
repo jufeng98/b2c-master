@@ -19,37 +19,41 @@ ognl '@java.lang.System@out'
 getstatic java.lang.System out
 
 #执行多行表达式，赋值给临时变量，返回一个List
-ognl '#value1=@System@getProperty("java.home"), #value2=@System@getProperty("java.runtime.name"), {#value1, #value2}'
+ognl '#res1=@System@getProperty("java.home"),
+#res2=@System@getProperty("java.runtime.name"),
+{#res1, #res2}'
 
 # 可调用被spring管理的任意bean的任意方法
-ognl "#value1=@cn.com.bluemoon.mall.common.utils.AppContextHelper@applicationContext.getBean('promotionCouponBaseService').getByActId(new java.math.BigInteger('16032219530215768471')),
-#value2=@com.alibaba.fastjson.JSONObject@toJSONString(#value1),
-{#value2}"
+ognl "#res1=@cn.com.bluemoon.mall.common.utils.AppContextHelper@applicationContext.getBean('promotionCouponBaseService').getByActId(new java.math.BigInteger('16032219530215768471')),
+#res2=@com.alibaba.fastjson.JSONObject@toJSONString(#res1),
+{#res2}"
 
 # 获取加载该类的classloader的hash码
 sc -d org.javamaster.b2c.swagger2.Swagger2Application
 # 指定使用的classloader的hash码
-ognl -c 439f5b3d "#value1=@org.javamaster.b2c.swagger2.Swagger2Application@context.getBean('loginServiceImpl').login(new org.javamaster.b2c.swagger2.model.UserReqVo(),'1'),
-#value2=new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(#value1),
-{#value2}"
+ognl -c 439f5b3d "#res1=@org.javamaster.b2c.swagger2.Swagger2Application@context.getBean('loginServiceImpl').login(new org.javamaster.b2c.swagger2.model.UserReqVo(),'1'),
+#res2=new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(#res1),
+{#res2}"
 
 # 若应用没有暴露context,可以用此命令记录context
 tt -t -n 1 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter invokeHandlerMethod
 
 # new一个对象并给字段赋值(用于查看new对象效果)
-ognl "#value1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
-#value1.username='jufeng98',
-#value1.password='123456'"
+ognl "#res1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
+#res1.username='jufeng98',
+#res1.password='123456'"
 
 # 拿到context去执行任意bean的方法
-tt -i 1000 -w "#value1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
-#value1.username='jufeng98',
-#value1.password='123456',
-target.getApplicationContext().getBean('loginServiceImpl').login(#value1,'1')"
+tt -i 1000 -w "#res1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
+#res1.username='jufeng98',
+#res1.password='123456',
+#res2=target.getApplicationContext().getBean('loginServiceImpl').login(#res1,'1'),
+#res3=new com.fasterxml.jackson.databind.ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(#res2),
+{#res3}"
 
 # 若应用引入了dubbo,则可以这样拿到context
 ognl "#context=@com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory@contexts.iterator.next,
-#value1=#context.getBean('loginServiceImpl').login(new org.javamaster.b2c.swagger2.model.UserReqVo(),'1')"
+#res1=#context.getBean('loginServiceImpl').login(new org.javamaster.b2c.swagger2.model.UserReqVo(),'1')"
 
 # 查看占用CPU的线程
 thread -n 3
