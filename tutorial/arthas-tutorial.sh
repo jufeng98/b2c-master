@@ -35,8 +35,15 @@ ognl -c 439f5b3d "#value1=@org.javamaster.b2c.swagger2.Swagger2Application@conte
 
 # 若应用没有暴露context,可以用此命令记录context
 tt -t -n 1 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter invokeHandlerMethod
-# 拿到context
-tt -i 1000 -w "target.getApplicationContext()"
+
+# new一个对象并给字段赋值(用于查看new对象效果)
+ognl "#value1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
+{#value1.username='jufeng98',#value1.password='123456'}"
+
+# 拿到context去执行任意bean的方法
+tt -i 1000 -w "#value1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
+{#value1.username='jufeng98',#value1.password='123456'},
+target.getApplicationContext().getBean('loginServiceImpl').login(#value1,'1')"
 
 # 若应用引入了dubbo,则可以这样拿到context
 ognl "#context=@com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory@contexts.iterator.next,
