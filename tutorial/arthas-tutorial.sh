@@ -38,11 +38,13 @@ tt -t -n 1 org.springframework.web.servlet.mvc.method.annotation.RequestMappingH
 
 # new一个对象并给字段赋值(用于查看new对象效果)
 ognl "#value1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
-{#value1.username='jufeng98',#value1.password='123456'}"
+#value1.username='jufeng98',
+#value1.password='123456'"
 
 # 拿到context去执行任意bean的方法
 tt -i 1000 -w "#value1=new org.javamaster.b2c.swagger2.model.UserReqVo(),
-{#value1.username='jufeng98',#value1.password='123456'},
+#value1.username='jufeng98',
+#value1.password='123456',
 target.getApplicationContext().getBean('loginServiceImpl').login(#value1,'1')"
 
 # 若应用引入了dubbo,则可以这样拿到context
