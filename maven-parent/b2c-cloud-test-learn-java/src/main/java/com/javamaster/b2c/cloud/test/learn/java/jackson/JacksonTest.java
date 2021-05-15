@@ -1,57 +1,22 @@
 package com.javamaster.b2c.cloud.test.learn.java.jackson;
 
 import com.alibaba.fastjson.JSONObject;
-import com.javamaster.b2c.cloud.test.learn.java.enums.CarTypeEnum;
-import com.javamaster.b2c.cloud.test.learn.java.enums.TransactionTypeEnum;
-import com.javamaster.b2c.cloud.test.learn.java.model.Address;
-import com.javamaster.b2c.cloud.test.learn.java.model.Car;
-import com.javamaster.b2c.cloud.test.learn.java.model.Driver;
-import com.javamaster.b2c.cloud.test.learn.java.model.EUserInformation;
-import com.javamaster.b2c.cloud.test.learn.java.model.LoginUserInformation;
-import com.javamaster.b2c.cloud.test.learn.java.model.MemberInformation;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonAnyGetter;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonDeserialize;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonGetter;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonImmutable;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonInclude;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonInject;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonPropertyOrder;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonRawValue;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonSerializer;
-import com.javamaster.b2c.cloud.test.learn.java.model.PersonValue;
-import com.javamaster.b2c.cloud.test.learn.java.model.Transaction;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.InjectableValues;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.javamaster.b2c.cloud.test.learn.java.enums.CarTypeEnum;
+import com.javamaster.b2c.cloud.test.learn.java.enums.TransactionTypeEnum;
+import com.javamaster.b2c.cloud.test.learn.java.model.*;
 import org.junit.Test;
 import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * @author yudong
@@ -78,9 +43,9 @@ public class JacksonTest {
         driver.setAddress(new Address());
         driver.setBirthday(null);
 
-        String json=objectMapper.writeValueAsString(driver);
+        String json = objectMapper.writeValueAsString(driver);
         System.out.println(json);
-        System.out.println("hello:"+driver);
+        System.out.println("hello:" + driver);
         JsonNode jsonNode = objectMapper.readTree(json);
 
         ObjectNode objectNode = objectMapper.createObjectNode();
@@ -262,6 +227,15 @@ public class JacksonTest {
         String s1 = "{\"subClassName\":\"MemberInformation\",\"userType\":\"1\",\"ip\":\"127.0.0.1\",\"fpcardno\":\"513712340023\",\"passwd\":\"qq123123\"}";
         information = objectMapper.readValue(s1, LoginUserInformation.class);
         System.out.println(information);
+    }
+
+
+    @Test
+    public void test6() throws Exception {
+        FastBean fastBean = new FastBean();
+        fastBean.setShopOrderId(-1L);
+        fastBean.setOrderCode("TW12345678");
+        System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(fastBean));;
     }
 }
 

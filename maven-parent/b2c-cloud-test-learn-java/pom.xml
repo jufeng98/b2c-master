@@ -451,6 +451,11 @@
             <artifactId>service-app-manager-api</artifactId>
             <version>0.0.3-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.1.8.RELEASE</version>
+        </dependency>
         <!--解决至尊项目dubbo报zookeeper找不到问题,加入下列依赖并重新导入-->
         <!--<dependency>-->
         <!--<groupId>org.apache.zookeeper</groupId>-->

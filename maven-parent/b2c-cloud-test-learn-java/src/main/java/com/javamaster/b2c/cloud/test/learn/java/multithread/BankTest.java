@@ -1,8 +1,10 @@
 package com.javamaster.b2c.cloud.test.learn.java.multithread;
 
+import org.junit.Test;
+
+import java.io.*;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @author yu
@@ -27,5 +29,40 @@ public class BankTest {
                 }
             });
         }
+    }
+
+    @Test
+    public void test22() throws Exception {
+        PipedWriter pipedWriter = new PipedWriter();
+        PipedReader pipedReader = new PipedReader();
+        pipedWriter.connect(pipedReader);
+
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService.submit(() -> {
+            try {
+                pipedWriter.write(1);
+                TimeUnit.SECONDS.sleep(3);
+                pipedWriter.write(2);
+                TimeUnit.SECONDS.sleep(3);
+                pipedWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        executorService.submit(()->{
+            try {
+                while (true) {
+                    if (pipedReader.ready()) {
+                        int read = pipedReader.read();
+                        System.out.println(read);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        TimeUnit.SECONDS.sleep(10);
     }
 }
