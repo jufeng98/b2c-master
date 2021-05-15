@@ -2,14 +2,14 @@ package org.javamaster.spring.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.javamaster.spring.test.GeneralTestCode.PROFILE_UNIT_TEST;
+import org.javamaster.spring.test.boot.ScanDependenciesContextBootstrapper;
 import org.javamaster.spring.test.config.*;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc
 @WebAppConfiguration
+@BootstrapWith(ScanDependenciesContextBootstrapper.class)
 @ActiveProfiles(PROFILE_UNIT_TEST)
 public abstract class GeneralTestCode {
     public static final String PROFILE_UNIT_TEST = "unit-test";
