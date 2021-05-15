@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Profile;
 @TestConfiguration
 @Profile(PROFILE_UNIT_TEST)
 public class DubboTestConfig implements ApplicationContextAware {
+    static {
+        System.setProperty("dubbo.application.qos.enable", "false");
+    }
 
     private ApplicationContext applicationContext;
 

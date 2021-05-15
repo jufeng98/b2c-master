@@ -2,13 +2,13 @@ package org.javamaster.spring.test.config;
 
 import lombok.SneakyThrows;
 import org.apache.ibatis.session.SqlSessionFactory;
+import static org.javamaster.spring.test.GeneralTestCode.PROFILE_UNIT_TEST;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -17,14 +17,13 @@ import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-import static org.javamaster.spring.test.GeneralTestCode.PROFILE_UNIT_TEST;
-
 /**
  * @author yudong
  * @date 2021/4/30
  */
 @SuppressWarnings("all")
 @TestConfiguration
+@Import(DataSourceTestConfig.class)
 @Profile(PROFILE_UNIT_TEST)
 public class TkMybatisTestConfig {
     @Value("${mybatis.mapperLocation}")
