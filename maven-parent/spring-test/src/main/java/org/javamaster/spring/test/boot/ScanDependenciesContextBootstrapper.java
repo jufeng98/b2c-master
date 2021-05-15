@@ -23,9 +23,11 @@ import java.util.stream.Collectors;
 public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrapper {
 
     private final Set<Class<?>> alreadyHandle = new HashSet<>();
-    private Vector<?> allAppClasses;
+
+    private Vector<?> allTargetClasses;
 
     @Override
+    @SuppressWarnings("all")
     protected MergedContextConfiguration processMergedContextConfiguration(MergedContextConfiguration mergedConfig) {
         MergedContextConfiguration mergedContextConfiguration = super.processMergedContextConfiguration(mergedConfig);
         Class<?> testClass = mergedConfig.getTestClass();
@@ -33,32 +35,54 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
 
         Class<?> targetTestedClass = annotation.value();
 
-        initAllAppClasses(targetTestedClass.getClassLoader());
+        initTargetAllClasses(targetTestedClass.getClassLoader());
 
-        List<Class<?>> list = getRelateClasses(targetTestedClass);
+        List<Class<?>> list = getDependencyClasses(targetTestedClass);
+
+        Class<?>[] interfaces = annotation.additionalInterfaces();
+        for (Class<?> additionalInterface : interfaces) {
+            List<Class<?>> implClasses = getInterfaceImplClasses(additionalInterface);
+            list.addAll(implClasses);
+            for (Class<?> clazz : implClasses) {
+                list.addAll(getDependencyClasses(clazz));
+            }
+        }
+
         list = list.stream()
                 .filter(clz -> !clz.getName().startsWith("org.springframework") && !Modifier.isAbstract(clz.getModifiers()))
                 .collect(Collectors.toList());
 
         Class<?>[] classes = mergedConfig.getClasses();
-        Class<?>[] appClasses = list.toArray(new Class<?>[]{});
+        Class<?>[] targetClasses = list.toArray(new Class<?>[]{});
 
-        Class<?>[] allClasses = new Class[classes.length + appClasses.length];
+        Class<?>[] allClasses = new Class[classes.length + targetClasses.length];
         System.arraycopy(classes, 0, allClasses, 0, classes.length);
-        System.arraycopy(appClasses, 0, allClasses, classes.length, appClasses.length);
+        System.arraycopy(targetClasses, 0, allClasses, classes.length, targetClasses.length);
 
         TestUtils.reflectSet(mergedContextConfiguration, "classes", allClasses);
         return mergedContextConfiguration;
     }
 
-    private List<Class<?>> getRelateClasses(Class<?> clz) {
-        Field[] declaredFields = clz.getDeclaredFields();
-        return getFieldRelateClasses(declaredFields);
+    private List<Class<?>> getDependencyClasses(Class<?> clz) {
+        List<Field> fields = getFields(clz);
+        return getFieldRelateClasses(fields);
     }
 
-    private List<Class<?>> getFieldRelateClasses(Field[] declaredFields) {
+    private List<Field> getFields(Class<?> clz) {
+        Field[] declaredFields = clz.getDeclaredFields();
+        List<Field> list = new ArrayList<>(Arrays.asList(declaredFields));
+
+        Class<?> superclass = clz.getSuperclass();
+        if (superclass != Object.class) {
+            List<Field> fields = getFields(superclass);
+            list.addAll(fields);
+        }
+        return list;
+    }
+
+    private List<Class<?>> getFieldRelateClasses(List<Field> fields) {
         List<Class<?>> list = new ArrayList<>();
-        for (Field declaredField : declaredFields) {
+        for (Field declaredField : fields) {
             if (declaredField.getAnnotation(Autowired.class) == null) {
                 continue;
             }
@@ -68,15 +92,15 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
             }
             alreadyHandle.add(fieldTypeClass);
             if (fieldTypeClass.isInterface()) {
-                List<Class<?>> allSubClass = getInterfaceImplClass(fieldTypeClass);
+                List<Class<?>> allSubClass = getInterfaceImplClasses(fieldTypeClass);
                 list.addAll(allSubClass);
                 for (Class<?> subClass : allSubClass) {
-                    List<Class<?>> relateClasses = getFieldRelateClasses(subClass.getDeclaredFields());
+                    List<Class<?>> relateClasses = getFieldRelateClasses(Arrays.asList(subClass.getDeclaredFields()));
                     list.addAll(relateClasses);
                 }
             } else {
                 list.add(fieldTypeClass);
-                List<Class<?>> relateClasses = getFieldRelateClasses(fieldTypeClass.getDeclaredFields());
+                List<Class<?>> relateClasses = getFieldRelateClasses(Arrays.asList(fieldTypeClass.getDeclaredFields()));
                 list.addAll(relateClasses);
             }
         }
@@ -84,13 +108,16 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
     }
 
 
+    /**
+     * 找到接口的所有实现类
+     */
     @SneakyThrows
-    private List<Class<?>> getInterfaceImplClass(Class<?> interfaceClass) {
+    private List<Class<?>> getInterfaceImplClasses(Class<?> interfaceClass) {
         if (interfaceClass == Logger.class) {
             return Collections.emptyList();
         }
         List<Class<?>> allSubclass = new ArrayList<>();
-        for (Object o : allAppClasses) {
+        for (Object o : allTargetClasses) {
             Class<?> c = (Class<?>) o;
             if (interfaceClass.isAssignableFrom(c) && !c.isInterface()) {
                 allSubclass.add(c);
@@ -100,7 +127,7 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
     }
 
     @SneakyThrows
-    private void initAllAppClasses(ClassLoader classLoader) {
+    private void initTargetAllClasses(ClassLoader classLoader) {
         String testClassPath = Objects.requireNonNull(classLoader.getResource("")).getFile();
         File targetPath = new File(testClassPath).getParentFile();
         File classPath = new File(targetPath, "classes");
@@ -126,7 +153,7 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
         }
         Field field = clazz.getDeclaredField("classes");
         field.setAccessible(true);
-        allAppClasses = (Vector<?>) field.get(classLoader);
+        allTargetClasses = (Vector<?>) field.get(classLoader);
     }
 
 }
