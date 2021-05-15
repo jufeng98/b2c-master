@@ -10,6 +10,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface Tested {
+public @interface ScanTestedDependencies {
     Class<?> value();
 }

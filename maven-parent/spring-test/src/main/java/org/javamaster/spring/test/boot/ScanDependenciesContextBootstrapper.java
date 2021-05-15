@@ -1,7 +1,7 @@
 package org.javamaster.spring.test.boot;
 
 import lombok.SneakyThrows;
-import org.javamaster.spring.test.annos.Tested;
+import org.javamaster.spring.test.annos.ScanTestedDependencies;
 import org.javamaster.spring.test.utils.TestUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
     protected MergedContextConfiguration processMergedContextConfiguration(MergedContextConfiguration mergedConfig) {
         MergedContextConfiguration mergedContextConfiguration = super.processMergedContextConfiguration(mergedConfig);
         Class<?> testClass = mergedConfig.getTestClass();
-        Tested annotation = testClass.getAnnotation(Tested.class);
+        ScanTestedDependencies annotation = testClass.getAnnotation(ScanTestedDependencies.class);
 
         Class<?> targetTestedClass = annotation.value();
 
