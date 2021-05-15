@@ -68,8 +68,9 @@ public class FeignTestConfig implements InitializingBean {
         System.out.println(hardCodedTarget.url());
 
         reflectSet(hardCodedTarget, "url", newUrl);
+        System.out.println("begin----------------------------");
         System.out.println(feignName + " url change to " + newUrl);
-        System.out.println("------------------------------------");
+        System.out.println("end------------------------------");
     }
 
 
