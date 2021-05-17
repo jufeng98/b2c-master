@@ -27,7 +27,8 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {
         PropertyTestConfig.class,
-        WebMvcTestConfig.class
+        WebMvcTestConfig.class,
+        SysConfig.class
 }, initializers = VerifyEnvApplicationContextInitializer.class)
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc

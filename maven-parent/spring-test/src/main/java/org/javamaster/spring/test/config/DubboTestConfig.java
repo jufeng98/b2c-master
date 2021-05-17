@@ -22,6 +22,8 @@ import org.springframework.context.annotation.Profile;
 public class DubboTestConfig implements ApplicationContextAware {
     static {
         System.setProperty("dubbo.application.qos.enable", "false");
+        System.setProperty("dubbo.reference.check", "false");
+        System.setProperty("dubbo.consumer.check", "false");
     }
 
     private ApplicationContext applicationContext;
@@ -40,6 +42,7 @@ public class DubboTestConfig implements ApplicationContextAware {
         String address = applicationContext.getEnvironment().getProperty("spring.dubbo.registry.address");
         registryConfig.setAddress(address);
         registryConfig.setTimeout(30000);
+        registryConfig.setCheck(false);
         return registryConfig;
     }
 
