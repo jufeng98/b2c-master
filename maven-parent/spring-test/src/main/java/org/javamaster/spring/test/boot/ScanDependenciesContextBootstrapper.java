@@ -24,22 +24,21 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
 
     private final Set<Class<?>> alreadyHandle = new HashSet<>();
 
-    private Vector<?> allTargetClasses;
+    private final List<Class<?>> allTargetClasses = new ArrayList<>();
 
     @Override
     @SuppressWarnings("all")
     protected MergedContextConfiguration processMergedContextConfiguration(MergedContextConfiguration mergedConfig) {
         MergedContextConfiguration mergedContextConfiguration = super.processMergedContextConfiguration(mergedConfig);
         Class<?> testClass = mergedConfig.getTestClass();
-        ScanTestedDependencies annotation = testClass.getAnnotation(ScanTestedDependencies.class);
+        ScanTestedDependencies scanTestedDependencies = testClass.getAnnotation(ScanTestedDependencies.class);
 
-        Class<?> targetTestedClass = annotation.value();
+        initTargetAllClasses(testClass.getClassLoader());
 
-        initTargetAllClasses(targetTestedClass.getClassLoader());
-
+        Class<?> targetTestedClass = scanTestedDependencies.value();
         List<Class<?>> list = getDependencyClasses(targetTestedClass);
 
-        Class<?>[] interfaces = annotation.additionalInterfaces();
+        Class<?>[] interfaces = scanTestedDependencies.additionalInterfaces();
         for (Class<?> additionalInterface : interfaces) {
             List<Class<?>> implClasses = getInterfaceImplClasses(additionalInterface);
             list.addAll(implClasses);
@@ -141,19 +140,12 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
                             .replace(classPathStr, "")
                             .replace(".class", "")
                             .replace("\\", ".");
-                    Class.forName(str.substring(1));
+                    Class<?> clz = Class.forName(str.substring(1));
+                    allTargetClasses.add(clz);
                 }
                 return FileVisitResult.CONTINUE;
             }
         });
-
-        Class<?> clazz = classLoader.getClass();
-        while (clazz != ClassLoader.class) {
-            clazz = clazz.getSuperclass();
-        }
-        Field field = clazz.getDeclaredField("classes");
-        field.setAccessible(true);
-        allTargetClasses = (Vector<?>) field.get(classLoader);
     }
 
 }
