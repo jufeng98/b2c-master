@@ -49,9 +49,9 @@ public class FeignTestConfig implements InitializingBean {
     private void changeFeignServiceUrl(String feignName, String newUrl) throws Exception {
         Object feignService = context.getBean(feignName);
         TestUtils.changeFeignBeanUrl(feignService, newUrl);
-        System.out.println("begin----------------------------");
-        System.out.println(feignName + " url change to " + newUrl);
-        System.out.println("end------------------------------");
+        System.out.println(getClass().getSimpleName() + ":begin----------------------------");
+        System.out.println(getClass().getSimpleName() + ":" + feignName + " url change to " + newUrl);
+        System.out.println(getClass().getSimpleName() + ":end------------------------------");
     }
 
 
