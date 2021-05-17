@@ -54,7 +54,7 @@ public class FeignBeanUrlProcessor implements BeanPostProcessor {
             serviceUrl = "http://" + ipAddr + ":" + port;
         } catch (Exception e) {
             serviceUrl = serviceName;
-            System.err.println(getClass().getSimpleName() + ":get eureka instance" + serviceName + " failed");
+            System.err.println(getClass().getSimpleName() + ":get eureka instance " + serviceName + " failed");
         }
         map.put(serviceName, serviceUrl);
         return serviceUrl;
