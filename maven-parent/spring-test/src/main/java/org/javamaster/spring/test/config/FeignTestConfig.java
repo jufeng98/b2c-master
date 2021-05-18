@@ -10,8 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfiguration;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
 
 /**
  * 修改feign service的url以便用于能正常调用
@@ -30,6 +29,7 @@ import org.springframework.context.annotation.Profile;
         FeignAutoConfiguration.class
 })
 @Profile(PROFILE_UNIT_TEST)
+@EnableAspectJAutoProxy
 public class FeignTestConfig {
     @Autowired
     private ApplicationContext context;
