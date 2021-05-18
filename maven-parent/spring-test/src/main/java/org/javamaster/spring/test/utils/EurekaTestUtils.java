@@ -25,8 +25,8 @@ public class EurekaTestUtils {
             String port = instance.get("port").get("$").asText();
             serviceUrl = ipAddr + ":" + port;
         } catch (Exception e) {
-            serviceUrl = serviceName;
             System.err.println(EurekaTestUtils.class.getSimpleName() + ":eureka instance " + serviceName + " not exists!");
+            throw e;
         }
         MAP.put(serviceName, serviceUrl);
         return serviceUrl;
