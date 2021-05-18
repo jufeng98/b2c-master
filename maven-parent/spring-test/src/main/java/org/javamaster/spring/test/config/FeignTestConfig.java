@@ -1,10 +1,8 @@
 package org.javamaster.spring.test.config;
 
 import static org.javamaster.spring.test.GeneralTestCode.PROFILE_UNIT_TEST;
-import org.javamaster.spring.test.utils.TestUtils;
-import org.springframework.beans.factory.InitializingBean;
+import org.javamaster.spring.test.advisor.FeignBeanUrlAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
@@ -12,6 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.ribbon.FeignRibbonClientAutoConfiguration;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 /**
@@ -31,28 +30,13 @@ import org.springframework.context.annotation.Profile;
         FeignAutoConfiguration.class
 })
 @Profile(PROFILE_UNIT_TEST)
-public class FeignTestConfig implements InitializingBean {
+public class FeignTestConfig {
     @Autowired
     private ApplicationContext context;
-    @Value("${feign.services:}")
-    private String[] services;
 
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        for (String service : services) {
-            String[] split = service.split("\\|");
-            changeFeignServiceUrl(split[0], split[1]);
-        }
+    @Bean
+    public FeignBeanUrlAdvisor feignBeanUrlAdvisor() {
+        return new FeignBeanUrlAdvisor();
     }
-
-    private void changeFeignServiceUrl(String feignName, String newUrl) throws Exception {
-        Object feignService = context.getBean(feignName);
-        TestUtils.changeFeignBeanUrl(feignService, newUrl);
-        System.out.println(getClass().getSimpleName() + ":begin----------------------------");
-        System.out.println(getClass().getSimpleName() + ":" + feignName + " url change to " + newUrl);
-        System.out.println(getClass().getSimpleName() + ":end------------------------------");
-    }
-
 
 }
