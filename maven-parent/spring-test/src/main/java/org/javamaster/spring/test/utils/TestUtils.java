@@ -14,6 +14,7 @@ import java.util.Objects;
  * @date 2021/5/13
  */
 public class TestUtils {
+    private static final Client CLIENT = new Client.Default(null, null);
 
     @SneakyThrows
     public static Object reflectGet(Object object, String fieldName) {
@@ -45,14 +46,11 @@ public class TestUtils {
     public static void changeFeignBeanUrl(Object feignBean, String newUrl) {
         Object hObj = reflectGet(feignBean, "h");
         HashMap<?, ?> dispatchObj = (HashMap<?, ?>) reflectGet(hObj, "dispatch");
-        Client client = new Client.Default(null, null);
         for (Object methodHandler : dispatchObj.values()) {
-            reflectSet(methodHandler, "client", client);
+            reflectSet(methodHandler, "client", CLIENT);
         }
-
         Target.HardCodedTarget<?> hardCodedTarget = (Target.HardCodedTarget<?>) reflectGet(hObj, "target");
         reflectSet(hardCodedTarget, "url", newUrl);
-
     }
 
 }

@@ -8,8 +8,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author yudong
@@ -48,7 +47,7 @@ public class FeignBeanUrlProcessor implements BeanPostProcessor {
         String eureka = context.getEnvironment().getProperty("eureka.client.serviceUrl.defaultZone") + "apps/" + serviceName;
         try {
             JsonNode jsonNode = restTemplate.getForObject(eureka, JsonNode.class);
-            JsonNode instance = jsonNode.get("application").get("instance").get(0);
+            JsonNode instance = Objects.requireNonNull(jsonNode).get("application").get("instance").get(0);
             String ipAddr = instance.get("ipAddr").asText();
             String port = instance.get("port").get("$").asText();
             serviceUrl = "http://" + ipAddr + ":" + port;
