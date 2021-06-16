@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import springfox.documentation.builders.*;
-import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Parameter;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -25,13 +23,12 @@ public class Swagger2Config {
 
     @Bean
     public Docket createRestApi() {
-        List<Parameter> params = new ArrayList<>();
-        Parameter param = new ParameterBuilder()
+        List<RequestParameter> params = new ArrayList<>();
+        RequestParameter param = new RequestParameterBuilder()
                 .name("Authorization")
                 .description("访问授权码头字段")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
-                .required(false)
+                .required(true)
+                .in(ParameterType.HEADER)
                 .build();
         params.add(param);
 
@@ -43,7 +40,7 @@ public class Swagger2Config {
                 // 路径使用any风格
                 .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(params)
+                .globalRequestParameters(params)
                 .consumes(Sets.newHashSet(MediaType.APPLICATION_JSON_VALUE))
                 .produces(Sets.newHashSet(MediaType.APPLICATION_JSON_VALUE))
                 // 接口文档的基本信息

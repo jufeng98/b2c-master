@@ -22,6 +22,7 @@ public class Swagger2Application {
         context = SpringApplication.run(Swagger2Application.class, args);
         Environment environment = context.getEnvironment();
         log.info("swagger2 url:http://localhost:{}/swagger-ui.html#/", environment.getProperty("server.port"));
+        log.info("swagger2 url:http://localhost:{}/doc.html#/", environment.getProperty("server.port"));
     }
 
     public static ApplicationContext getContext() {
