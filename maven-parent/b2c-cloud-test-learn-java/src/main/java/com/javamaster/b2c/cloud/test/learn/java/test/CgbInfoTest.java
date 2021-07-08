@@ -1,12 +1,12 @@
 package com.javamaster.b2c.cloud.test.learn.java.test;
 
-import com.javamaster.b2c.cloud.test.learn.java.model.CgbAngelInfo;
-import com.javamaster.b2c.cloud.test.learn.java.utils.MybatisUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.javamaster.b2c.cloud.test.learn.java.model.CgbAngelInfo;
+import com.javamaster.b2c.cloud.test.learn.java.utils.MybatisUtils;
+import static com.javamaster.b2c.cloud.test.learn.java.utils.PropertiesUtils.getProp;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.javamaster.b2c.config.B2cMasterConsts;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yudong
@@ -60,7 +58,7 @@ public class CgbInfoTest {
     }
 
     private void handlerList(List<CgbAngelInfo> list) {
-        String url = "http://restapi.amap.com/v3/assistant/coordinate/convert?locations={1},{2}&coordsys=baidu&output=JSON&key=" + B2cMasterConsts.Map.GAODE_KEY_2;
+        String url = "http://restapi.amap.com/v3/assistant/coordinate/convert?locations={1},{2}&coordsys=baidu&output=JSON&key=" + getProp("Map.GAODE_KEY_2");
         for (CgbAngelInfo cgbAngelInfo : list) {
             if (StringUtils.isBlank(cgbAngelInfo.getLongitude())) {
                 log.info("address blank userId:{}", cgbAngelInfo.getUserid());
@@ -102,7 +100,7 @@ public class CgbInfoTest {
 
     private void handlerBlank(List<CgbAngelInfo> list) {
         String url = "https://restapi.amap.com/v3/geocode/geo";
-        String key = B2cMasterConsts.Map.GAODE_KEY_2;
+        String key = getProp("Map.GAODE_KEY_2");
         outer:
         for (CgbAngelInfo cgbAngelInfo : list) {
             String address;

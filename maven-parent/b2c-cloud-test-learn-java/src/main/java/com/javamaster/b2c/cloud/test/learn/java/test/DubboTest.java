@@ -41,11 +41,10 @@ import com.bluemoon.proxy.service.sms.SmsService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.javamaster.b2c.cloud.test.learn.java.utils.DubboUtils;
 import com.javamaster.b2c.cloud.test.learn.java.utils.OMUtils;
+import static com.javamaster.b2c.cloud.test.learn.java.utils.PropertiesUtils.getProp;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang3.time.DateUtils;
-import static org.javamaster.b2c.config.B2cMasterConsts.Server.SERVER_1;
-import static org.javamaster.b2c.config.B2cMasterConsts.Server.SERVER_18;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -78,7 +77,7 @@ public class DubboTest {
 
     @Test
     public void test1() {
-        UserService service = DubboUtils.getService(UserService.class, "1.0.0", SERVER_1);
+        UserService service = DubboUtils.getService(UserService.class, "1.0.0", getProp("Server.SERVER_1"));
         Object object = service.getUserInfoByUserId("U18110814354169025621");
         log.info(OMUtils.writeValueAsString(object));
         object = service.getUserBaseByMobile("18826483965");
@@ -227,7 +226,7 @@ public class DubboTest {
 
     @Test
     public void test18() throws Exception {
-        RegionService service = DubboUtils.getService(RegionService.class, null, SERVER_18);
+        RegionService service = DubboUtils.getService(RegionService.class, null, getProp("SERVER_18"));
         Object resObj = service.getPointInfo("广东广州增城区凤凰岛一街凤凰苑");
         log.info(OMUtils.writeValueAsString(resObj, true));
         log.info(OMUtils.writeValueAsString(service.getAddressByGPS(0.0, 23.14365, 113.56129), true));

@@ -6,7 +6,6 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.javamaster.b2c.config.B2cMasterConsts;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -19,14 +18,14 @@ import java.util.List;
  */
 public class DubboUtils {
 
-    // private static final String ADDRESS = B2cMasterConsts.Dubbo.ZOOKEEPER_ADDRESS;
-    private static final String ADDRESS = B2cMasterConsts.Dubbo.ZOOKEEPER_ADDRESS_1;
-    // private static final String ADDRESS = B2cMasterConsts.Dubbo.ZOOKEEPER_ADDRESS_2;
-    // private static final String ADDRESS = B2cMasterConsts.Dubbo.ZOOKEEPER_ADDRESS_3;
+    // private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS");
+    private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_1");
+    // private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_2");
+    // private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_3");
 
     private static final int TIMEOUT = 10000;
 
-    static{
+    static {
         System.setProperty("dubbo.application.logger", "slf4j");
         Logger.getRootLogger().setLevel(Level.INFO);
     }

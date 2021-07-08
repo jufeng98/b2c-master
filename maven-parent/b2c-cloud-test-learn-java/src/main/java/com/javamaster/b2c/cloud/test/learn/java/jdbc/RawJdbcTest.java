@@ -1,8 +1,8 @@
 package com.javamaster.b2c.cloud.test.learn.java.jdbc;
 
+import static com.javamaster.b2c.cloud.test.learn.java.utils.PropertiesUtils.getProp;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.javamaster.b2c.config.B2cMasterConsts;
 import org.junit.Test;
 
 import java.sql.*;
@@ -18,8 +18,8 @@ public class RawJdbcTest {
 
     @SneakyThrows
     public static void main(String[] args) {
-        Connection connection = DriverManager.getConnection(B2cMasterConsts.Local.URL_ONLINE_EXAM,
-                B2cMasterConsts.Local.USERNAME, B2cMasterConsts.Local.PASSWORD);
+        Connection connection = DriverManager.getConnection(getProp("Local.URL_ONLINE_EXAM"),
+                getProp("Local.USERNAME"), getProp("Local.PASSWORD"));
         Scanner scanner = new Scanner(System.in);
         Statement statement = connection.createStatement();
         while (true) {
@@ -42,8 +42,8 @@ public class RawJdbcTest {
     @SneakyThrows
     public void test() {
         String sql = "select username,password from users limit 0,1";
-        Connection connection = DriverManager.getConnection(B2cMasterConsts.Local.URL_ONLINE_EXAM,
-                B2cMasterConsts.Local.USERNAME, B2cMasterConsts.Local.PASSWORD);
+        Connection connection = DriverManager.getConnection(getProp("Local.URL_ONLINE_EXAM"),
+                getProp("Local.USERNAME"), getProp("Local.PASSWORD"));
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         printResultSet(resultSet);

@@ -3,10 +3,8 @@ package com.javamaster.b2c.cloud.test.learn.java.jdbc;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSONObject;
 import com.javamaster.b2c.cloud.test.learn.java.utils.MybatisUtils;
+import static com.javamaster.b2c.cloud.test.learn.java.utils.PropertiesUtils.getProp;
 import static java.util.stream.Collectors.toList;
-import static org.javamaster.b2c.config.B2cMasterConsts.Honor.URL_APP;
-import static org.javamaster.b2c.config.B2cMasterConsts.WashingService.PASSWORD;
-import static org.javamaster.b2c.config.B2cMasterConsts.WashingService.USERNAME;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -29,9 +27,9 @@ public class HandlerWashingRecordTest {
 
         DruidDataSource appManagerDataSource = new DruidDataSource();
         appManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        appManagerDataSource.setUrl(URL_APP);
-        appManagerDataSource.setUsername(USERNAME);
-        appManagerDataSource.setPassword(PASSWORD);
+        appManagerDataSource.setUrl(getProp("Honor.URL_APP"));
+        appManagerDataSource.setUsername(getProp("WashingService.USERNAME"));
+        appManagerDataSource.setPassword(getProp("WashingService.PASSWORD"));
         // appManagerDataSource.setUrl(URL_APP_1);
         // appManagerDataSource.setUsername(USERNAME);
         // appManagerDataSource.setPassword(PASSWORD);

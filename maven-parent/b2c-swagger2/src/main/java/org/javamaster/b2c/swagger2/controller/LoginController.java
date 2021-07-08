@@ -42,13 +42,13 @@ public class LoginController {
         return new Result<>(loginService.login(userReqVo));
     }
 
-    @ApiOperation("登录")
+    @ApiOperation("登录1")
     @GetMapping(value = "/login1")
     public Result<User> login1(UserReqVo userReqVo, String appType) {
         return new Result<>(loginService.login(userReqVo, appType));
     }
 
-    @ApiOperation("登录")
+    @ApiOperation(value = "登录2", notes = "这是notes", tags = "这是tags")
     @GetMapping(value = "/login2")
     public Result<User> login2(UserReqVo userReqVo, Integer appType) {
         return new Result<>(loginService.login(userReqVo, appType));

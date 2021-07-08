@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.javamaster.b2c.cloud.test.learn.java.model.Coordinates;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.javamaster.b2c.config.B2cMasterConsts;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -59,8 +58,7 @@ public class AmapUtils {
 
     public static List<String> getLngLat(List<String> addresses) throws Exception {
         String url = "https://restapi.amap.com/v3/geocode/geo";
-        String key = B2cMasterConsts.Map.GAODE_KEY_2;
-        boolean batch = true;
+        String key = PropertiesUtils.getProp("Map.GAODE_KEY_2");
         String params = "key=" + key + "&output=JSON&batch=true" + "&address=" + StringUtils.join(addresses, "|");
         StringBuilder result = new StringBuilder();
         BufferedReader in = null;
@@ -81,7 +79,7 @@ public class AmapUtils {
             while ((line = in.readLine()) != null) {
                 result.append(line);
             }
-            log.info("res:{}", result.toString());
+            log.info("res:{}", result);
             JSONObject jsonObject = JSONObject.parseObject(result.toString());
             JSONArray jsonArray = jsonObject.getJSONArray("geocodes");
             List<String> locations = jsonArray.stream().map(obj -> {

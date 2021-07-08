@@ -1,14 +1,10 @@
 package com.javamaster.b2c.cloud.test.learn.java.utils;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import static com.javamaster.b2c.cloud.test.learn.java.utils.PropertiesUtils.getProp;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.javamaster.b2c.config.B2cMasterConsts;
-import static org.javamaster.b2c.config.B2cMasterConsts.Local.URL_SAKILA;
-import static org.javamaster.b2c.config.B2cMasterConsts.Micro.PASSWORD;
-import static org.javamaster.b2c.config.B2cMasterConsts.Micro.URL;
-import static org.javamaster.b2c.config.B2cMasterConsts.Micro.USERNAME;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -101,7 +97,7 @@ public class MybatisUtils {
         if (dataSourceMicrowebsite != null) {
             return dataSourceMicrowebsite;
         }
-        dataSourceMicrowebsite = druidDataSource(URL, USERNAME, PASSWORD);
+        dataSourceMicrowebsite = druidDataSource(getProp("Micro.URL"), getProp("Micro.USERNAME"), getProp("Micro_PASSWORD"));
         return dataSourceMicrowebsite;
     }
 
@@ -109,7 +105,7 @@ public class MybatisUtils {
         if (dataSourceJdbcMicrowebsite != null) {
             return dataSourceJdbcMicrowebsite;
         }
-        dataSourceJdbcMicrowebsite = druidDataSource(URL, USERNAME, PASSWORD);
+        dataSourceJdbcMicrowebsite = druidDataSource(getProp("Micro.URL"), getProp("Micro.USERNAME"), getProp("Micro_PASSWORD"));
         return dataSourceJdbcMicrowebsite;
     }
 
@@ -117,7 +113,7 @@ public class MybatisUtils {
         if (dataSourceJdbcSakila != null) {
             return dataSourceJdbcSakila;
         }
-        dataSourceJdbcSakila = druidDataSource(URL_SAKILA, B2cMasterConsts.Local.USERNAME, B2cMasterConsts.Local.PASSWORD);
+        dataSourceJdbcSakila = druidDataSource(getProp("Local.URL_SAKILA"), getProp("Local.USERNAME"), getProp("Local.PASSWORD"));
         return dataSourceJdbcSakila;
     }
 
@@ -125,8 +121,9 @@ public class MybatisUtils {
         if (dataSourceJdbcWashingService != null) {
             return dataSourceJdbcWashingService;
         }
-        dataSourceJdbcWashingService = druidDataSource(B2cMasterConsts.WashingService.URL, B2cMasterConsts.WashingService.USERNAME, B2cMasterConsts.WashingService.PASSWORD);
-        // dataSourceJdbcWashingService = druidDataSource(URL_SAKILA, B2cMasterConsts.Local.USERNAME, B2cMasterConsts.Local.PASSWORD);
+        dataSourceJdbcWashingService = druidDataSource(getProp("WashingService.URL"), getProp("WashingService.USERNAME"),
+                getProp("WashingService.PASSWORD"));
+        // dataSourceJdbcWashingService = druidDataSource(URL_SAKILA, getProp("Local.USERNAME, getProp("Local.PASSWORD);
         return dataSourceJdbcWashingService;
     }
 
@@ -134,7 +131,8 @@ public class MybatisUtils {
         if (dataSourceJdbcWashingService != null) {
             return dataSourceJdbcWashingService;
         }
-        dataSourceJdbcWashingService = druidDataSource(B2cMasterConsts.WashingService.URL, B2cMasterConsts.WashingService.USERNAME, B2cMasterConsts.WashingService.PASSWORD);
+        dataSourceJdbcWashingService = druidDataSource(getProp("WashingService.URL"), getProp("WashingService.USERNAME"),
+                getProp("WashingService.PASSWORD"));
         return dataSourceJdbcWashingService;
     }
 
@@ -142,7 +140,7 @@ public class MybatisUtils {
         if (dataSourceJdbcWashMall != null) {
             return dataSourceJdbcWashMall;
         }
-        dataSourceJdbcWashMall = druidDataSource(B2cMasterConsts.Honor.URL_WASH, B2cMasterConsts.WashingService.USERNAME, B2cMasterConsts.WashingService.PASSWORD);
+        dataSourceJdbcWashMall = druidDataSource(getProp("Honor.URL_WASH"), getProp("WashingService.USERNAME"), getProp("WashingService.PASSWORD"));
         return dataSourceJdbcWashMall;
     }
 
@@ -150,8 +148,8 @@ public class MybatisUtils {
         if (dataSourceJdbcMoonMall != null) {
             return dataSourceJdbcMoonMall;
         }
-        dataSourceJdbcMoonMall = druidDataSource(B2cMasterConsts.Honor.URL_MOON, B2cMasterConsts.WashingService.USERNAME, B2cMasterConsts.WashingService.PASSWORD);
-        // dataSourceJdbcMoonMall = druidDataSource(B2cMasterConsts.Honor.URL_MOON_1, B2cMasterConsts.WashingService.USERNAME, B2cMasterConsts.WashingService.PASSWORD);
+        dataSourceJdbcMoonMall = druidDataSource(getProp("Honor.URL_MOON"), getProp("WashingService.USERNAME"), getProp("WashingService.PASSWORD"));
+        // dataSourceJdbcMoonMall = druidDataSource(getProp("Honor.URL_MOON_1, getProp("WashingService.USERNAME, getProp("WashingService.PASSWORD);
         return dataSourceJdbcMoonMall;
     }
 
@@ -159,7 +157,7 @@ public class MybatisUtils {
         if (dataSourceJdbcOnlineExam != null) {
             return dataSourceJdbcOnlineExam;
         }
-        dataSourceJdbcOnlineExam = druidDataSource(B2cMasterConsts.Local.URL_ONLINE_EXAM, B2cMasterConsts.Local.USERNAME, B2cMasterConsts.Local.PASSWORD);
+        dataSourceJdbcOnlineExam = druidDataSource(getProp("Local.URL_ONLINE_EXAM"), getProp("Local.USERNAME"), getProp("Local.PASSWORD"));
         return dataSourceJdbcOnlineExam;
     }
 
@@ -167,7 +165,7 @@ public class MybatisUtils {
         if (dataSourceJdbcB2b2cMall != null) {
             return dataSourceJdbcB2b2cMall;
         }
-        dataSourceJdbcB2b2cMall = druidDataSource(B2cMasterConsts.Honor.URL_B2B2C_MALL, B2cMasterConsts.WashingService.USERNAME, B2cMasterConsts.WashingService.PASSWORD);
+        dataSourceJdbcB2b2cMall = druidDataSource(getProp("Honor.URL_B2B2C_MALL"), getProp("WashingService.USERNAME"), getProp("WashingService.PASSWORD"));
         return dataSourceJdbcB2b2cMall;
     }
 

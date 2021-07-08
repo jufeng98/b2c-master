@@ -3,16 +3,14 @@ package com.javamaster.b2c.cloud.test.learn.java.test;
 import com.javamaster.b2c.cloud.test.learn.java.model.Coordinates;
 import com.javamaster.b2c.cloud.test.learn.java.utils.AmapUtils;
 import com.javamaster.b2c.cloud.test.learn.java.utils.PositionUtils;
-import org.javamaster.b2c.config.B2cMasterConsts;
+import static com.javamaster.b2c.cloud.test.learn.java.utils.PropertiesUtils.getProp;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author yudong
@@ -25,7 +23,7 @@ public class GaodeTest {
         double longitude = 113.350255;
         double latitude = 23.147079;
         String url = "https://restapi.amap.com/v3/geocode/regeo";
-        String params = "key=" + B2cMasterConsts.Map.GAODE_KEY + "&output=JSON&location=" + longitude + "," + latitude;
+        String params = "key=" + getProp("Map.GAODE_KEY") + "&output=JSON&location=" + longitude + "," + latitude;
         StringBuilder result = new StringBuilder();
         BufferedReader in = null;
         try {
@@ -85,7 +83,7 @@ public class GaodeTest {
     @Test
     public void test3() {
         try {
-            List<String> addresses = Arrays.asList(
+            List<String> addresses = Collections.singletonList(
                     "广东省广州市天河区五山路31号东莞xx信息科技有限公司"
             );
             System.out.println(AmapUtils.getLngLat(addresses));
