@@ -97,7 +97,7 @@ public class ScanDependenciesContextBootstrapper extends WebTestContextBootstrap
                 continue;
             }
             alreadyHandle.add(fieldTypeClass);
-            if (fieldTypeClass.isInterface()) {
+            if (fieldTypeClass.isInterface() || Modifier.isAbstract(fieldTypeClass.getModifiers())) {
                 List<Class<?>> allSubClass = getInterfaceImplClasses(fieldTypeClass);
                 list.addAll(allSubClass);
                 for (Class<?> subClass : allSubClass) {
