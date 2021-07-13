@@ -1,19 +1,16 @@
 package org.javamaster.spring.test.utils;
 
-import feign.Client;
-import feign.Target;
 import lombok.SneakyThrows;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
  * @author yudong
  * @date 2021/5/13
  */
-public class TestUtils {
+public class ReflectTestUtils {
 
     @SneakyThrows
     public static Object reflectGet(Object object, String fieldName) {

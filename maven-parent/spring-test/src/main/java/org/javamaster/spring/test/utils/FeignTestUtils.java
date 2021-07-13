@@ -2,8 +2,8 @@ package org.javamaster.spring.test.utils;
 
 import feign.Client;
 import feign.Target;
-import static org.javamaster.spring.test.utils.TestUtils.reflectGet;
-import static org.javamaster.spring.test.utils.TestUtils.reflectSet;
+import static org.javamaster.spring.test.utils.ReflectTestUtils.reflectGet;
+import static org.javamaster.spring.test.utils.ReflectTestUtils.reflectSet;
 
 import java.util.HashMap;
 
