@@ -11,34 +11,40 @@ import cn.com.bluemoon.mall.activity.dubbo.service.UserCouponPackageManageServic
 import cn.com.bluemoon.mall.activity.dubbo.vo.CartItemVo;
 import cn.com.bluemoon.mall.order.dubbo.service.MallWashOrderService;
 import cn.com.bluemoon.mall.pay.dubbo.service.MallPayApiService;
-import cn.com.bluemoon.mall.user.dubbo.dto.UserInfoDto;
 import cn.com.bluemoon.mall.user.dubbo.enums.MatchType;
 import cn.com.bluemoon.mall.user.dubbo.service.UserAddressService;
 import cn.com.bluemoon.mall.user.dubbo.service.UserService;
+import cn.com.bluemoon.mallorder.api.dubbo.order.service.IMHServiceOrderService;
+import cn.com.bluemoon.mallorder.api.serviceorder.dto.WashOrderUpdateDto;
+import cn.com.bluemoon.mallorder.api.serviceorder.enums.ServiceOrderProductStatusEnum;
+import cn.com.bluemoon.mallorder.api.userorder.dto.resp.ProductStatusResp;
+import cn.com.bluemoon.mallorder.api.userorder.enums.UserOrderStatusEnum;
+import cn.com.bluemoon.mallorder.common.enmu.OrderStatusConstants;
 import cn.com.bluemoon.mallwash.order.dubbo.service.WashOrderService;
 import cn.com.bluemoon.moonmall.item.dubbo.service.MoonMallItemService;
 import cn.com.bluemoon.moonmall.order.dubbo.service.MoonMallOrderService;
 import cn.com.bluemoon.moonmall.shoppingcart.dubbo.service.MoonMallShoppingCartDubboService;
 import cn.com.bluemoon.service.common.service.RegionService;
 import cn.com.bluemoon.service.customizingorder.api.CustomizingOrderDubboService;
+import cn.com.bluemoon.service.emp.api.EmpDubboService;
 import cn.com.bluemoon.service.emp.api.MapService;
 import cn.com.bluemoon.service.mallcrm.service.message.MesssagePushService;
 import cn.com.bluemoon.service.portal.service.PortalAppService;
 import cn.com.bluemoon.service.station.api.DubboCommonService;
 import cn.com.bluemoon.service.user.service.SsoService;
 import cn.com.bluemoon.training.dubbo.api.CourseBaseApiService;
-import cn.com.bluemoon.wash.dubbo.service.*;
+import cn.com.bluemoon.wash.dubbo.service.WashLevelTypeService;
+import cn.com.bluemoon.wash.dubbo.service.WashPriceManageService;
 import com.alibaba.fastjson.JSON;
 import com.bluemoon.kafka.dubbo.api.MessageQueueService;
-import com.bluemoon.pf.map.dto.AddressDto;
 import com.bluemoon.pf.map.enums.ApiTypeEnums;
-import com.bluemoon.pf.map.sdk.dto.Coordinates;
-import com.bluemoon.pf.map.sdk.dto.ResultBean;
-import com.bluemoon.pf.map.sdk.vo.AddressVo;
+import com.bluemoon.pf.map.sdk.dto.*;
+import com.bluemoon.pf.map.sdk.enums.Coordsys;
 import com.bluemoon.pf.map.service.BasicMapService;
 import com.bluemoon.proxy.service.sms.EmailService;
 import com.bluemoon.proxy.service.sms.SmsService;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.collect.Lists;
 import com.javamaster.b2c.cloud.test.learn.java.utils.DubboUtils;
 import com.javamaster.b2c.cloud.test.learn.java.utils.OMUtils;
 import static com.javamaster.b2c.cloud.test.learn.java.utils.PropertiesUtils.getProp;
@@ -63,15 +69,9 @@ public class DubboTest {
     }
 
     @Test
-    public void test() {
-        UserService service = DubboUtils.getService(UserService.class, "1.0.0");
-        Object resObj = service.getUserInfoByUserId("U18082410053572785731");
-        log.info(OMUtils.writeValueAsString(resObj, true));
-        resObj = service.getUserBaseByMobile("18826483966");
-        log.info(OMUtils.writeValueAsString(resObj, true));
-        UserInfoDto userInfoDto = new UserInfoDto();
-        userInfoDto.setNickName("188****3966");
-        resObj = service.getUserInfoByPart(userInfoDto);
+    public void test() throws Exception {
+        EmpDubboService service = DubboUtils.getService(EmpDubboService.class);
+        Object resObj = service.getEmpInfoByNameCode("80555379");
         log.info(OMUtils.writeValueAsString(resObj, true));
     }
 
@@ -296,9 +296,17 @@ public class DubboTest {
     @Test
     public void test26() {
         BasicMapService service = DubboUtils.getService(BasicMapService.class, "1.0.0");
-        AddressDto addressDto = new AddressDto();
-        addressDto.setAddress("广东省广州市天河区五山路261号中公教育大厦");
-        ResultBean<AddressVo> resObj = service.geocoder(addressDto, ApiTypeEnums.amap);
+        Geoconv geoconv = new Geoconv();
+        geoconv.setApiType(ApiTypeEnums.amap.name());
+        geoconv.setFrom(Coordsys.GPSC);
+        geoconv.setTo(Coordsys.GCJ02);
+        Coordinates coordinates = new Coordinates();
+        coordinates.setApiType(ApiTypeEnums.amap.name());
+        coordinates.setLat(39.990475D);
+        coordinates.setLng(116.481499D);
+        List<Coordinates> coords = Lists.newArrayList(coordinates);
+        geoconv.setCoords(coords);
+        ResultBean<List<Coordinates>> resObj = service.geoconv(geoconv, ApiTypeEnums.amap);
         log.info(OMUtils.writeValueAsString(resObj, true));
     }
 
@@ -458,8 +466,26 @@ public class DubboTest {
 
     @Test
     public void test44() {
-        EnterpriseReceiveDubboService service = DubboUtils.retrieveService(EnterpriseReceiveDubboService.class, "1.0.0", null);
-        Object resObj = service.findWashCardShopping("18826483963");
+        IMHServiceOrderService service = DubboUtils.retrieveService(IMHServiceOrderService.class, "1.0.0", null);
+        WashOrderUpdateDto washOrderUpdateDto = new WashOrderUpdateDto();
+
+        // List<ProductStatusResp> productStatusResps = Lists.newArrayList();
+        // for (int i = 0; i < 2; i++) {
+        //     ProductStatusResp productStatusResp = new ProductStatusResp();
+        //     productStatusResp.setProductStatus(ServiceOrderProductStatusEnum.PACKAGED.getCode());
+        //     productStatusResp.setId(83994L + i);
+        //     productStatusResps.add(productStatusResp);
+        // }
+        // washOrderUpdateDto.setProductStatusList(productStatusResps);
+
+        // washOrderUpdateDto.setServiceOrderCode();
+        // washOrderUpdateDto.setServiceOrderStatus();
+        // washOrderUpdateDto.setOrderStatus(OrderStatusConstants.ON_ITS_WAY_TO_WASH);
+        washOrderUpdateDto.setOrderStatus(OrderStatusConstants.RETURNING_CLOTHES);
+        // washOrderUpdateDto.setUserOrderStatus(UserOrderStatusEnum.SEND_WASHING.getCode());
+        washOrderUpdateDto.setUserOrderStatus(UserOrderStatusEnum.BACKING.getCode());
+
+        Object resObj = service.updateServiceOrder(washOrderUpdateDto);
         log.info("{}", resObj);
     }
 

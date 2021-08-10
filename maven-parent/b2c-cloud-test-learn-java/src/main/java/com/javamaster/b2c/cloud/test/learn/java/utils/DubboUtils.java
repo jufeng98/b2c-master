@@ -19,8 +19,8 @@ import java.util.List;
 public class DubboUtils {
 
     // private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS");
-    private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_1");
-    // private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_2");
+    // private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_1");
+    private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_2");
     // private static final String ADDRESS = PropertiesUtils.getProp("Dubbo.ZOOKEEPER_ADDRESS_3");
 
     private static final int TIMEOUT = 10000;
