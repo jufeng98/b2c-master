@@ -20,6 +20,17 @@ public class SocketHandler extends AbstractWebSocketHandler {
     @OnOpen
     public void onOpen(Session session) {
         logger.info("connect:{}", session.getId());
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(2000);
+                    session.getBasicRemote().sendText("important java message " + Thread.currentThread().getName()
+                            + " " + Math.random());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @OnClose
@@ -35,6 +46,6 @@ public class SocketHandler extends AbstractWebSocketHandler {
 
     @OnError
     public void onError(Session session, Throwable error) {
-        logger.info("receive {} from js,session id:{}", error.getClass().getSimpleName(), session.getId());
+        logger.error("receive {} from js,session id:{}", error.getClass().getSimpleName(), session.getId());
     }
 }

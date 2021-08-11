@@ -1,11 +1,41 @@
 <!html>
+<html>
 <head lang="en">
     <meta charset="UTF-8"/>
     <title>websocket</title>
 </head>
 <body>
 <h1 th:text="${welcomeText}">placeholder</h1>
+<input type="button" onclick="connectWS()" value="连接WS服务器">
+<input type="button" onclick="disconnectWS()" value="断开WS服务器">
+<input type="button" onclick="sayMacro()" value="发送信息到WS服务器">
 <p id="content"></p>
 <script th:src="@{/web.js}" type="text/javascript"></script>
 </body>
+<script type="text/javascript">
+    var i = 0;
+    var url = "ws://localhost:9600/macro";
+    var sock;
+
+    function connectWS() {
+        sock = new WebSocket(url);
+        sock.onopen = function () {
+            document.getElementById("content").innerText = "websocket open";
+        };
+        sock.onclose = function () {
+            document.getElementById("content").innerText = "websocket close";
+        };
+        sock.onmessage = function (e) {
+            document.getElementById("content").innerText = e.data;
+        };
+    }
+
+    function disconnectWS() {
+        sock.close();
+    }
+
+    function sayMacro() {
+        sock.send("important js message " + i++);
+    }
+</script>
 </html>
