@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>摄像头测试</title>
+</head>
+<body>
+
+<input type="button" onclick="takePhoto()" value="点击拍照">
+
+<video style="position: absolute;left: -900px" id="video" width="300" height="300" autoplay></video>
+<canvas style="position: absolute;left: -900px" id="canvas" width="300" height="300"></canvas>
+<div id="picArea">
+
+</div>
+<script type="text/javascript">
+    let video = document.getElementById('video');
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+
+    function takePhoto() {
+        getUserMedia({
+            video: {
+                width: 480,
+                height: 320
+            }
+        }, success, error);
+        // 点击，canvas画图
+        context.drawImage(video, 0, 0, 300, 300);
+        // 获取图片base64链接
+        var image = canvas.toDataURL('image/png');
+        // 定义一个img
+        var img = new Image();
+        //设置属性和src
+        img.id = "imgBox";
+        img.src = image;
+        //将图片添加到页面中
+        document.getElementById("picArea").appendChild(img);
+    }
+
+    function getUserMedia(constraints, success, error) {
+        if (navigator.mediaDevices.getUserMedia) {
+            //最新的标准API
+            navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+        } else if (navigator.webkitGetUserMedia) {
+            //webkit核心浏览器
+            navigator.webkitGetUserMedia(constraints, success, error)
+        } else if (navigator.mozGetUserMedia) {
+            //firfox浏览器
+            navigator.mozGetUserMedia(constraints, success, error);
+        } else if (navigator.getUserMedia) {
+            //旧版API
+            navigator.getUserMedia(constraints, success, error);
+        }
+    }
+
+
+    function success(stream) {
+        //将视频流设置为video元素的源
+        console.log(stream);
+        video.srcObject = stream;
+        video.play();
+    }
+
+    function error(error) {
+        console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
+    }
+
+
+</script>
+</body>
+</html>
