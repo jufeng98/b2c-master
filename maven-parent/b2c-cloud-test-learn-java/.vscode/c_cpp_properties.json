@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/include",
+                "/usr/local/include/win32",
+                "D:/cygwin64/usr/local/include",
+                "D:/cygwin64/usr/local/include/win32"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "${default}",
+            "compilerPath": "D:/cygwin64/bin/gcc.exe",
+            "browse": {
+                "path": [
+                    "/usr/local/include",
+                    "/usr/local/include/win32",
+                    "D:/cygwin64/usr/local/include",
+                    "D:/cygwin64/usr/local/include/win32"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
