@@ -3,6 +3,10 @@
 
 venv
 
+windows/bin
+windows/obj
+*.exe
+
 # Log file
 *.log
 
