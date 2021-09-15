@@ -59,11 +59,6 @@ public class SocketTest {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 System.out.println(line);
-                if ("".equals(line)) {
-                    String body = scanner.nextLine();
-                    System.out.println(body);
-                    break;
-                }
             }
             outputStream.write("welcome to server socket!".getBytes());
         } finally {

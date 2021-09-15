@@ -11,6 +11,12 @@ last
 # 查看进程的线程情况
 top -H -p 2456
 
+#查看进程启动时间
+ps -eo pid,lstart,etime | grep 35507
+
+#查看进程所在目录
+ll /proc/35507
+
 # 排序
 sort
 
@@ -132,3 +138,4 @@ sudo netstat -ltp | grep 21324
 
 #查询端口被哪个进程所占
 sudo netstat -ltp | grep 20884
+lsof -i:20884
