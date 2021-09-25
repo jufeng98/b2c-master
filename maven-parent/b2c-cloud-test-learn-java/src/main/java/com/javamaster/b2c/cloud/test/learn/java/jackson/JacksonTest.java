@@ -237,5 +237,25 @@ public class JacksonTest {
         fastBean.setOrderCode("TW12345678");
         System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(fastBean));;
     }
+
+    @Test
+    public void test7() throws Exception {
+        FastBean fastBean = new FastBean();
+        fastBean.setShopOrderId(2345665765768757L);
+        fastBean.setOrderCode("TW12345678");
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addSerializer(Long.class, new JsonSerializer<Long>() {
+            @Override
+            public void serialize(Long value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+                if (value == null) {
+                    gen.writeNull();
+                } else {
+                    gen.writeString(value + "");
+                }
+            }
+        });
+        objectMapper.registerModule(simpleModule);
+        System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(fastBean));;
+    }
 }
 

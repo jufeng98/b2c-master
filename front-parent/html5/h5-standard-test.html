@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <title>测试页面</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="vue" style="width: 60%;margin: auto">
+    <el-form :model="form" :rules="rules" ref="ruleForm" label-width="90px" v-loading="loading"
+             element-loading-text="请稍候。。。">
+        <el-form-item label="活动名称1" prop="texts[0]">
+            <el-input v-model="form.texts[0]"></el-input>
+        </el-form-item>
+        <el-form-item label="活动名称2" prop="texts[1]">
+            <el-input v-model="form.texts[1]"></el-input>
+        </el-form-item>
+        <el-form-item label="活动名称3" prop="texts[2]">
+            <el-input v-model="form.texts[2]"></el-input>
+        </el-form-item>
+        <el-form-item label="图片">
+            <el-upload
+                    class="avatar-uploader"
+                    action=""
+                    :show-file-list="false"
+                    :http-request="uploadImage">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+        </el-form-item>
+        <el-form-item style="text-align: center">
+            <el-button type="primary" @click="onSubmit">提交</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<script type="text/javascript">
+    window.vue = new Vue({
+        el: '#vue',
+        data() {
+            return {
+                loading: false,
+                form: {
+                    mobile: '',
+                    tmpId: '',
+                    texts: [
+                        "",
+                        "",
+                        "",
+                    ],
+                },
+                imageUrl: '',
+                rules: {
+                    "texts[0]": [
+                        {required: true, message: '请输入参数', trigger: 'blur'},
+                    ],
+                    "texts[1]": [
+                        {required: true, message: '请输入参数', trigger: 'blur'},
+                    ],
+                    "texts[2]": [
+                        {required: true, message: '请输入参数', trigger: 'blur'},
+                    ],
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                this.$refs["ruleForm"].validate(valid => {
+                    if (!valid) {
+                        return false;
+                    }
+                    this.loading = true;
+                    let reqJson = Object.assign({}, this.form);
+                    // let url = "http://47.110.162.116:9080/imosapi/e5gsend";
+                    let url = "http://localhost:8258/test/save";
+                    axios.post(url, reqJson)
+                        .then(response => {
+                            if (!response.data.success) {
+                                this.$notify.error({title: '错误', message: response.data.message});
+                                return;
+                            }
+                            this.$alert('提交成功', '温馨提示', {
+                                confirmButtonText: '确定',
+                                callback: () => {
+                                    window.close();
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            this.$notify.error({title: '错误', message: error});
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
+                });
+            },
+            uploadImage(res) {
+                this.imageUrl = URL.createObjectURL(res.file);
+            },
+            getQueryStringArgs() {
+                let qs = location.search.length > 0 ? location.search.substring(1) : "",
+                    args = {},
+                    items = qs.length ? qs.split("&") : [],
+                    item = null,
+                    name = null,
+                    value = null,
+                    i,
+                    len = items.length;
+                for (i = 0; i < len; i++) {
+                    item = items[i].split("=");
+                    name = decodeURIComponent(item[0]);
+                    value = decodeURIComponent(item[1]);
+                    if (name.length) {
+                        args[name] = value;
+                    }
+                }
+                return args;
+            },
+        },
+        mounted() {
+            let queryStringArgs = this.getQueryStringArgs();
+            this.form.mobile = queryStringArgs.mobile;
+            this.$set(this.form.texts, 1, this.form.mobile);
+            this.form.tmpId = queryStringArgs.tmpId;
+        }
+    });
+</script>
+</body>
+</html>

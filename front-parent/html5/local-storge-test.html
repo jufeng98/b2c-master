@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>本地存储</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="clz.js"></script>
+    <script src="db.js"></script>
+</head>
+<body>
+<div id="vue">
+    <el-form :model="form" label-width="90px" v-loading="loading"
+             element-loading-text="请稍候。。。">
+        <el-form-item label="唯一主键" prop="id">
+            <el-input v-model.number="form.id"></el-input>
+        </el-form-item>
+        <el-form-item label="名称" prop="name">
+            <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="年龄" prop="age">
+            <el-input v-model.number="form.age"></el-input>
+        </el-form-item>
+        <el-form-item style="text-align: center">
+            <el-button type="primary" @click="insertPerson">保存</el-button>
+            <el-button type="primary" @click="queryPerson">查询</el-button>
+            <el-button type="primary" @click="updateCursorPerson">游标更新</el-button>
+            <el-button type="primary" @click="queryCursorAllPersons">游标查询所有</el-button>
+            <el-button type="primary" @click="queryIndexPersons">索引查询</el-button>
+            <el-button type="primary" @click="delPerson">删除</el-button>
+            <el-button type="primary" @click="delCursorPerson">游标删除</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<script type="text/javascript">
+    window.vue = new Vue({
+        el: '#vue',
+        data() {
+            return {
+                loading: false,
+                form: {
+                    id: 1,
+                    name: 'jufeng98',
+                    age: 20
+                },
+                db: null,
+                storeName: 'persons'
+            }
+        },
+        methods: {
+            insertPerson() {
+                let person = new Person(this.form.id, this.form.name, this.form.age);
+                this.db.saveObject(person)
+                    .then(obj => {
+                        this.$notify.info({
+                            title: '提示', message: "保存成功:" + JSON.stringify(obj)
+                        });
+                    })
+                    .catch(error => {
+                        this.$notify.info({
+                            title: '提示', message: error
+                        });
+                    })
+            },
+            queryPerson() {
+                this.db.getObject(this.form.id)
+                    .then(result => {
+                        this.$notify.info({
+                            title: '提示', message: "查询成功:" + JSON.stringify(result)
+                        });
+                    });
+            },
+            updateCursorPerson() {
+                this.db.updateCursorObject(this.form.id, "name", this.form.name)
+                    .then(result => {
+                        this.$notify.info({
+                            title: '提示', message: "更新成功:" + result
+                        });
+                    });
+                this.db.updateCursorObject(this.form.id, "age", this.form.age)
+                    .then(result => {
+                        this.$notify.info({
+                            title: '提示', message: "更新成功:" + result
+                        });
+                    });
+
+            },
+            queryCursorAllPersons() {
+                this.db.getAllObjects()
+                    .then(result => {
+                        this.$notify.info({
+                            title: '提示', message: "查询成功:" + JSON.stringify(result)
+                        });
+                    })
+            },
+            queryIndexPersons() {
+                this.db.getObjectsByIndex("name")
+                    .then(result => {
+                        this.$notify.info({
+                            title: '提示', message: "查询成功:" + JSON.stringify(result)
+                        });
+                    })
+            },
+            delPerson() {
+                this.db.delObject(this.form.id)
+                    .then(result => {
+                        this.$notify.info({
+                            title: '提示', message: "删除成功:" + result
+                        });
+                    })
+            },
+            delCursorPerson() {
+                this.db.delCursorObject(this.form.id)
+                    .then(result => {
+                        this.$notify.info({
+                            title: '提示', message: "删除成功:" + result
+                        });
+                    })
+            },
+            hasNet() {
+                let imgUrl = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png?id=' + Math.random();
+                return new Promise(resolve => {
+                    let img = new Image();
+                    img.onload = function () {
+                        resolve(true)
+                    }
+                    img.onerror = function () {
+                        resolve(false)
+                    }
+                    img.src = imgUrl;
+                });
+            }
+        },
+        mounted() {
+            this.$notify.info({title: '网络状态(不准)', message: navigator.onLine});
+
+            this.hasNet()
+                .then(online => {
+                    this.$notify.info({title: '网络状态(准)', message: '' + online});
+                })
+
+            this.db = new Db(this);
+            this.db.initDbAndStore('washingservice', this.storeName, 'id', 'name');
+        }
+    });
+</script>
+</body>
+</html>
