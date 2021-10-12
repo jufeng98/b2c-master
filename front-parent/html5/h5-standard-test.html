@@ -101,7 +101,6 @@
                     }
                     this.loading = true;
                     let reqJson = Object.assign({}, this.form);
-                    // let url = "http://47.110.162.116:9080/imosapi/e5gsend";
                     let url = "http://localhost:8258/test/save";
                     axios.post(url, reqJson)
                         .then(response => {

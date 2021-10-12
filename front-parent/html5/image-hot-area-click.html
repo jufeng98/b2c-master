@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点击图片特定区域触发事件</title>
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <style>
+        #vue {
+            width: 100%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="vue">
+    <img id="hot-image" src='http://1.tttest2.applinzi.com/%E7%8F%A0%E6%BE%B3%E9%80%9AAPP%E4%B8%8B%E8%BD%BD.png'
+         usemap='#img1' ismap alt="图片热点区域" style="width: 100%;height: 2018px">
+    <map name='img1' id='img1'>
+        <area :coords="coords" id="area" onfocus="blur()" alt="点击下载"
+              href="http://1.tttest2.applinzi.com/com.digitalgd.gaj.apk">
+    </map>
+</div>
+<script type="text/javascript">
+    window.vue = new Vue({
+        el: '#vue',
+        data() {
+            return {
+                coords: '0,0,0,0',
+            }
+        },
+        methods: {},
+        mounted() {
+            this.$nextTick(() => {
+                let image = document.getElementById("hot-image");
+                let width = image.width;
+                let height = image.height;
+                let x1 = width * 0.12;
+                let y1 = height * 0.77;
+                let x2 = width * 0.88;
+                let y2 = height * 0.86;
+                this.coords = x1 + ',' + y1 + ',' + x2 + ',' + y2;
+            })
+        }
+    });
+</script>
+</body>
+</html>

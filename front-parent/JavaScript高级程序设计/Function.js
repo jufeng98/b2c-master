@@ -87,6 +87,7 @@ var factorial = function (n) {
 };
 console.log(factorial(5));
 
+let window = {};
 window.color = "red";
 var o = {color: "blue"};
 
@@ -103,7 +104,7 @@ window.color = "red";
 var o = {color: "blue"};
 
 function sayColor() {
-    alert(this.color);
+    console.log(this.color);
 }
 
 var objectSayColor = sayColor.bind(o);
@@ -113,3 +114,41 @@ var immediate = function (num) {
     return num * num;
 }(5);
 console.log(immediate);
+
+function callMethod(obj, method) {
+    let args = [].slice.call(arguments, 2);
+    return obj[method].apply(obj, args);
+}
+
+let obj = {
+    add: function (a, b) {
+        return a + b;
+    }
+}
+
+let result = callMethod(obj, "add", 17, 25);
+console.log(result);
+
+let buffer = {
+    entries: [],
+    add(a) {
+        this.entries.push(a);
+    },
+    concat() {
+        return this.entries.join("");
+    }
+}
+let source = ["125", "-", "769"];
+source.forEach(buffer.add, buffer);
+console.log(buffer.concat())
+source.forEach(buffer.add.bind(buffer));
+console.log(buffer.concat())
+
+function combineUrl(protocol, domain, path) {
+    return `${protocol}://${domain}/${path}`;
+}
+
+let paths = ["/search", "/index"]
+// 函数柯里化
+paths = paths.map(combineUrl.bind(null, "http", "www.baidu.com"))
+console.log(paths)
