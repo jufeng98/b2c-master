@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Net.Mime;
+using System;
+using System.Windows.Forms;
 
 namespace windows
 {
@@ -8,7 +10,12 @@ namespace windows
         {
             Net net = new Net();
             net.netChangeListener();
-            Console.ReadLine();
+            Console.WriteLine(SysInfo.getSysInfo());
+            // Console.ReadLine();
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new ProgramWindows());
         }
     }
 }

@@ -32,8 +32,8 @@ namespace windows
         
         public static void testWrite1()
         {
-            #nullable enable
-            FileStream? file = null;
+            // #nullable enable
+            FileStream file = null;
             //Change the path to something that works on your machine.
             FileInfo fileInfo = new System.IO.FileInfo("G://test.txt");
 
