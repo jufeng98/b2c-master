@@ -58,6 +58,21 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>cn.com.bluemoon</groupId>
+                <artifactId>mh-git-hook-plugin</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <configuration>
+                    <gitTestBranchName>test_for_all_group</gitTestBranchName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>add-git-hook</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

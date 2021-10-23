@@ -1,5 +1,7 @@
 package org.javamaster.get.ip;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
@@ -61,11 +63,13 @@ public class Application {
             try {
                 File file = new File("C:\\Users\\yu\\Nox_share\\ImageShare\\hosts.txt");
                 String oldHostsContent = threadLocal.get();
-                if (!oldHostsContent.equals(content.toString())) {
+                String hostContent = content.toString();
+                if (!oldHostsContent.equals(hostContent)) {
                     fileWriter = new FileWriter(file);
-                    fileWriter.write(content.toString());
-                    threadLocal.set(content.toString());
+                    fileWriter.write(hostContent);
+                    threadLocal.set(hostContent);
                     logger.info("write hosts info to " + file.getAbsolutePath() + " finished");
+                    showTray(hostContent);
                 }
             } catch (Exception e) {
                 logger.severe(e.getClass() + " " + e.getMessage());
@@ -76,7 +80,14 @@ public class Application {
             }
             TimeUnit.SECONDS.sleep(10);
         }
+    }
 
+    private static  void showTray(String msg) throws Exception {
+        Toolkit.getDefaultToolkit().beep();
+        SystemTray systemTray = SystemTray.getSystemTray();
+        TrayIcon trayIcon = new TrayIcon(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR));
+        systemTray.add(trayIcon);
+        trayIcon.displayMessage("通知", msg, TrayIcon.MessageType.INFO);
     }
 
 }
