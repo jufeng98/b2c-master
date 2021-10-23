@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System;
 using System.Windows.Forms;
+using System.IO;
+using log4net.Config;
 
 namespace windows
 {
@@ -11,6 +13,9 @@ namespace windows
         {
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            var configFile = new FileInfo("log4net.config");
+            XmlConfigurator.Configure(configFile);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -30,6 +35,7 @@ namespace windows
         {
             Exception ex = e.ExceptionObject as Exception;
             log.Error("系统子线程出错", ex);
+            alertAndExit(ex);
         }
 
         static void alertAndExit(Exception ex)

@@ -1,0 +1,11 @@
+//新建项目
+dotnet new console -o 路径   
+
+//运行
+dotnet run   
+
+运行程序 :
+dotnet run -p ceshi002.csproj
+
+发布exe :
+dotnet publish ceshi002.csproj

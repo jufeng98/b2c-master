@@ -55,3 +55,5 @@ sakila
 moonMall-proxy-api
 *qqconnect.log
 *qqconnect.log.1
+bin
+obj
