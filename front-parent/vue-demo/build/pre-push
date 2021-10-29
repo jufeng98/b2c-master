@@ -1,0 +1,52 @@
+#!/bin/sh
+# @author liangyudong
+# @date 20211029
+echo "开始检查最近10天的git提交信息,如果有merge测试分支到别的分支,则无法push"
+git_test_branch_name=$gitTestBranchName
+ten_day_ago_time=$(date "+%Y/%m/%d %H:%M:%S" -d  '10 day ago')
+remote="$1"
+url="$2"
+
+z40=0000000000000000000000000000000000000000
+
+while read local_ref local_sha remote_ref remote_sha; do
+  echo "local_ref = $local_ref, local_sha = $local_sha"
+  echo "remote_ref = $remote_ref, remote_sha = $remote_sha"
+  if [ "$local_sha" = $z40 ]; then
+    # Handle delete
+    :
+  else
+    if [ "$remote_sha" = $z40 ]; then
+      # New branch, examine all commits
+      range="$local_sha"
+    else
+      # Update to existing branch, examine new commits
+      range="$remote_sha..$local_sha"
+    fi
+    echo "range = $range"
+    for commit_id in $(git rev-list "$range" --since "$ten_day_ago_time"); do
+      # echo "commit_id = $commit_id"
+      line2=$(git show $commit_id | awk -F "[\n]" '{print $1}' | awk "NR==2")
+      words=${line2:0:6}
+      # echo "line 2 = $line2"
+      # echo "words = $words"
+      if [[ "$words" == "Merge:" ]]; then
+        # 存在Merge操作
+        oldifs="$IFS"
+        IFS=$'\n'
+        # echo "存在merge commit记录，记录如下："
+        for content in $(git show $commit_id); do
+          # echo "‼️ ‼️ $content"
+          if [[ $content =~ .*$git_test_branch_name.*into ]]; then
+            echo "merge了测试分支 $git_test_branch_name 到别的分支,无法push"
+            echo "说明: 测试分支严格禁止往任何别的分支合并"
+            IFS="$oldifs"
+            exit 1
+          fi
+        done
+      fi
+    done
+  fi
+done
+
+exit 0

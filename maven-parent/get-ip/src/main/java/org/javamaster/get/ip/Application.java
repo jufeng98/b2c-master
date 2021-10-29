@@ -1,5 +1,6 @@
 package org.javamaster.get.ip;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -82,10 +83,12 @@ public class Application {
         }
     }
 
-    private static  void showTray(String msg) throws Exception {
+    private static void showTray(String msg) throws Exception {
         Toolkit.getDefaultToolkit().beep();
         SystemTray systemTray = SystemTray.getSystemTray();
-        TrayIcon trayIcon = new TrayIcon(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR));
+        InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("favicon.png");
+        BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(stream));
+        TrayIcon trayIcon = new TrayIcon(bufferedImage);
         systemTray.add(trayIcon);
         trayIcon.displayMessage("通知", msg, TrayIcon.MessageType.INFO);
     }
