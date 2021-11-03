@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Windows.Forms;
+
 namespace windows
 {
     public class FileTest
@@ -29,7 +31,7 @@ namespace windows
             }
             Console.WriteLine("Done");
         }
-        
+
         public static void testWrite1()
         {
             // #nullable enable
@@ -57,6 +59,23 @@ namespace windows
             {
                 Console.WriteLine("OpenWrite() failed");
             }
+        }
+
+        public static void testCopy()
+        {
+            string sourceFilePath = Environment.CurrentDirectory + "\\..\\res\\customerConfig.ini";
+            string targetFilePath = Application.StartupPath + "\\customerConfig.ini";
+            copy(sourceFilePath, targetFilePath);
+        }
+
+        public static void copy(string sourceFilePath, string targetFilePath)
+        {
+            FileInfo sourceFileInfo = new System.IO.FileInfo(sourceFilePath);
+            if (!sourceFileInfo.Exists)
+            {
+                return;
+            }
+            sourceFileInfo.CopyTo(targetFilePath, true);
         }
     }
 }

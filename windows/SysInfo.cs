@@ -34,6 +34,8 @@ namespace windows
                 sb.Append("CurrentDirectory:").AppendLine(Environment.CurrentDirectory);
                 sb.Append("ProcessorCount:").AppendLine(Environment.ProcessorCount + "");
                 sb.Append("WorkingSet:").AppendLine(Environment.WorkingSet + "");
+                sb.Append("CurrentDirectory:").AppendLine(Environment.CurrentDirectory);
+                sb.Append("StartupPath:").AppendLine(Application.StartupPath);
             }
             catch
             {
