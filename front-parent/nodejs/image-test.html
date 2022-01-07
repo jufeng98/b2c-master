@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="lrz.mobile.min.js"></script>
+</head>
+<body>
+
+<input id="img"  type="file">
+<button onclick="cal()">计算</button>
+<script>
+    function cal() {
+        let elementById = document.getElementById("img");
+        let file = elementById.files[0];
+        lrz(file, {quality:0.7}, images => {
+            let base64ImageData = images.base64.split("base64,")[1];
+            console.log(base64ImageData)
+        });
+    }
+</script>
+</body>
+</html>

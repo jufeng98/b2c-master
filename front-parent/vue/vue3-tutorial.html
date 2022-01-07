@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue3</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="counter">
+    <div>Counter: {{ counter }}</div>
+
+    <div>
+        <span v-bind:title="message">
+             鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+        <span :title="message">
+             鼠标悬停几秒钟查看此处动态绑定的提示信息1！
+        </span>
+    </div>
+
+    <div>
+        <p>{{ text }}</p>
+        <button v-on:click="reverseText">反转 Text</button>
+        <button @click="reverseText">反转 Text</button>
+    </div>
+
+    <div>
+        <p>{{ name }}</p>
+        <input v-model="name" />
+    </div>
+</div>
+<script src="./vue3-tutorial.js"></script>
+</body>
+</html>

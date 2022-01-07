@@ -16,6 +16,7 @@ ps -eo pid,lstart,etime | grep 35507
 
 #查看进程所在目录
 ll /proc/35507
+ls -al /proc/35507
 
 # 排序
 sort

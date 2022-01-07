@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片编辑</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        #vue {
+            width: 100%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="vue">
+    <canvas id="imgCanvas" width="200" height="300"
+            @click="drawCircle($event)">
+    </canvas>
+    <div>
+        <div v-for="(item,index) in operationHistory">
+            <el-tag>圆圈半径</el-tag>
+            <el-input-number v-model="item.allArguments[2]" @change="handleChange()" :min="5" :max="50"
+                             step="5"></el-input-number>
+            <el-button @click="delOperation(index)">删除</el-button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    window.vue = initVue();
+
+    function initVue() {
+        return new Vue({
+            el: '#vue',
+            data() {
+                return {
+                    imageUrl: "https://mallapi.bluemoon.com.cn/wash/img/poster3.1f8afbf2.jpg",
+                    htmlImageElement: null,
+                    operationHistory: [],
+                    initRadius: 10
+                }
+            },
+            methods: {
+                handleChange() {
+                    this.repaintCanvas();
+                },
+                drawImage() {
+                    const ctx = this.getCtx();
+                    ctx.drawImage(this.htmlImageElement, 0, 0, 200, 300);
+                },
+                drawCircle(event) {
+                    this.realDrawCircle(event.layerX, event.layerY, this.initRadius)
+                    window.vue.operationHistory.push({
+                        methodName: 'realDrawCircle',
+                        allArguments: [event.layerX, event.layerY, this.initRadius]
+                    });
+                },
+                realDrawCircle(layerX, layerY, radius) {
+                    const ctx = this.getCtx();
+                    ctx.strokeStyle = "#FF0000";
+                    ctx.beginPath();
+                    ctx.arc(layerX, layerY, radius, 0, 2 * Math.PI);
+                    ctx.stroke();
+                },
+                getCtx() {
+                    const canvas = document.getElementById('imgCanvas');
+                    return canvas.getContext('2d');
+                },
+                delOperation(index) {
+                    this.operationHistory.splice(index, 1);
+                    this.repaintCanvas();
+                },
+                repaintCanvas() {
+                    this.drawImage();
+                    for (let i = 0; i < this.operationHistory.length; i++) {
+                        this[this.operationHistory[i].methodName].apply(this, this.operationHistory[i].allArguments);
+                    }
+                },
+            },
+            mounted() {
+                this.htmlImageElement = document.createElement("img");
+                this.htmlImageElement.src = this.imageUrl;
+                this.htmlImageElement.onload = () => {
+                    this.repaintCanvas();
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

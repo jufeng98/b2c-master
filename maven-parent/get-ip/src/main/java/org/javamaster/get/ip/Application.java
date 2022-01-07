@@ -70,7 +70,7 @@ public class Application {
                     fileWriter.write(hostContent);
                     threadLocal.set(hostContent);
                     logger.info("write hosts info to " + file.getAbsolutePath() + " finished");
-                    showTray(hostContent);
+                    // showTray(hostContent);
                 }
             } catch (Exception e) {
                 logger.severe(e.getClass() + " " + e.getMessage());

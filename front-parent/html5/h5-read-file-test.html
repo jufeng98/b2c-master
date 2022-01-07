@@ -40,9 +40,9 @@
 
     function loadAsText(theFile) {
         var reader = new FileReader();
-        reader.readAsText(theFile);
+        // 将文件内容读取为文本
+        reader.readAsText(theFile, "UTF-8");
         reader.onload = function (loadedEvent) {
-            // result contains loaded file.
             console.log(loadedEvent.target.result);
         };
     }
@@ -56,17 +56,24 @@
         reader.onload = function (loadedEvent) {
             console.log(loadedEvent.target.result);
         };
+        // 将blob内容读取为文本
         reader.readAsText(blob);
     }
 
     function loadAsUrl(theFile) {
         var reader = new FileReader();
         reader.onload = function (loadedEvent) {
-            console.log(loadedEvent.target.result);
-            document.getElementById("img-show").src = loadedEvent.target.result;
+            let base64 = loadedEvent.target.result;
+            console.log(base64);
+            document.getElementById("img-show").src = base64;
         };
+        // 读取为base64字符串
         reader.readAsDataURL(theFile);
-        document.getElementById("img-show1").src = URL.createObjectURL(theFile);
+
+        // 读取为blob的url,例如blob:http://localhost:63342/1c7a3701-0d4a-4384-aa64-3104481f1e9f
+        let blobUrl = URL.createObjectURL(theFile);
+        console.log(blobUrl);
+        document.getElementById("img-show1").src = blobUrl;
     }
 
     function loadAsArrayBuffer(theFile) {

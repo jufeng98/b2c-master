@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -9,6 +10,7 @@ namespace windows
         public ProgramWindows()
         {
             log.Info("启动桌面");
+            log.Info(DateTime.Now.ToString("yyyyMMdd-HHmmssfff"));
             //InitializeComponent();
         }
     }
