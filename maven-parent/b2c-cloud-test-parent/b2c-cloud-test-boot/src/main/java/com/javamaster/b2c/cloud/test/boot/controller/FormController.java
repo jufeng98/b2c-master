@@ -1,14 +1,25 @@
 package com.javamaster.b2c.cloud.test.boot.controller;
 
-import java.util.Date;
-
+import com.javamaster.b2c.cloud.test.boot.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Validator;
+import java.util.Date;
 
 @Controller
 public class FormController {
+
+    @Autowired
+    private Validator validator;
+
+    @Qualifier("mvcValidator")
+    @Autowired
+    private org.springframework.validation.Validator validator1;
 
     @RequestMapping(value = "/test", method = {RequestMethod.GET})
     public ModelAndView test() {
@@ -16,5 +27,11 @@ public class FormController {
         modelAndView.setViewName("home");
         modelAndView.addObject("date", new Date());
         return modelAndView;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/test1", method = {RequestMethod.POST})
+    public String test1(@Validated Person person) {
+        return "hello world:" + person;
     }
 }

@@ -1,18 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-3.2.xsd
-		http://www.springframework.org/schema/mvc
-		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
-		http://www.springframework.org/schema/util
-        http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean name="/home" class="com.javamaster.b2c.cloud.test.boot.controller.HomeController"/>
+    <import resource="../daos.xml"/>
 
+    <context:component-scan base-package="com.javamaster.b2c">
+        <context:include-filter type="regex" expression=".*Helper"/>
+        <context:include-filter type="custom" expression="com.javamaster.b2c.cloud.test.boot.filer.MyTypeFilter"/>
+    </context:component-scan>
+
+    <bean id="book" name="bookName" class="com.javamaster.b2c.cloud.test.boot.entity.Book"
+          p:id="12" p:author="jufeng98"/>
+
+    <bean id="book1" class="com.javamaster.b2c.cloud.test.boot.entity.Book">
+        <property name="id" value="12"/>
+        <property name="title" value="标题"/>
+    </bean>
+
+    <bean name="/home" id="homeController" class="com.javamaster.b2c.cloud.test.boot.controller.HomeController">
+        <property name="book" ref="book"/>
+    </bean>
+
+    <!--    必须开启调试的编译标志-->
+    <bean name="/home1" id="homeController1" class="com.javamaster.b2c.cloud.test.boot.controller.HomeController" depends-on="book">
+        <constructor-arg name="book" ref="book"/>
+    </bean>
+
+    <bean name="/home2" id="homeController2" class="com.javamaster.b2c.cloud.test.boot.controller.HomeController" lazy-init="true">
+        <constructor-arg ref="book"/>
+    </bean>
+
+    <bean name="/home3" id="homeController3" class="com.javamaster.b2c.cloud.test.boot.controller.HomeController">
+        <constructor-arg index="0" ref="book"/>
+    </bean>
+
+    <bean name="/home4" id="homeController4" class="com.javamaster.b2c.cloud.test.boot.controller.HomeController">
+        <property name="book">
+            <bean class="com.javamaster.b2c.cloud.test.boot.entity.Book">
+                <property name="id" value="22"/>
+            </bean>
+        </property>
+        <property name="list">
+            <list>
+                <value>hello</value>
+                <value>world</value>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>hello</value>
+                <value>world</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="an entry" value="just some string"/>
+                <entry key="an entry">
+                    <null/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <alias name="homeController" alias="homeControllerCopy"/>
+
+    <bean id="clientService" class="com.javamaster.b2c.cloud.test.boot.service.ClientService"
+          factory-method="getInstance"/>
+
+    <bean id="serviceLocator" class="com.javamaster.b2c.cloud.test.boot.factory.DefaultServiceLocator"/>
+
+    <bean id="clientService1" factory-bean="serviceLocator" factory-method="createClientServiceInstance"/>
+    <bean id="accountService" factory-bean="serviceLocator" factory-method="createAccountServiceInstance"/>
+
+    <bean id="mappings"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!-- typed as a java.util.Properties -->
+        <property name="properties">
+            <value>
+                jdbc.driver.className=com.mysql.jdbc.Driver
+                jdbc.url=jdbc:mysql://localhost:3306/mydb
+            </value>
+        </property>
+    </bean>
+
+    <bean id="mappings1"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <!-- typed as a java.util.Properties -->
+        <property name="properties">
+            <props>
+                <prop key="administrator">administrator@example.org</prop>
+                <prop key="support">support@example.org</prop>
+                <prop key="development">development@example.org</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="thread">
+                    <value>com.javamaster.b2c.cloud.test.boot.scope.SimpleThreadScope</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="beanCycle" class="com.javamaster.b2c.cloud.test.boot.lifecycle.BeanCycle"/>
+
+    <bean id="bookServiceImpl" class="com.javamaster.b2c.cloud.test.boot.service.impl.BookServiceImpl"/>
+    <bean id="bookServiceImplTwo" class="com.javamaster.b2c.cloud.test.boot.service.impl.BookServiceImplTwo"/>
 </beans>

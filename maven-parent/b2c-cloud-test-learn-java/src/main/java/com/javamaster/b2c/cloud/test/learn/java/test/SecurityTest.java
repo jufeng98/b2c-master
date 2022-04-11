@@ -1,7 +1,6 @@
 package com.javamaster.b2c.cloud.test.learn.java.test;
 
 import com.javamaster.b2c.cloud.test.learn.java.utils.*;
-import com.javamaster.b2c.cloud.test.learn.java.utils.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.buf.HexUtils;
@@ -9,8 +8,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.data.util.Pair;
-import org.springframework.util.ResourceUtils;
-import org.springframework.util.StreamUtils;
+import org.springframework.util.*;
 
 import javax.crypto.SecretKey;
 import java.io.File;
@@ -62,19 +60,23 @@ public class SecurityTest {
 
     @Test
     public void testAes() {
-        String password = "qq123123";
-        String encryptHexMsg = AesUtils.aesEncrypt("这是最高机密的信息!!!", password);
-        log.info("AES加密后的16进制信息:{}", encryptHexMsg);
+        String password = "bluemoodvvxanMoonWash";
+        // String encryptHexMsg = AesUtils.aesEncrypt("梁煜东", password);
+        // log.info("AES加密后的16进制信息:{}", encryptHexMsg);
+        System.out.println(Base64Utils.encodeToString(AesUtils.aesEncrypt1("梁煜东", password)));
 
-        String plainMsg = AesUtils.aesDecrypt(encryptHexMsg, password);
-        log.info("AES解密后的原始信息:{}", plainMsg);
+        // AES aes =  SecureUtil.aes(password.getBytes(StandardCharsets.UTF_8));
+        // System.out.println(aes.encryptBase64("梁煜东"));
 
-        SecretKey secretKey = AesUtils.getRandomAesKey();
-        encryptHexMsg = AesUtils.aesEncrypt("这是最高机密的信息!!!", secretKey);
-        log.info("AES加密后的16进制信息:{}", encryptHexMsg);
-
-        plainMsg = AesUtils.aesDecrypt(encryptHexMsg, secretKey);
-        log.info("AES解密后的原始信息:{}", plainMsg);
+        // String plainMsg = AesUtils.aesDecrypt(encryptHexMsg, password);
+        // log.info("AES解密后的原始信息:{}", plainMsg);
+        //
+        // SecretKey secretKey = AesUtils.getRandomAesKey();
+        // encryptHexMsg = AesUtils.aesEncrypt("这是最高机密的信息!!!", secretKey);
+        // log.info("AES加密后的16进制信息:{}", encryptHexMsg);
+        //
+        // plainMsg = AesUtils.aesDecrypt(encryptHexMsg, secretKey);
+        // log.info("AES解密后的原始信息:{}", plainMsg);
     }
 
     @Test
@@ -103,5 +105,16 @@ public class SecurityTest {
 
         String originalMsg = RsaUtils.rsaAesDecrypt(pair.getFirst(), pair.getSecond(), keyPair.getPrivate());
         log.info("解密后的信息:{}", originalMsg);
+    }
+
+    @Test
+    @SneakyThrows
+    public void test1() {
+        String pass = "TJ0OfrdgWsr1hTbMi5BDrTEfHc8yG6Uz52nT5vFyqCI=";
+        String username = "W9GeVngEWiViUNKwooI1bQ==";
+        String key = "me1wTa?or";
+
+        System.out.println("加密密码: "+ AesUtils.decrypt(pass, key));
+        System.out.println("用户名: "+AesUtils.decrypt(username, key));
     }
 }

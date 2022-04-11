@@ -14,10 +14,8 @@ import cn.com.bluemoon.mall.pay.dubbo.service.MallPayApiService;
 import cn.com.bluemoon.mall.user.dubbo.enums.MatchType;
 import cn.com.bluemoon.mall.user.dubbo.service.UserAddressService;
 import cn.com.bluemoon.mall.user.dubbo.service.UserService;
-import cn.com.bluemoon.mallorder.api.dubbo.order.service.IMHServiceOrderService;
 import cn.com.bluemoon.mallorder.api.serviceorder.dto.WashOrderUpdateDto;
-import cn.com.bluemoon.mallorder.api.serviceorder.enums.ServiceOrderProductStatusEnum;
-import cn.com.bluemoon.mallorder.api.userorder.dto.resp.ProductStatusResp;
+import cn.com.bluemoon.mallorder.api.serviceorder.dubbo.IMHServiceOrderService;
 import cn.com.bluemoon.mallorder.api.userorder.enums.UserOrderStatusEnum;
 import cn.com.bluemoon.mallorder.common.enmu.OrderStatusConstants;
 import cn.com.bluemoon.mallwash.order.dubbo.service.WashOrderService;
@@ -36,7 +34,6 @@ import cn.com.bluemoon.training.dubbo.api.CourseBaseApiService;
 import cn.com.bluemoon.wash.dubbo.service.WashLevelTypeService;
 import cn.com.bluemoon.wash.dubbo.service.WashPriceManageService;
 import com.alibaba.fastjson.JSON;
-import com.bluemoon.kafka.dubbo.api.MessageQueueService;
 import com.bluemoon.pf.map.enums.ApiTypeEnums;
 import com.bluemoon.pf.map.sdk.dto.*;
 import com.bluemoon.pf.map.sdk.enums.Coordsys;
@@ -329,12 +326,12 @@ public class DubboTest {
 
     @Test
     public void test29() {
-        MessageQueueService service = DubboUtils.getService(MessageQueueService.class, "1.3.6");
-        JSONObject json = new JSONObject();
-        json.put("clothesCode", "20200407hd001");
-        json.put("reportCode", "2004070003");
-        Object resObj = service.sendMessage("clothes_conmunication_notice", json.toString(), true);
-        log.info(OMUtils.writeValueAsString(resObj, true));
+        // MessageQueueService service = DubboUtils.getService(MessageQueueService.class, "1.3.6");
+        // JSONObject json = new JSONObject();
+        // json.put("clothesCode", "20200407hd001");
+        // json.put("reportCode", "2004070003");
+        // Object resObj = service.sendMessage("clothes_conmunication_notice", json.toString(), true);
+        // log.info(OMUtils.writeValueAsString(resObj, true));
     }
 
     @Test
@@ -485,8 +482,6 @@ public class DubboTest {
         // washOrderUpdateDto.setUserOrderStatus(UserOrderStatusEnum.SEND_WASHING.getCode());
         washOrderUpdateDto.setUserOrderStatus(UserOrderStatusEnum.BACKING.getCode());
 
-        Object resObj = service.updateServiceOrder(washOrderUpdateDto);
-        log.info("{}", resObj);
     }
 
 }

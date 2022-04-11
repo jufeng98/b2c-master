@@ -3,8 +3,7 @@ package org.javamaster.b2c.open.feign.service;
 import org.javamaster.b2c.open.feign.model.Pageable;
 import org.javamaster.b2c.open.feign.model.Store;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,4 +22,7 @@ public interface StoreClientService {
     @RequestMapping(method = RequestMethod.POST, value = "/getStoresPage")
     Map<String, Object> getStores(Pageable pageable);
 
+
+    @RequestMapping(method = RequestMethod.POST, value = "/getStoresPage1")
+    Map<String, Object> getStores1(@RequestBody Pageable pageable);
 }

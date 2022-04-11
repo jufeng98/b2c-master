@@ -9,12 +9,16 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author yudong
  * @date 2020/7/31
  */
-@EnableFeignClients
+@EnableFeignClients(basePackages = {
+        "cn.com.bluemoon",
+        "org.javamaster.b2c"
+})
 @EnableDiscoveryClient
 @SpringBootApplication
 public class B2cOpenFeignApplication {
 
     public static void main(String[] args) {
+        System.setProperty("spring.main.allow-bean-definition-overriding", "true");
         SpringApplication.run(B2cOpenFeignApplication.class, args);
     }
 

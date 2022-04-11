@@ -2,9 +2,12 @@ package com.javamaster.b2c.cloud.test.learn.java.utils;
 
 import com.eos.system.utility.Assert;
 import lombok.SneakyThrows;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.springframework.util.StreamUtils;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -13,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 /**
  * Created on 2019/1/25.<br/>
@@ -43,6 +47,14 @@ public class AesUtils {
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(new byte[PASSWORD_LENGTH]));
         byte[] encryptedMsgBytes = cipher.doFinal(originalMsg.getBytes(StandardCharsets.UTF_8));
         return HexUtils.toHexString(encryptedMsgBytes).toUpperCase();
+    }
+
+    @SneakyThrows
+    public static byte[] aesEncrypt1(String originalMsg, String password) {
+        SecretKey secretKey = new SecretKeySpec(Arrays.copyOf(DigestUtils.sha1(password), 16), "AES");
+        Cipher cipher = Cipher.getInstance(AES);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(new byte[PASSWORD_LENGTH]));
+        return cipher.doFinal(originalMsg.getBytes(StandardCharsets.UTF_8));
     }
 
     @SneakyThrows
@@ -102,5 +114,39 @@ public class AesUtils {
         byte[] originalBytes = StreamUtils.copyToByteArray(cipherInputStream);
         cipherInputStream.close();
         return originalBytes;
+    }
+
+    @SneakyThrows
+    public static String decrypt(String sSrc, String sKey) {
+        StringBuilder sKeyBuilder = new StringBuilder(sKey);
+        while (sKeyBuilder.length() < 16) {
+            sKeyBuilder.append(":BlZEmoon");
+        }
+        sKey = sKeyBuilder.toString();
+        sKey = sKey.substring(0, 16);
+        byte[] raw = sKey.getBytes(StandardCharsets.UTF_8);
+        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(2, skeySpec);
+        byte[] encrypted1 = (new BASE64Decoder()).decodeBuffer(sSrc);
+        byte[] original = cipher.doFinal(encrypted1);
+        return new String(original, StandardCharsets.UTF_8);
+    }
+
+    @SneakyThrows
+    public static String encrypt(String sSrc, String sKey) {
+        StringBuilder sKeyBuilder = new StringBuilder(sKey);
+        while (sKeyBuilder.length() < 16) {
+            sKeyBuilder.append(":BlZEmoon");
+        }
+        sKey = sKeyBuilder.toString();
+
+        sKey = sKey.substring(0, 16);
+        byte[] raw = sKey.getBytes(StandardCharsets.UTF_8);
+        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(1, skeySpec);
+        byte[] encrypted = cipher.doFinal(sSrc.getBytes(StandardCharsets.UTF_8));
+        return (new BASE64Encoder()).encode(encrypted);
     }
 }

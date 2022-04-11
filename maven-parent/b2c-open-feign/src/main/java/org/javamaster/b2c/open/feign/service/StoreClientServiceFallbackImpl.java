@@ -28,4 +28,9 @@ public class StoreClientServiceFallbackImpl implements StoreClientService {
         log.error("error2");
         return null;
     }
+
+    @Override
+    public Map<String, Object> getStores1(Pageable pageable) {
+        return null;
+    }
 }
