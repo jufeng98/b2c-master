@@ -7,6 +7,8 @@ import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +25,11 @@ public class MonitorNetwork implements Runnable {
             return "";
         }
     });
+
+    public static void startMonitor() {
+        Executors.newSingleThreadScheduledExecutor()
+                .scheduleAtFixedRate(new MonitorNetwork(), 0, 10, TimeUnit.SECONDS);
+    }
 
     @Override
     public void run() {

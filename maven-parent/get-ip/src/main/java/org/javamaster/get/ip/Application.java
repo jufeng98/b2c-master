@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.Objects;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -21,8 +20,7 @@ public class Application {
         try {
             ClipboardListener.startListener();
 
-            Executors.newSingleThreadScheduledExecutor()
-                    .scheduleAtFixedRate(new MonitorNetwork(), 0, 10, TimeUnit.SECONDS);
+            MonitorNetwork.startMonitor();
         } catch (Exception e) {
             logger.severe(e.getClass() + " " + e.getMessage());
         }
