@@ -1,6 +1,7 @@
 package com.javamaster.b2c.cloud.test.boot.controller;
 
 import com.javamaster.b2c.cloud.test.boot.model.Person;
+import com.javamaster.b2c.cloud.test.boot.service.impl.BookServiceImplThree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ public class FormController {
 
     @Autowired
     private Validator validator;
+    @Autowired
+    private BookServiceImplThree bookServiceImplThree;
 
     @Qualifier("mvcValidator")
     @Autowired

@@ -5,4 +5,7 @@ package com.javamaster.b2c.cloud.test.boot.service;
  * @date 2022/4/10
  */
 public interface BookService {
+
+    String desc(String name);
+
 }

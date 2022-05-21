@@ -1,13 +1,12 @@
 package org.javamaster.get.ip;
 
 import net.sourceforge.tess4j.Tesseract;
-import static org.javamaster.get.ip.Application.showTray;
 
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.image.BufferedImage;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
@@ -15,15 +14,22 @@ import java.util.logging.Logger;
  * @date 2022/4/28
  */
 public class ClipboardListener implements ClipboardOwner {
-    private static final Logger logger = Logger.getLogger(Application.class.getName());
-    public static Tesseract instance;
+    private static final Logger logger = Logger.getLogger(ClipboardListener.class.getName());
+    private static final Tesseract INSTANCE;
+    private static final ClipboardListener CLIPBOARD_LISTENER;
+
+    static {
+        INSTANCE = new Tesseract();
+        INSTANCE.setDatapath("D:\\Program Files\\Tesseract-OCR\\tessdata");
+        INSTANCE.setLanguage("chi_sim");
+        CLIPBOARD_LISTENER = new ClipboardListener();
+    }
 
     public static void startListener() {
-        instance = new Tesseract();
-        instance.setDatapath("D:\\Program Files\\Tesseract-OCR\\tessdata");
-        instance.setLanguage("chi_sim");
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(clipboard.getContents(null), new ClipboardListener());
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(clipboard.getContents(null), CLIPBOARD_LISTENER);
+        });
     }
 
     @Override
@@ -32,22 +38,19 @@ public class ClipboardListener implements ClipboardOwner {
             Thread.sleep(1000);
             if (clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor)) {
                 BufferedImage image = (BufferedImage) clipboard.getData(DataFlavor.imageFlavor);
-                String text = instance.doOCR(image);
-
+                String text = INSTANCE.doOCR(image);
                 logger.info(text);
-                showTray(text);
-
-                Path path = Paths.get("C:\\Users\\yu\\Documents\\clipboard.txt");
-                byte[] bytes = Files.readAllBytes(path);
-                String s = new String(bytes, StandardCharsets.UTF_8);
-                s += "\r\n" + text;
-                Files.write(path, s.getBytes(StandardCharsets.UTF_8), StandardOpenOption.WRITE);
             }
             // 不影响剪切板内容
             // 每次剪切板变动，剪切板的所有者会被剥夺，所以要重新设置自己为所有者，才能监听下一次剪切板变动
-            clipboard.setContents(clipboard.getContents(null), this);
+            clipboard.setContents(clipboard.getContents(null), CLIPBOARD_LISTENER);
         } catch (Exception e) {
             logger.severe(e.getClass() + " " + e.getMessage());
+            try {
+                TimeUnit.SECONDS.sleep(6);
+            } catch (InterruptedException ignored) {
+            }
+            startListener();
         }
     }
 

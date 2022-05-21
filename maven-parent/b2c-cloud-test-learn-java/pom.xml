@@ -37,6 +37,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>cn.com.bluemoon</groupId>
+            <artifactId>service-washing-center-api</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.vdurmont</groupId>
             <artifactId>emoji-java</artifactId>
             <version>4.0.0</version>

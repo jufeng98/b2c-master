@@ -1,20 +1,21 @@
 package com.javamaster.b2c.cloud.test.learn.java.jdbc;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.javamaster.b2c.cloud.test.learn.java.model.Actor;
 import com.javamaster.b2c.cloud.test.learn.java.utils.MybatisUtils;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,10 +27,12 @@ import java.util.stream.IntStream;
 public class JdbcTemplateTest {
 
     static JdbcTemplate jdbcTemplate;
+    static NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @BeforeClass
     public static void init() {
         jdbcTemplate = MybatisUtils.getJdbcTemplateSakila();
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
     }
 
     @Test
@@ -96,6 +99,24 @@ public class JdbcTemplateTest {
     public void test10() {
         Actor o = jdbcTemplate.queryForObject("select * from actor where first_name=? and last_name=?", (rs, rowNum) -> getActor(rs), "ADAM", "GRANT");
         log.info("{}", JSONObject.toJSONString(o, true));
+    }
+
+    @Test
+    public void test11() {
+        Map<String, Object> queryParams = Maps.newHashMap();
+        List<Integer> idsList = Arrays.asList(1, 2);
+        queryParams.put("ids", idsList);
+        List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList("select * from actor where actor_id in (:ids)", queryParams);
+        log.info("{}", JSONObject.toJSONString(list, true));
+    }
+
+    @Test
+    public void test12() {
+        MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
+        List<Integer> idsList = Arrays.asList(1, 2);
+        sqlParameterSource.addValue("ids", idsList);
+        List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList("select * from actor where actor_id in (:ids)", sqlParameterSource);
+        log.info("{}", JSONObject.toJSONString(list, true));
     }
 
     @Test

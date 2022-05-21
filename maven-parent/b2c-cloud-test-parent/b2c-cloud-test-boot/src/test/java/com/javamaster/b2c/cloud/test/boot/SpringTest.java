@@ -1,11 +1,15 @@
 package com.javamaster.b2c.cloud.test.boot;
 
+import com.javamaster.b2c.cloud.test.boot.aspect.LogAspect;
 import com.javamaster.b2c.cloud.test.boot.model.Address;
 import com.javamaster.b2c.cloud.test.boot.model.Person;
-import com.javamaster.b2c.cloud.test.boot.service.BookHelper;
-import com.javamaster.b2c.cloud.test.boot.service.BookUtils;
+import com.javamaster.b2c.cloud.test.boot.service.*;
+import com.javamaster.b2c.cloud.test.boot.service.impl.BookServiceImpl;
 import com.javamaster.b2c.cloud.test.boot.validator.PersonValidator;
+import org.aopalliance.intercept.MethodInterceptor;
 import org.junit.Test;
+import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.*;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
@@ -78,4 +82,33 @@ public class SpringTest {
         BindingResult bindingResult = dataBinder.getBindingResult();
         System.out.println(bindingResult);
     }
+
+    @Test
+    public void test3() {
+        BookServiceImpl bookServiceImpl = new BookServiceImpl();
+        ProxyFactory proxyFactory = new ProxyFactory(bookServiceImpl);
+        proxyFactory.setExposeProxy(true);
+        proxyFactory.addInterface(BookService.class);
+        proxyFactory.addAdvice((MethodInterceptor) invocation -> {
+            Object[] arguments = invocation.getArguments();
+            if (arguments.length == 0) {
+                return invocation.proceed();
+            }
+            arguments[0] = (arguments[0] + "").toUpperCase();
+            return invocation.proceed();
+        });
+        BookService bookServiceProxy = (BookService) proxyFactory.getProxy();
+        System.out.println(bookServiceProxy.desc("hello"));
+    }
+
+    @Test
+    public void test4() {
+        AspectJProxyFactory aspectJProxyFactory = new AspectJProxyFactory();
+        aspectJProxyFactory.setExposeProxy(true);
+        aspectJProxyFactory.setTarget(new BookServiceImpl());
+        aspectJProxyFactory.addAspect(LogAspect.class);
+        BookService proxy = aspectJProxyFactory.getProxy();
+        System.out.println(proxy.desc("hello"));
+    }
+
 }

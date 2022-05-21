@@ -1,11 +1,10 @@
 package org.javamaster.get.ip;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
+import java.lang.management.ManagementFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -13,10 +12,19 @@ import java.util.logging.Logger;
  * @date 2020/6/18
  */
 public class Application {
+    static {
+        try {
+            InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("logging.properties");
+            LogManager.getLogManager().readConfiguration(stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static final Logger logger = Logger.getLogger(Application.class.getName());
 
     public static void main(String[] args) {
+        logger.info(ManagementFactory.getRuntimeMXBean().getName());
         try {
             ClipboardListener.startListener();
 
@@ -28,18 +36,8 @@ public class Application {
         try {
             TimeUnit.SECONDS.sleep(Long.MAX_VALUE);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.severe(e.getClass() + " " + e.getMessage());
         }
-    }
-
-    public static void showTray(String msg) throws Exception {
-        Toolkit.getDefaultToolkit().beep();
-        SystemTray systemTray = SystemTray.getSystemTray();
-        InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("favicon.png");
-        BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(stream));
-        TrayIcon trayIcon = new TrayIcon(bufferedImage);
-        systemTray.add(trayIcon);
-        trayIcon.displayMessage("通知", msg, TrayIcon.MessageType.INFO);
     }
 
 }

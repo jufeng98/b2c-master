@@ -1,7 +1,5 @@
 package org.javamaster.get.ip;
 
-import static org.javamaster.get.ip.Application.showTray;
-
 import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
@@ -16,7 +14,7 @@ import java.util.logging.Logger;
  * @date 2022/4/28
  */
 public class MonitorNetwork implements Runnable {
-    private static final Logger logger = Logger.getLogger(Application.class.getName());
+    private static final Logger logger = Logger.getLogger(MonitorNetwork.class.getName());
     private static final ThreadLocal<String> THREAD_LOCAL = ThreadLocal.withInitial(() -> {
         try {
             return new String(Files.readAllBytes(Paths.get("C:\\Users\\yu\\Nox_share\\ImageShare\\hosts.txt")));
@@ -61,7 +59,6 @@ public class MonitorNetwork implements Runnable {
             for (Map.Entry<String, String> stringEntry : ipMap.entrySet()) {
                 content.append("#").append(stringEntry.getKey()).append("\n");
                 content.append(stringEntry.getValue()).append("      agent.javamaster.org\n");
-                logger.info("system ip is:" + stringEntry.getKey() + " " + stringEntry.getValue());
             }
 
             FileWriter fileWriter = null;
@@ -74,7 +71,6 @@ public class MonitorNetwork implements Runnable {
                     fileWriter.write(hostContent);
                     THREAD_LOCAL.set(hostContent);
                     logger.info("write hosts info to " + file.getAbsolutePath() + " finished");
-                    showTray(hostContent);
                 }
             } finally {
                 if (fileWriter != null) {
