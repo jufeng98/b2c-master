@@ -23,7 +23,7 @@ public class B2cJspApplication {
 
     public static void main(String[] args) {
         Global.context = SpringApplication.run(B2cJspApplication.class, args);
-        System.out.println("http://localhost:8666/a/jstl/springJstlTest");
+        System.out.println("http://localhost:8666/b2c-jsp/a/jstl/springJstlTest");
     }
 
     @Bean

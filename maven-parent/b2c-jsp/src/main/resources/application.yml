@@ -3,6 +3,7 @@ server:
     jsp:
       init-parameters:
         development: true
+    context-path: /b2c-jsp
   port: 8666
 spring:
   datasource:

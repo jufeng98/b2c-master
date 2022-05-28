@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -19,7 +20,18 @@ import javax.validation.Valid;
 public class JstlController extends BaseController {
 
     @RequestMapping("/springJstlTest")
-    public String springJstlTest(Model model) {
+    public String springJstlTest(Model model, HttpServletRequest request) {
+        // http://localhost:8666/b2c-jsp/a/jstl/springJstlTest?name=yu&age=22
+        // /b2c-jsp/a/jstl/springJstlTest
+        System.out.println("getRequestURI:" + request.getRequestURI());
+        // http://localhost:8666/b2c-jsp/a/jstl/springJstlTest
+        System.out.println("getRequestURL:" + request.getRequestURL());
+        // /b2c-jsp
+        System.out.println("getContextPath:" + request.getContextPath());
+        // name=yu&age=22
+        System.out.println("getQueryString:" + request.getQueryString());
+        // /a/jstl/springJstlTest
+        System.out.println("getServletPath:" + request.getServletPath());
         JstlReqVo reqVo = new JstlReqVo();
         reqVo.setName("梁煜东");
         reqVo.setPassword("");
