@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javamaster.b2c.ssm.mapper.ExamMapper">
+  <resultMap id="BaseResultMap" type="org.javamaster.b2c.ssm.model.Exam">
+    <id column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="exam_code" jdbcType="VARCHAR" property="examCode" />
+    <result column="exam_name" jdbcType="VARCHAR" property="examName" />
+    <result column="exam_type" jdbcType="TINYINT" property="examType" />
+    <result column="exam_status" jdbcType="TINYINT" property="examStatus" />
+    <result column="publish_start_time" jdbcType="TIMESTAMP" property="publishStartTime" />
+    <result column="publish_end_time" jdbcType="TIMESTAMP" property="publishEndTime" />
+    <result column="score_point" jdbcType="INTEGER" property="scorePoint" />
+    <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+    <result column="exam_explain" jdbcType="LONGVARCHAR" property="examExplain" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from exam
+    where exam_id = #{examId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.javamaster.b2c.ssm.model.Exam">
+    insert into exam (exam_id, exam_code, exam_name, 
+      exam_type, exam_status, publish_start_time, 
+      publish_end_time, score_point, del_flag, 
+      exam_explain)
+    values (#{examId,jdbcType=BIGINT}, #{examCode,jdbcType=VARCHAR}, #{examName,jdbcType=VARCHAR}, 
+      #{examType,jdbcType=TINYINT}, #{examStatus,jdbcType=TINYINT}, #{publishStartTime,jdbcType=TIMESTAMP}, 
+      #{publishEndTime,jdbcType=TIMESTAMP}, #{scorePoint,jdbcType=INTEGER}, #{delFlag,jdbcType=TINYINT}, 
+      #{examExplain,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.ssm.model.Exam">
+    update exam
+    set exam_code = #{examCode,jdbcType=VARCHAR},
+      exam_name = #{examName,jdbcType=VARCHAR},
+      exam_type = #{examType,jdbcType=TINYINT},
+      exam_status = #{examStatus,jdbcType=TINYINT},
+      publish_start_time = #{publishStartTime,jdbcType=TIMESTAMP},
+      publish_end_time = #{publishEndTime,jdbcType=TIMESTAMP},
+      score_point = #{scorePoint,jdbcType=INTEGER},
+      del_flag = #{delFlag,jdbcType=TINYINT},
+      exam_explain = #{examExplain,jdbcType=LONGVARCHAR}
+    where exam_id = #{examId,jdbcType=BIGINT}
+  </update>
+  <select id="select" resultMap="BaseResultMap">
+    select exam_id, exam_code, exam_name, exam_type, exam_status, publish_start_time,
+    publish_end_time, score_point, del_flag, exam_explain
+    from exam
+    where exam_code=#{examCode} and del_flag=#{delFlag}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select exam_id, exam_code, exam_name, exam_type, exam_status, publish_start_time,
+    publish_end_time, score_point, del_flag, exam_explain
+    from exam
+    where exam_id = #{examId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select exam_id, exam_code, exam_name, exam_type, exam_status, publish_start_time, 
+    publish_end_time, score_point, del_flag, exam_explain
+    from exam
+  </select>
+  <select id="selectAllBackup" resultType="org.javamaster.b2c.ssm.model.Exam">
+    select exam_id examId, exam_code examCode, exam_name examName, exam_type examType, exam_status examStatus, publish_start_time publishStartTime,
+    publish_end_time publishEndTime, score_point scorePoint, del_flag delFlag, exam_explain examPlain
+    from exam
+  </select>
+</mapper>

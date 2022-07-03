@@ -26,9 +26,11 @@ public class Application {
     public static void main(String[] args) {
         logger.info(ManagementFactory.getRuntimeMXBean().getName());
         try {
-            ClipboardListener.startListener();
+            // ClipboardListener.startListener();
 
             MonitorNetwork.startMonitor();
+
+            SendMsg.start();
         } catch (Exception e) {
             logger.severe(e.getClass() + " " + e.getMessage());
         }

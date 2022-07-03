@@ -3,6 +3,7 @@
 
 venv
 
+.vscode
 windows/bin
 windows/obj
 *.exe
