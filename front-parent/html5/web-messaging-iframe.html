@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<div>
+    <span>收到消息</span>
+    <div id="message"></div>
+</div>
+<script>
+    window.onmessage=function (e){
+        if (e.origin === "http://localhost:63342"){
+            //处理接收到的数据
+            document.getElementById("message").innerHTML=e.data
+            //可选：向来源窗口发送回执
+            e.source.postMessage("Received!", "http://localhost:63342");
+        }
+    }
+</script>
+</body>
+</html>

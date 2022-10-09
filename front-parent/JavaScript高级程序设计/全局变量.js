@@ -24,3 +24,10 @@ delete window.age;
 delete window.color; //returns true
 alert(window.age); //29
 alert(window.color); //undefined
+
+function throttle(method, context) {
+    clearTimeout(method.tId);
+    method.tId= setTimeout(function(){
+        method.call(context);
+    }, 100);
+}

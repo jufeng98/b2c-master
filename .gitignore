@@ -3,6 +3,7 @@
 
 venv
 
+build
 .vscode
 windows/bin
 windows/obj

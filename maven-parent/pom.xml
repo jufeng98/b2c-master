@@ -19,7 +19,7 @@
 <!--        <module>b2c-apollo</module>-->
 <!--        <module>b2c-batch</module>-->
 <!--        <module>b2c-cache</module>-->
-        <module>b2c-cloud-test-learn-java</module>
+<!--        <module>b2c-cloud-test-learn-java</module>-->
 <!--        <module>b2c-cloud-test-parent</module>-->
 <!--        <module>b2c-cloud-test-parent-fundamental</module>-->
 <!--        <module>b2c-cloud-test-summer</module>-->
@@ -71,6 +71,7 @@
 <!--        <module>spring-mybatisplus</module>-->
 <!--        <module>summer-parent</module>-->
 <!--        <module>test-learn-java</module>-->
+        <module>b2c-ssm</module>
     </modules>
 
 </project>

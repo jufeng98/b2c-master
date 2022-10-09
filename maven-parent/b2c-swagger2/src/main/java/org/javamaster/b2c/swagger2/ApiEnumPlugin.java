@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 @Component
 public class ApiEnumPlugin implements ModelPropertyBuilderPlugin {
 
-    @SneakyThrows
     @Override
     public void apply(ModelPropertyContext modelPropertyContext) {
         Optional<BeanPropertyDefinition> optional = modelPropertyContext.getBeanPropertyDefinition();
@@ -54,7 +53,12 @@ public class ApiEnumPlugin implements ModelPropertyBuilderPlugin {
         PropertySpecificationBuilder builder = modelPropertyContext.getSpecificationBuilder();
         Field field = ReflectionUtils.findField(builder.getClass(), "description");
         ReflectionUtils.makeAccessible(Objects.requireNonNull(field));
-        String desc = (String) field.get(builder);
+        String desc;
+        try {
+            desc = (String) field.get(builder);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
         String enumDesc = StringUtils.join(list, "；");
         desc = desc + "，" + enumDesc;
         builder.description(desc);

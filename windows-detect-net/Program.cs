@@ -15,7 +15,7 @@ namespace windows_detect_net
             DetectNet detectNet = new DetectNet();
             detectNet.netChangeListener();
 
-            Thread.Sleep(3000000);
+            //Thread.Sleep(3000000);
         }
     }
 }

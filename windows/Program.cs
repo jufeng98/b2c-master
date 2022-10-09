@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using log4net.Config;
+using System.Drawing;
 
 namespace windows
 {
@@ -17,9 +18,13 @@ namespace windows
             var configFile = new FileInfo("log4net.config");
             XmlConfigurator.Configure(configFile);
 
+            Net.saveToFile(Net.netInfo());
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ProgramWindows());
+            // Application.Run(new ProgramWindows());
+            notify(Net.netInfo()+"\n已写入文件C:\\Users\\yu\\Nox_share\\ImageShare\\hosts.txt");
+            Thread.Sleep(2000);
         }
 
         // 主线程全局异常捕获处理
@@ -45,5 +50,14 @@ namespace windows
             Environment.Exit(-1);
         }
 
+        public static void notify(string content)
+        {
+            NotifyIcon fyIcon = new NotifyIcon();
+            fyIcon.Icon = new Icon("favicon.ico");
+            fyIcon.BalloonTipText = content;
+            fyIcon.BalloonTipTitle = "通知";
+            fyIcon.Visible = true;
+            fyIcon.ShowBalloonTip(0);
+        }
     }
 }

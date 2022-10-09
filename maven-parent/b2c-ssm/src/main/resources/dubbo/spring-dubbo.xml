@@ -14,13 +14,13 @@
 
     <dubbo:application name="b2c-ssm" owner="b2c-ssm"/>
     <dubbo:protocol name="dubbo" payload="50331648"/>
-    <dubbo:registry protocol="zookeeper" address="localhost:2181" timeout="6000" check="false"/>
+    <dubbo:registry timeout="6000" check="false"/>
 
-<!--    <dubbo:reference interface="cn.com.bluemoon.service.station.api.DubboCommonService"-->
-<!--                     check="false"-->
-<!--                     id="dubboCommonService"/>-->
+    <dubbo:reference interface="cn.com.bluemoon.service.station.api.DubboCommonService"
+                     check="false"
+                     id="dubboCommonService"/>
 
-<!--    <dubbo:service interface="org.javamaster.b2c.dubbo.server.api.service.UserDubboService"-->
-<!--                   ref="userDubboServiceImpl" version="1.0.0" timeout="6000"/>-->
+    <dubbo:service interface="org.javamaster.b2c.dubbo.server.api.service.UserDubboService"
+                   ref="userDubboServiceImpl" version="1.0.0" timeout="6000"/>
 
 </beans>

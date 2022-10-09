@@ -30,7 +30,7 @@ public class Application {
 
             MonitorNetwork.startMonitor();
 
-            SendMsg.start();
+            // SendMsg.start();
         } catch (Exception e) {
             logger.severe(e.getClass() + " " + e.getMessage());
         }

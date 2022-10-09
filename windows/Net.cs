@@ -59,7 +59,7 @@ namespace windows
             return sb.ToString();
         }
 
-        public void saveToFile(string str)
+        public static void saveToFile(string str)
         {
             using (FileStream fileStream = File.OpenWrite("C:\\Users\\yu\\Nox_share\\ImageShare\\hosts.txt"))
             {

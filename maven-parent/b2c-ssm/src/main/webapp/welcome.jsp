@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="cn">
 <head>
@@ -11,7 +12,15 @@
 </head>
 <body>
 <div id="layout" style="min-width: 1000px;">
-    <h1>欢迎来到我的世界</h1>
+    <h1>欢迎来到我的世界1</h1>
+    <%
+    javax.el.ELContext c=pageContext.getELContext();
+    System.out.println(c.getClass());
+    System.out.println(c.getClass().getClassLoader());
+    System.out.println(c.getClass().getResource(""));
+    System.out.println(javax.el.ELContext.class);
+    %>
+
     <el-table :data="tableData" style="width: 100%"
               :height="300" size="mini"
               v-loading="loadings.length>0" element-loading-text="请稍后..."

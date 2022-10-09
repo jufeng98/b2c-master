@@ -11,7 +11,6 @@ namespace windows
         {
             log.Info("启动桌面");
             log.Info(DateTime.Now.ToString("yyyyMMdd-HHmmssfff"));
-            //InitializeComponent();
         }
     }
 }

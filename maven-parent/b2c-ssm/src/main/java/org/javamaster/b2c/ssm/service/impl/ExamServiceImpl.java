@@ -10,6 +10,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletContext;
 import java.util.List;
 
 @Service
@@ -20,6 +21,8 @@ public class ExamServiceImpl implements ExamService {
     private DubboCommonService service;
     @Autowired
     private BeanFactory beanFactory;
+    @Autowired
+    private ServletContext servletContext;
 
     @SneakyThrows
     @Override

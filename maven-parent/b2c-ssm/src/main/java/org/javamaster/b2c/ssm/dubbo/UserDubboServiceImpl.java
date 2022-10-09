@@ -6,7 +6,7 @@ import org.javamaster.b2c.dubbo.server.api.service.UserDubboService;
 
 import java.util.*;
 
-@Service(version = "1.0.0")
+@Service(version = "1.0.0", timeout = 6000)
 public class UserDubboServiceImpl implements UserDubboService {
     @Override
     public List<UserDto> queryAll() {

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>元素拖动</title>
+    <script type="text/javascript" src="event.js"></script>
+</head>
+<body>
+<div>拖动色块</div>
+<div id="status" style="height: 200px;overflow-y: auto"></div>
+<div style="position: absolute;top: 50px;left: 50px;cursor: pointer;width: 30px;height: 30px;background-color: #0e99d0"
+     id="myDiv" class="draggable"></div>
+<div>拖动文件到此处</div>
+<div id="droptarget" style="width: 100px;height: 100px;border: 1px solid magenta"></div>
+<div id="output"></div>
+<script type="text/javascript">
+    var DragDrop = function(){
+        var dragging = null;
+        var dragdrop = new EventTarget();
+        diffX = 0;
+        diffY = 0;
+        function handleEvent(event){
+//获取事件和目标
+            event = EventUtil.getEvent(event);
+            var target = EventUtil.getTarget(event);
+//确定事件类型
+            switch(event.type){
+                case "mousedown":
+                    if (target.className.indexOf("draggable") > -1){
+                        dragging = target;
+                        diffX = event.clientX - target.offsetLeft;
+                        diffY = event.clientY - target.offsetTop;
+                        dragdrop.fire({type:"dragstart", target: dragging,
+                            x: event.clientX, y: event.clientY});
+                    }
+                    break;
+                case "mousemove":
+                    if (dragging !== null){
+//指定位置
+                        dragging.style.left = (event.clientX - diffX) + "px";
+                        dragging.style.top = (event.clientY - diffY) + "px";
+                        //触发自定义事件
+                        dragdrop.fire({type:"drag", target: dragging,
+                            x: event.clientX, y: event.clientY});
+                    }
+                    break;
+                case "mouseup":
+                    dragdrop.fire({type:"dragend", target: dragging,
+                        x: event.clientX, y: event.clientY});
+                    dragging = null;
+                    break;
+            }
+        };
+//公共接口
+        dragdrop.enable = function(){
+            EventUtil.addHandler(document, "mousedown", handleEvent);
+            EventUtil.addHandler(document, "mousemove", handleEvent);
+            EventUtil.addHandler(document, "mouseup", handleEvent);
+        };
+        dragdrop.disable = function(){
+            EventUtil.removeHandler(document, "mousedown", handleEvent);
+            EventUtil.removeHandler(document, "mousemove", handleEvent);
+            EventUtil.removeHandler(document, "mouseup", handleEvent);
+        };
+        return dragdrop;
+    }();
+    DragDrop.enable()
+    DragDrop.addHandler("dragstart", function(event){
+        var status = document.getElementById("status");
+        status.innerHTML = "Started dragging " + event.target.id;
+    });
+    DragDrop.addHandler("drag", function(event){
+        var status = document.getElementById("status");
+        status.innerHTML += "<br/> Dragged " + event.target.id + " to (" + event.x +
+            "," + event.y + ")";
+    });
+    DragDrop.addHandler("dragend", function(event){
+        var status = document.getElementById("status");
+        status.innerHTML += "<br/> Dropped " + event.target.id + " at (" + event.x +
+            "," + event.y + ")";
+    });
+
+    var droptarget = document.getElementById( "droptarget");
+    function handleEvent(event){
+        var info = "",
+            output = document.getElementById("output"),
+            data,
+            files, i, len;
+        EventUtil.preventDefault(event);
+        if (event.type == "drop"){
+            data = new FormData();
+            files = event.dataTransfer.files;
+            i = 0;
+            len = files.length;
+            while (i < len){
+                info += files[i].name + " (" + files[i].type + ", " + files[i].size +
+                    " bytes)<br>";
+                data.append("file" + i, files[i]);
+                i++;
+            }
+            output.innerHTML = info;
+            xhr = new XMLHttpRequest();
+            xhr.open("post", "FileAPIExample06Upload.php", true);
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4){
+                    alert(xhr.responseText);
+                }
+            };
+            xhr.send(data);
+        }
+    }
+    EventUtil.addHandler(droptarget, "dragenter", handleEvent);
+    EventUtil.addHandler(droptarget, "dragover", handleEvent);
+    EventUtil.addHandler(droptarget, "drop", handleEvent);
+</script>
+</body>
+</html>

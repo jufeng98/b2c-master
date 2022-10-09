@@ -43,3 +43,22 @@ console.log(Object.isPrototypeOf(jb));
 
 var obj = new Object("some text");
 console.log(obj instanceof String); //true
+
+var person = { name: "Nicholas" };
+// 调用了 Object.preventExtensions()方法后，就不能给 person 对象添加新属性和方法
+Object.preventExtensions(person);
+person.age = 29;
+alert(person.age); //undefined
+alert(Object.isExtensible(person));
+
+var person = { name: "Nicholas" };
+// 密封对象不可扩展，而
+// 且已有成员的[[Configurable]]特性将被设置为 false。这就意味着不能删除属性和方法
+Object.seal(person);
+alert(Object.isSealed(person));
+
+var person = { name: "Nicholas" };
+// 最严格的防篡改级别是冻结对象（ frozen object）。冻结的对象既不可扩展，又是密封的，而且对象
+// 数据属性的[[Writable]]特性会被设置为 false。
+Object.freeze(person);
+alert(Object.isFrozen(person));

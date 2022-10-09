@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<div>
+    <button onclick="sendMessage()">向iframe發送消息</button>
+    <iframe id="frame" src="web-messaging-iframe.html"></iframe>
+</div>
+<script>
+    function sendMessage(){
+        let iframeWindow = document.getElementById("frame").contentWindow;
+        // 传给 postMessage()的第二个参数是"*"，则表示可以把消息发送给来自任何域的文档
+        iframeWindow.postMessage("A secret", "http://localhost:63342");
+    }
+</script>
+</body>
+</html>

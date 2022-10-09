@@ -34,7 +34,7 @@
         <property name="mediaTypes" >
             <value>
                 json=application/json
-                xml=application/xml
+                xml=application/ml
             </value>
         </property>
     </bean>
