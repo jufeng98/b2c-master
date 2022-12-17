@@ -10,6 +10,8 @@
     <context:component-scan base-package="com.javamaster.b2c">
         <context:include-filter type="regex" expression=".*Helper"/>
         <context:include-filter type="custom" expression="com.javamaster.b2c.cloud.test.boot.filer.MyTypeFilter"/>
+        <context:exclude-filter type="regex" expression=".*Controller"/>
+        <context:exclude-filter type="regex" expression=".*Application"/>
     </context:component-scan>
 
     <bean id="book" name="bookName" class="com.javamaster.b2c.cloud.test.boot.entity.Book"

@@ -7,7 +7,7 @@ import com.javamaster.b2c.cloud.test.learn.java.bytecode.tablestructure.Constant
 import com.javamaster.b2c.cloud.test.learn.java.bytecode.tablestructure.ConstantInfo;
 import com.javamaster.b2c.cloud.test.learn.java.bytecode.tablestructure.ConstantLongInfo;
 import com.javamaster.b2c.cloud.test.learn.java.bytecode.tablestructure.ConstantPaddingInfo;
-import com.javamaster.b2c.cloud.test.learn.java.jackson.HexSerializer;
+import com.javamaster.b2c.cloud.test.learn.java.json.HexSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.DataInputStream;

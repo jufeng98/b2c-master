@@ -2,8 +2,8 @@ package com.javamaster.b2c.cloud.test.learn.java.model;
 
 import com.javamaster.b2c.cloud.test.learn.java.enums.CarTypeEnum;
 import com.javamaster.b2c.cloud.test.learn.java.enums.TransactionTypeEnum;
-import com.javamaster.b2c.cloud.test.learn.java.jackson.EnumBaseDeserializer;
-import com.javamaster.b2c.cloud.test.learn.java.jackson.EnumBaseSerializer;
+import com.javamaster.b2c.cloud.test.learn.java.json.EnumBaseDeserializer;
+import com.javamaster.b2c.cloud.test.learn.java.json.EnumBaseSerializer;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

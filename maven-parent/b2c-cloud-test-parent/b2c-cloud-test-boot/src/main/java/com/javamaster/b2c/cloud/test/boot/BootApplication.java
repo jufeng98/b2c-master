@@ -22,7 +22,7 @@ public class BootApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(BootApplication.class, args);
         ClassLoader classLoader = context.getClassLoader();
-        System.out.println();
+        System.out.println(classLoader);
     }
 
 }

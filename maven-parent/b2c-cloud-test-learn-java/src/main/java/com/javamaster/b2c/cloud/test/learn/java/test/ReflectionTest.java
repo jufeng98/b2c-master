@@ -1,12 +1,11 @@
 package com.javamaster.b2c.cloud.test.learn.java.test;
 
-import com.google.common.collect.Lists;
+import com.javamaster.b2c.cloud.test.learn.java.model.Reflection;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.lang.reflect.*;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public class ReflectionTest {
     @Test
     @SneakyThrows
     public void test() {
-        Method method = MyClass.class.getMethod("getStringList");
+        Method method = Reflection.class.getMethod("getStringList");
         Type returnType = method.getGenericReturnType();
         if (returnType instanceof ParameterizedType) {
             ParameterizedType type = (ParameterizedType) returnType;
@@ -34,7 +33,7 @@ public class ReflectionTest {
     @Test
     @SneakyThrows
     public void test1() {
-        Method method = MyClass.class.getMethod("setStringList", List.class);
+        Method method = Reflection.class.getMethod("setStringList", List.class);
         Type[] genericParameterTypes = method.getGenericParameterTypes();
         for (Type genericParameterType : genericParameterTypes) {
             if (genericParameterType instanceof ParameterizedType) {
@@ -51,7 +50,7 @@ public class ReflectionTest {
     @Test
     @SneakyThrows
     public void test3() {
-        Field field = MyClass.class.getDeclaredField("stringList");
+        Field field = Reflection.class.getDeclaredField("stringList");
         Type genericFieldType = field.getGenericType();
         if (genericFieldType instanceof ParameterizedType) {
             ParameterizedType aType = (ParameterizedType) genericFieldType;
@@ -91,42 +90,6 @@ public class ReflectionTest {
         System.out.println(stringArrayComponentType);
     }
 
-    @Test
-    @SneakyThrows
-    @SuppressWarnings("ALL")
-    public void test6() {
-        InvocationHandler handler = new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                System.out.println(proxy.getClass());
-                System.out.println(method);
-                System.out.println(Arrays.toString(args));
-                return "hello";
-            }
-        };
-        MyInterface proxy = (MyInterface) Proxy.newProxyInstance(
-                MyInterface.class.getClassLoader(),
-                new Class[]{MyInterface.class},
-                handler);
-        System.out.println(proxy.getClass());
-        System.out.println(proxy.getDesc("yu", 22));
-    }
-
-    public static class MyClass {
-        protected List<String> stringList = Lists.newArrayList();
-
-        public List<String> getStringList() {
-            return this.stringList;
-        }
-
-        public void setStringList(List<String> list) {
-            this.stringList = list;
-        }
-    }
-
-    public interface MyInterface {
-        String getDesc(String name, int age);
-    }
 }
 
 

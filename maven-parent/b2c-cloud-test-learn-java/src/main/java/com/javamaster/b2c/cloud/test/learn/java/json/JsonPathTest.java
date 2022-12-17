@@ -1,4 +1,4 @@
-package com.javamaster.b2c.cloud.test.learn.java.jackson;
+package com.javamaster.b2c.cloud.test.learn.java.json;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;

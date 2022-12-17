@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.javamaster.b2c.swagger2.model.*;
+import org.javamaster.b2c.swagger2.service.Lambda;
 import org.javamaster.b2c.swagger2.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private Lambda lambda;
 
     @ApiOperation("获取应用名")
     @ApiResponses({
@@ -32,6 +35,7 @@ public class LoginController {
     })
     @GetMapping("/getName")
     public String getName() {
+        lambda.printList();
         return "b2c-swagger2";
     }
 

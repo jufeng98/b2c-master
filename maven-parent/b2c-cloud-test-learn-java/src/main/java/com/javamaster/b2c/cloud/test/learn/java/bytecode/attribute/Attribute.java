@@ -2,7 +2,7 @@ package com.javamaster.b2c.cloud.test.learn.java.bytecode.attribute;
 
 import com.javamaster.b2c.cloud.test.learn.java.bytecode.ConstantPool;
 import com.javamaster.b2c.cloud.test.learn.java.bytecode.tablestructure.ConstantUtf8Info;
-import com.javamaster.b2c.cloud.test.learn.java.jackson.ByteArraySerializer;
+import com.javamaster.b2c.cloud.test.learn.java.json.ByteArraySerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

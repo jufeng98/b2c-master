@@ -37,11 +37,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-washing-center-api</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>com.vdurmont</groupId>
             <artifactId>emoji-java</artifactId>
             <version>4.0.0</version>
@@ -95,11 +90,6 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>itext-asian</artifactId>
             <version>5.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon.training</groupId>
-            <artifactId>api</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -178,25 +168,6 @@
             <version>0.1</version>
         </dependency>
         <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>mh-smc-api</artifactId>
-            <version>0.2.5-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>cn.com.bluemoon</groupId>
-                    <artifactId>ms-common-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-openfeign</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>2.2.2</version>
@@ -228,21 +199,14 @@
             <version>3.4.6</version>
         </dependency>
         <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>bluemoon-service</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>17.0.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -346,54 +310,9 @@
         </dependency>
 
         <dependency>
-            <groupId>washingService-parent</groupId>
-            <artifactId>washingService-stationApi</artifactId>
-            <version>0.0.5-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-washmall-enterprise-item-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-mall-user-api</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-washmall-order-api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>washingService-parent</groupId>
-            <artifactId>washingService-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-washmall-pricetype-api</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-mall-order-api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bluemoon</groupId>
-            <artifactId>moonMall-proxy-api</artifactId>
-            <version>0.0.3</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
             <version>4.1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>mh-mall-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>cn.com.bluemoon.handypoi</groupId>
@@ -411,41 +330,6 @@
             <version>4.3</version>
         </dependency>
         <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>bm-express-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-mall-activity-api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>crmbp-service</artifactId>
-            <version>1.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bluemoon.pf</groupId>
-            <artifactId>pf-map-api</artifactId>
-            <version>1.1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>bmhr-api-emp</artifactId>
-            <version>0.6.65</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bluemoon.kafka</groupId>
-            <artifactId>kafkaApi</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>express-api</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>net.sourceforge.htmlcleaner</groupId>
             <artifactId>htmlcleaner</artifactId>
             <version>2.24</version>
@@ -456,63 +340,15 @@
             <version>1.0.8</version>
         </dependency>
         <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-mall-pay-api</artifactId>
-            <version>0.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-moonmall-order-api</artifactId>
-            <version>0.1.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-moonmall-item-api</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-moonmall-shoppingcart-api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.bluemoon</groupId>
-            <artifactId>service-app-manager-api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>5.1.8.RELEASE</version>
         </dependency>
-        <!--解决至尊项目dubbo报zookeeper找不到问题,加入下列依赖并重新导入-->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.zookeeper</groupId>-->
-        <!--<artifactId>zookeeper</artifactId>-->
-        <!--<version>3.4.8</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.github.sgroschupf</groupId>-->
-        <!--<artifactId>zkclient</artifactId>-->
-        <!--<version>0.1</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.alibaba</groupId>-->
-        <!--<artifactId>dubbo</artifactId>-->
-        <!--<version>2.8.4</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>commons-beanutils</groupId>-->
-        <!--<artifactId>commons-beanutils</artifactId>-->
-        <!--<version>1.9.3</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>net.sf.ezmorph</groupId>-->
-        <!--<artifactId>ezmorph</artifactId>-->
-        <!--<version>1.0.6</version>-->
-        <!--</dependency>-->
-
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.6</version>
+        </dependency>
     </dependencies>
 
     <build>

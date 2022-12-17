@@ -1,23 +1,20 @@
-package com.javamaster.b2c.cloud.test.learn.java.test;
+package com.javamaster.b2c.cloud.test.learn.java.easyexcel;
 
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.metadata.TableStyle;
 import com.alibaba.excel.support.ExcelTypeEnum;
-import com.javamaster.b2c.cloud.test.learn.java.easyexcel.QuestionAnalysisListener;
 import com.javamaster.b2c.cloud.test.learn.java.model.QuestionReadVo;
 import com.javamaster.b2c.cloud.test.learn.java.model.QuestionWriteVo;
-import com.google.common.collect.Lists;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author yudong
@@ -38,11 +35,11 @@ public class EasyExcelTest {
         if (file.exists()) {
             file.delete();
         }
-        List<QuestionWriteVo> questionWriteVos = Lists.transform(questionReadVos, questionReadVo -> {
+        List<QuestionWriteVo> questionWriteVos = questionReadVos.stream().map(questionReadVo -> {
             QuestionWriteVo writeVo = new QuestionWriteVo();
             BeanUtils.copyProperties(questionReadVo, writeVo);
             return writeVo;
-        });
+        }).collect(Collectors.toList());
         ExcelWriter excelWriter = new ExcelWriter(new FileOutputStream(file), ExcelTypeEnum.XLSX, true);
         Sheet sheet = new Sheet(0, 1, QuestionWriteVo.class);
         TableStyle tableStyle = new TableStyle();
@@ -59,7 +56,7 @@ public class EasyExcelTest {
 
     private static <T> List<T> read() throws Exception {
         File file = ResourceUtils.getFile("classpath:excel/question-20190523.xls");
-        QuestionAnalysisListener analysisListener = new QuestionAnalysisListener();
+        QuestionAnalysisListener<T> analysisListener = new QuestionAnalysisListener<>();
         ExcelReader excelReader = new ExcelReader(new FileInputStream(file), ExcelTypeEnum.XLS, null,
                 analysisListener, true);
         for (Sheet sheet : excelReader.getSheets()) {

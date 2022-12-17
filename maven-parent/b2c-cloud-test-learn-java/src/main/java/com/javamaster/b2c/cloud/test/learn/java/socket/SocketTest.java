@@ -1,4 +1,4 @@
-package com.javamaster.b2c.cloud.test.learn.java.server;
+package com.javamaster.b2c.cloud.test.learn.java.socket;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

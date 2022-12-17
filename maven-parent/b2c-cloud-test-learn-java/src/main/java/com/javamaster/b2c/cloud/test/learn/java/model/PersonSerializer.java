@@ -1,6 +1,6 @@
 package com.javamaster.b2c.cloud.test.learn.java.model;
 
-import com.javamaster.b2c.cloud.test.learn.java.jackson.OptimizedBooleanSerializer;
+import com.javamaster.b2c.cloud.test.learn.java.json.OptimizedBooleanSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**

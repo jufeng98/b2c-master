@@ -1,4 +1,4 @@
-package com.javamaster.b2c.cloud.test.learn.java.jackson;
+package com.javamaster.b2c.cloud.test.learn.java.json;
 
 import com.javamaster.b2c.cloud.test.learn.java.enums.EnumBase;
 import com.fasterxml.jackson.core.JsonParser;

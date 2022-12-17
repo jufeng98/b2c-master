@@ -72,7 +72,7 @@ java -XX:+PrintFlagsFinal
 #jmap Java内存映像工具，用于生成堆转储快照，一般称为dump文件
 #生成dump文件,live表示是否只dump出存活对象
 #-F 当使用-dump虚拟机没有响应时，强制生成dump快照，只在linux环境有效
-jmap -dump:live,format=b,file=java_pid1620.hprof 1620
+jmap -dump:live,format=b,file=java_pid.hprof 8
 #Dumping heap to D:\open-source\b2c-master\eureka.hprof ...
 #Heap dump file created
 

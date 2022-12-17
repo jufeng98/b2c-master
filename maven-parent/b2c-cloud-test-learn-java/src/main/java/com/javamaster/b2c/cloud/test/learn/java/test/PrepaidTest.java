@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class PrepaidTest {
     @Test
     public void chargePrepaid() {
-        String mobile = "18826483963";
+        String mobile = "13800138000";
         JdbcTemplate jdbcTemplate = MybatisUtils.getJdbcTemplateMoonMall();
         String sql = "select * from mall_user_base where mobile = ?";
-        Map<String, Object> map = jdbcTemplate.queryForMap(sql, new Object[]{mobile});
+        Map<String, Object> map = jdbcTemplate.queryForMap(sql, mobile);
         System.out.println(JSONObject.toJSONString(map, true));
         String userId = (String) map.get("USER_ID");
         System.out.println(userId);

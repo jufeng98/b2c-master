@@ -1,10 +1,10 @@
 package com.javamaster.b2c.cloud.test.learn.java.utils;
 
-import com.eos.system.utility.Assert;
 import lombok.SneakyThrows;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.buf.HexUtils;
+import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;

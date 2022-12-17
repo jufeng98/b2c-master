@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.*;
 
 /**
@@ -15,6 +16,24 @@ import java.util.concurrent.*;
 @Slf4j
 public class SftpTest {
     private static ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+    public static void main(String[] args) {
+        SftpClient sftpClient = new SftpClient("root", "root", "127.0.0.1", 22);
+        try {
+            sftpClient.connect();
+            while (true) {
+                Scanner in = new Scanner(System.in);
+                System.out.print("input command:");
+                String command = in.nextLine();
+                if ("exit".equals(command)) {
+                    break;
+                }
+                System.out.println(sftpClient.shell(command));
+            }
+        } finally {
+            sftpClient.disconnect();
+        }
+    }
 
     @Test
     public void test() {

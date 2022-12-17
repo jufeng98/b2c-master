@@ -1,7 +1,7 @@
 package com.javamaster.b2c.cloud.test.learn.java.bytecode.tablestructure;
 
 import com.javamaster.b2c.cloud.test.learn.java.bytecode.ConstantPool;
-import com.javamaster.b2c.cloud.test.learn.java.jackson.TagSerializer;
+import com.javamaster.b2c.cloud.test.learn.java.json.TagSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

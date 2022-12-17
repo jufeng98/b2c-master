@@ -1,24 +1,16 @@
 package com.javamaster.b2c.cloud.test.learn.java.lombok;
 
-import com.javamaster.b2c.cloud.test.learn.java.utils.OMUtils;
 import com.google.common.collect.Lists;
-import lombok.Cleanup;
-import lombok.NonNull;
-import lombok.SneakyThrows;
-import lombok.Synchronized;
+import com.javamaster.b2c.cloud.test.learn.java.utils.OMUtils;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.junit.Test;
 import org.springframework.util.StreamUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -59,13 +51,13 @@ public class LombokTest {
 
         log.info("{}", get(1));
         log.info("{}", parseDate("20180225"));
-        log.info("{}", readFileAsString(LombokTest.class.getClassLoader().getResource("car.json").getPath()));
+        log.info("{}", readFileAsString(Objects.requireNonNull(LombokTest.class.getClassLoader()
+                .getResource("car.json")).getPath()));
     }
 
     @Synchronized
     public static Student get(@NonNull Integer id) {
-        Student student = students.get(id);
-        return student;
+        return students.get(id);
     }
 
     @Synchronized
@@ -83,6 +75,6 @@ public class LombokTest {
     public static String readFileAsString(String path) {
         File file = new File(path);
         @Cleanup InputStream inputStream = new FileInputStream(file);
-        return StreamUtils.copyToString(inputStream, Charset.forName("utf-8"));
+        return StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
     }
 }
