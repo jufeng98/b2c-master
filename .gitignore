@@ -53,6 +53,7 @@ online-exam
 pic
 *.pickle
 
+.vs
 sakila
 moonMall-proxy-api
 *qqconnect.log
