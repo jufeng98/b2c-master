@@ -63,7 +63,9 @@ namespace WindowsFormsApp
         public static void saveToFile(string str)
         {
             notify(str);
-            using (FileStream fileStream = File.OpenWrite("C:\\Users\\yu\\Nox_share\\ImageShare\\hosts.txt"))
+            var path = "C:\\Users\\yu\\Nox_share\\ImageShare";
+            Directory.CreateDirectory(path);
+            using (FileStream fileStream = File.OpenWrite(path + "hosts.txt"))
             {
                 using (StreamWriter streamWriter = new StreamWriter(fileStream))
                 {

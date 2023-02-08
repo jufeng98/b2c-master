@@ -24,7 +24,10 @@ namespace WindowsFormsApp
             var configFile = new FileInfo("log4net.config");
             XmlConfigurator.Configure(configFile);
 
-            Application.Run(new Form1());
+            //EnumTest.Test();
+            //BasicType.Test();
+            MyList<string>.Test();
+            Application.Run();
         }
     }
 }

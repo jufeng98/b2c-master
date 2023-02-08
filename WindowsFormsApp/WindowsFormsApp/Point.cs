@@ -11,6 +11,10 @@ namespace WindowsFormsApp
             Point point = new Point(1, 2);
             Console.WriteLine(point.X + " " + point.Y);
         }
-        public Point(int x, int y) { }
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
