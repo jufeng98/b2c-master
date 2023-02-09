@@ -26,7 +26,11 @@ namespace WindowsFormsApp
 
             //EnumTest.Test();
             //BasicType.Test();
-            MyList<string>.Test();
+            //MyList<string>.Test();
+            //StringTest.Test();
+            //DelegateTest.Test();
+            //AsyncTest.Test();
+            AttrTest.Test();
             Application.Run();
         }
     }

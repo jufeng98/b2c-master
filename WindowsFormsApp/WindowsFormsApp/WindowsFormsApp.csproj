@@ -73,7 +73,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncTest.cs" />
+    <Compile Include="AttrTest.cs" />
     <Compile Include="BasicType.cs" />
+    <Compile Include="DelegateTest.cs" />
     <Compile Include="DetectNet.cs" />
     <Compile Include="EnumTest.cs" />
     <Compile Include="FileTest.cs" />
@@ -83,7 +86,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelpAttribute.cs" />
     <Compile Include="IControl.cs" />
     <Compile Include="ListTest.cs" />
     <Compile Include="MyList.cs" />
@@ -95,8 +97,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stack.cs" />
+    <Compile Include="StringTest.cs" />
     <Compile Include="SysInfo.cs" />
-    <Compile Include="Widget.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
